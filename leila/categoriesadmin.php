@@ -92,9 +92,6 @@ if (isset($_POST['deletecategories'])){
 	
 </form>
 
-
-
-
 </body>
 </html>
 
