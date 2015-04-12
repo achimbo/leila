@@ -1,5 +1,5 @@
 <?php
-require_once 'login.php';
+require_once 'variables.php';
 require_once 'tools.php';
 
 if (isset($_POST['addtopcategory'])){

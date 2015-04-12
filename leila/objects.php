@@ -1,5 +1,5 @@
 <?php
-require_once 'login.php';
+require_once 'variables.php';
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
