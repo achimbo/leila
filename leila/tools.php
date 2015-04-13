@@ -60,4 +60,9 @@ function getsubcategories($subcatid){
 	$connection->close();
 	return;
 }
+
+function getcurrentdate(){
+	return date("Y-m-d", time());
+}
+
 ?>
