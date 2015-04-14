@@ -26,7 +26,18 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 		die ("Angaben fehlerhaft, Objekt nicht erstellt " . $connection->error);
 		$message = '<div class="errorclass">Fehler, Objekt nicht erstellt</div>';
 	} else {
-		$message = '<div class="message">Objekt erstellt</div>';
+		if (isset($_POST['subcategory'])) {$cat = $_POST['subcategory']; } 
+			else {$cat = $_POST['topcategory'];	}
+			$insid = mysqli_insert_id($connection);
+		$query = "INSERT INTO objects_has_categories (objects_ID, categories_ID) 
+				VALUES ('$insid', '$cat' )";
+		echo "Query ist " . $query;
+		$result = $connection->query($query);
+		if (!$result) {
+			die ("Angaben fehlerhaft, Kategorie nicht erstellt " . $connection->error);
+			$message = '<div class="errorclass">Fehler, Kategorie nicht erstellt</div>';
+		} 
+			else {$message = '<div class="message">Objekt erstellt</div>';}
 	}
 }
 ?>
