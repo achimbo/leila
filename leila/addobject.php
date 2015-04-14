@@ -2,8 +2,7 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
-if (!isset($_POST['getsubcategories']) && (isset($_POST['name']))){
-	echo 'objekt anlegen';
+if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name'] != '')){
 	
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
@@ -15,14 +14,20 @@ if (!isset($_POST['getsubcategories']) && (isset($_POST['name']))){
 	$owner = sanitizeMySQL($connection, $_POST['owner']);
 	$loaneduntil = sanitizeMySQL($connection, $_POST['loaneduntil']);
 
-	// set values or mysql complains
-	if ($owner == '') $owner = 1;
-	if ($loaneduntil == '') $loaneduntil = "2050-1-1";
+	// set NULL or mysql complains
+	$owner != '' ? $owner = addquotes($owner) : $owner = 'NULL';
+	$loaneduntil != '' ? $loaneduntil = addquotes($loaneduntil) : $loaneduntil = 'NULL';
 	
 	$query = "INSERT INTO objects (name, description, dateadded, internalcomment, owner, loaneduntil, isavailable) 
-		VALUES ('$name', '$description', '$dateadded', '$internalcomment', '$owner', '$loaneduntil', '1')" ;
+		VALUES ('$name', '$description', '$dateadded', '$internalcomment', $owner, $loaneduntil, '1')" ;
+	echo "Query ist " . $query;
 	$result = $connection->query($query);
-	if (!$result) die ("Angaben fehlerhaft, Objekt nicht erstellt " . $connection->error);
+	if (!$result) { 
+		die ("Angaben fehlerhaft, Objekt nicht erstellt " . $connection->error);
+		$message = '<div class="errorclass">Fehler, Objekt nicht erstellt</div>';
+	} else {
+		$message = '<div class="message">Objekt erstellt</div>';
+	}
 }
 ?>
 
@@ -32,11 +37,12 @@ if (!isset($_POST['getsubcategories']) && (isset($_POST['name']))){
 <title>Objekt hinzuf&uuml;gen</title>
 </head>
 <body>
-
+<?= isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>
 <form method="post" action="addobject.php">
+<!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 <input type="submit" value="hiddensubmit" style="visibility: hidden;" />
-<?= isset($_POST['addobject']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
+<?= isset($_POST['name']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
 Name <input type="text" name="name" Name ="name" value="<?php 
 	if(isset($_POST['name']) && isset($_POST['getsubcategories'])){ echo $_POST['name']; } ?>" >  <br>
 

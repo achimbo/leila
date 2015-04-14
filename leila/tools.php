@@ -65,4 +65,8 @@ function getcurrentdate(){
 	return date("Y-m-d", time());
 }
 
+function addquotes($mystring){
+	return $mystring = "'" . $mystring . "'";
+}
+
 ?>
