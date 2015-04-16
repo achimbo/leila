@@ -15,26 +15,44 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 	$loaneduntil = sanitizeMySQL($connection, $_POST['loaneduntil']);
 
 //	print_R($_FILES['image']);
+	if (file_exists($_FILES['image']['tmp_name'])){
+		$imagename = sanitizeMySQL($connection, $_FILES['image']['name']);
+		$imagetype = sanitizeMySQL($connection, $_FILES['image']['type']);
+		$tmpname  = $_FILES['image']['tmp_name'];
 		
-	$imagename = sanitizeMySQL($connection, $_FILES['image']['name']);
-	$imagetype = sanitizeMySQL($connection, $_FILES['image']['type']);
-	$tmpname  = $_FILES['image']['tmp_name'];
+		$image = file_get_contents($tmpname);
+		$image = $connection->real_escape_string($image);
+		
+		$img = new imagick($_FILES['image']['tmp_name']);
+		$img->scaleImage(100, 75);
+		$imagescaled = $img->getimageblob();
+		$imagescaled = $connection->real_escape_string($imagescaled);		
+		
+		$imagename = addquotes($imagename);
+		$imagetype = addquotes($imagetype);
+		$image = addquotes($image);
+		$imagescaled = addquotes($imagescaled);
 	
-	$image = file_get_contents($tmpname);
-	$image = addslashes($image);
-	
-    $img = new imagick($_FILES['image']['tmp_name']);
-    $img->scaleImage(100, 75);
-    $imagescaled = $img->getimageblob();
-    $imagescaled = addslashes($imagescaled);
+	} else {
+		// rewrite to NULL / addquotes() ?
+		$imagename = 'NULL';
+		$imagetype = 'NULL';
+		$image = 'NULL';
+		$imagescaled = 'NULL';
+	}
+
 
     
 	// set NULL or mysql complains
 	$owner != '' ? $owner = addquotes($owner) : $owner = 'NULL';
 	$loaneduntil != '' ? $loaneduntil = addquotes($loaneduntil) : $loaneduntil = 'NULL';
+	$dateadded != '' ? $dateadded = addquotes($dateadded) : $dateadded = 'NULL';
+	$description != '' ? $description = addquotes($description) : $description = 'NULL';
+	$internalcomment != '' ? $internalcomment = addquotes($internalcomment) : $internalcomment = 'NULL';
+	
 	
 	$query = "INSERT INTO objects (name, description, image, imagename, imagetype, scaledimage, dateadded, internalcomment, owner, loaneduntil, isavailable) 
-		VALUES ('$name', '$description', '$image', '$imagename', '$imagetype', '$imagescaled', '$dateadded', '$internalcomment', $owner, $loaneduntil, '1')" ;
+		VALUES ('$name', $description, $image, $imagename, $imagetype, $imagescaled, $dateadded, $internalcomment, $owner, $loaneduntil, '1')" ;
 //	echo "Query ist " . $query;
 	$result = $connection->query($query);
 	if (!$result) { 
@@ -52,7 +70,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 			die ("Angaben fehlerhaft, Kategorie nicht erstellt " . $connection->error);
 			$message = '<div class="errorclass">Fehler, Kategorie nicht erstellt</div>';
 		} 
-			else {$message = '<div class="message">Objekt erstellt</div>';}
+			else {$message = '<div class="message"><a href="showobject.php?ID=' .$insid . '"> Objekt</a> erstellt</div>';}
 	}
 }
 ?>
