@@ -61,6 +61,14 @@ function getsubcategories($subcatid){
 	return;
 }
 
+function getcategories($id){
+	include 'variables.php'; 
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	
+	
+}
+
 function getcurrentdate(){
 	return date("Y-m-d", time());
 }
