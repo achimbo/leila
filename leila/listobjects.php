@@ -24,9 +24,7 @@ if (isset($catid) ){
 	$message = "in Kategorie " . getcategoryname($catid);
 } elseif (isset($searchstring)){
 	$query = "SELECT * FROM objects WHERE MATCH(name, description) AGAINST ('$searchstring' IN BOOLEAN MODE)";
-}
-
-else {
+} else {
 	$query = "SELECT * FROM objects";
 }
 
@@ -40,7 +38,10 @@ for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	
-	$mylist .= 'Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a><br>';
+	$mylist .= 'Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
+			<img src="showimage.php?ID=' . $row['ID'] . '&showthumb"><br>
+			
+			<br>';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 

@@ -49,22 +49,22 @@ function getcategoriesaslinks(){
 	}
 	
 
-		$query = "SELECT * FROM categories WHERE ischildof IS NULL";
-		$result = $connection->query($query);
-		if (!$result) die ("Database query error" . $connection->error);
-		$rows = $result->num_rows;
+	$query = "SELECT * FROM categories WHERE ischildof IS NULL";
+	$result = $connection->query($query);
+	if (!$result) die ("Database query error" . $connection->error);
+	$rows = $result->num_rows;
 
-		for ($r = 0; $r < $rows; ++$r) {
-			$result->data_seek($r);
-			$row = $result->fetch_array(MYSQLI_ASSOC);
-	
-			if ((isset($catid) && $row['ID'] == $catid) || $row['ID'] == getparentid($catid)){
-				echo  '<b><a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a></b>&nbsp;';
-			} else {
-				echo '<a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a>&nbsp;';
-			}
-			
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+
+		if ($row['ID'] == $catid || $row['ID'] == getparentid($catid)){
+			echo  '<b><a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a></b>&nbsp;';
+		} else {
+			echo '<a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a>&nbsp;';
 		}
+		
+	}
 	if(!istopcategory($catid)){	
 		echo "<br>";	
 		getsiblings($catid);

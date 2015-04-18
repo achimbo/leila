@@ -1,11 +1,13 @@
 <?php
 require_once 'variables.php';
+require_once 'tools.php';
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
 if ($connection->connect_error) die($connection->connect_error);
 
-$query = "SELECT * FROM objects WHERE ID = " . $_GET['ID'];
+$id = sanitizeMySQL($connection, $_GET['ID']);
+$query = "SELECT * FROM objects WHERE ID = " . $id;
 $result = $connection->query($query);
 
 if (!$result) die ("Database query error" . $connection->error);
@@ -14,9 +16,18 @@ $result->data_seek(0);
 $row = $result->fetch_array(MYSQLI_ASSOC);
 
 header("Content-Type: " . $row['imagetype']);
+header('Content-Disposition:filename="' . $row['imagename'] . '"');
+
 if (isset($_GET['showthumb'])){
-	echo $row['scaledimage'];
+	if (isset($row['scaledimage'])){
+		echo $row['scaledimage'];
+	} else {
+		echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=');
+	}
 } else {
-	echo $row['image'];
-}
+	if (isset($row['image'])){
+		echo $row['image'];
+	} else {
+		echo base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAApJREFUCNdjYAAAAAIAAeIhvDMAAAAASUVORK5CYII=');
+	}}
 ?>

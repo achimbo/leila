@@ -3,10 +3,14 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
-
 if ($connection->connect_error) die($connection->connect_error);
+if (isset($_GET['ID']) ){
+	$id = sanitizeMySQL($connection, $_GET['ID']);
+} else {
+	die("missing query");
+}
 
-$query = "SELECT * FROM objects WHERE ID = " . $_GET['ID'];
+$query = "SELECT * FROM objects WHERE ID = " . $id;
 $result = $connection->query($query);
 
 if (!$result) die ("Database query error" . $connection->error);
@@ -20,13 +24,12 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <html>
 <body>
 <h1>Objekt anzeigen</h1>
-<img src="showimage.php?ID=<?=$row['ID']?>&showthumb"><br>
+<a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a><br>
 Objekt ID <input disabled="disabled" type="text" value="<?= $row['ID']?>"> <br>
 <?php 
-foreach (getcategories($_GET['ID']) as $cat){
+foreach (getcategories($id) as $cat){
 	echo 'Kategorie <a href="listobjects.php?catid=' . $cat['catid'] . '">' . $cat['name'] . '</a><br>';
 }
-
 ?>
 Objekt Name <input disabled="disabled" type="text" value="<?= $row['name']?>"> <br>
 Objekt Beschreibung <textarea disabled="disabled"><?= $row['description']?></textarea> <br>
