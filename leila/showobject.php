@@ -1,5 +1,6 @@
 <?php
 require_once 'variables.php';
+require_once 'tools.php';
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
@@ -21,6 +22,12 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <h1>Objekt anzeigen</h1>
 <img src="showimage.php?ID=<?=$row['ID']?>&showthumb"><br>
 Objekt ID <input disabled="disabled" type="text" value="<?= $row['ID']?>"> <br>
+<?php 
+foreach (getcategories($_GET['ID']) as $cat){
+	echo 'Kategorie <a href="listobjects.php?catid=' . $cat['catid'] . '">' . $cat['name'] . '</a><br>';
+}
+
+?>
 Objekt Name <input disabled="disabled" type="text" value="<?= $row['name']?>"> <br>
 Objekt Beschreibung <textarea disabled="disabled"><?= $row['description']?></textarea> <br>
 Datum hinzugef&uuml;gt <input disabled="disabled" type="text" value="<?= $row['dateadded']?>"> <br>
