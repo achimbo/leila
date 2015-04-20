@@ -20,7 +20,7 @@ if (isset($catid) ){
 	$query = "SELECT o.* FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID		
     INNER JOIN categories c on ohc.categories_ID = c.ID 
-	WHERE ohc.categories_ID = $catid OR c.ischildof = " . $catid;	
+	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid";	
 	$message = "in Kategorie " . getcategoryname($catid);
 } elseif (isset($searchstring)){
 	$query = "SELECT * FROM objects WHERE MATCH(name, description) AGAINST ('$searchstring' IN BOOLEAN MODE)";
