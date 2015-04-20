@@ -38,6 +38,7 @@ Interner Kommentar <textarea disabled="disabled"><?= $row['internalcomment']?></
 Eigent&uuml;er ID <input disabled="disabled" type="text" value="<?= $row['owner']?>"> <br>
 Geliehen bis <input disabled="disabled" type="text" value="<?= $row['loaneduntil']?>"> <br>
 Ist verf&uuml;gbar <input disabled="disabled" type="text" value="<?= $row['isavailable']?>"> <br>
-
+<br>
+<a href="editobject.php?ID=<?=$row['ID']?>"><b>Objekt Editieren</b></a>
 </body>
 </html>

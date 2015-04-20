@@ -6,7 +6,12 @@ $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database)
 
 if ($connection->connect_error) die($connection->connect_error);
 
-$id = sanitizeMySQL($connection, $_GET['ID']);
+if (isset($_GET['ID']) ){
+	$id = sanitizeMySQL($connection, $_GET['ID']);
+} else {
+	die("missing query");
+}
+
 $query = "SELECT * FROM objects WHERE ID = " . $id;
 $result = $connection->query($query);
 

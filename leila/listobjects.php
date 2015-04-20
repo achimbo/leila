@@ -24,6 +24,7 @@ if (isset($catid) ){
 	$message = "in Kategorie " . getcategoryname($catid);
 } elseif (isset($searchstring)){
 	$query = "SELECT * FROM objects WHERE MATCH(name, description) AGAINST ('$searchstring' IN BOOLEAN MODE)";
+	$message = "mit Inhalt " . $searchstring;
 } else {
 	$query = "SELECT * FROM objects";
 }
