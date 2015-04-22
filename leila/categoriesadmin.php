@@ -8,10 +8,13 @@ if (isset($_POST['addtopcategory'])){
 	if ($connection->connect_error) die($connection->connect_error);
 
 	$categoryname = sanitizeMySQL($connection, $_POST['categoryname']);
+	$error = checkname($categoryname);
 	
-	$query = "INSERT INTO categories (name) VALUES ('$categoryname')" ;
-	$result = $connection->query($query);
-	if (!$result) die ("Database query error" . $connection->error);		
+	if ($error == ""){
+		$query = "INSERT INTO categories (name) VALUES ('$categoryname')" ;
+		$result = $connection->query($query);
+		if (!$result) die ("Database query error" . $connection->error);
+	}		
 }
 
 if (isset($_POST['addsubcategory'])){
@@ -20,12 +23,16 @@ if (isset($_POST['addsubcategory'])){
 	if ($connection->connect_error) die($connection->connect_error);
 
 	$categoryname = sanitizeMySQL($connection, $_POST['topcategory']);
-
 	$subcategoryname = sanitizeMySQL($connection, $_POST['subcategoryname']);
 
-	$query = "INSERT INTO categories (ischildof, name) VALUES ('$categoryname','$subcategoryname')" ;
-	$result = $connection->query($query);
-	if (!$result) die ("Database query error" . $connection->error);
+	$error = checkname($categoryname);
+	$error .= checkname($subcategoryname);
+	
+	if ($error == ""){
+		$query = "INSERT INTO categories (ischildof, name) VALUES ('$categoryname','$subcategoryname')" ;
+		$result = $connection->query($query);
+		if (!$result) die ("Database query error" . $connection->error);
+	}
 }
 
 if (isset($_POST['deletecategories'])){
@@ -54,7 +61,9 @@ if (isset($_POST['deletecategories'])){
 <title>Kategorie Administration</title>
 </head>
 <body>
-<?php include 'menu.php';?>
+<?php include 'menu.php';
+if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+?>
 
 <h1> Kategorien verwalten</h1>
 <h3>Top Kategorie hinzuf&uuml;gen</h3>

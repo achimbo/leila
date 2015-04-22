@@ -2,6 +2,12 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
+	$error = checkname($_POST['name']);
+	$error .= mycheckdate($_POST['dateadded']);
+	$error .= mycheckdate($_POST['loaneduntil']);
+}
+
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 if ($connection->connect_error) die($connection->connect_error);
 if (isset($_GET['ID']) ){
@@ -33,11 +39,12 @@ if (isset($_POST['deleteobject'])) {
 	$query = "DELETE FROM objects WHERE ID = $id";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
+	include "menu.php";
 	die ("Objekt gel&ouml;scht <br> Zur <a href=\"listobjects.php\">&Uuml;bersicht</a>");
 }
 
 
-if (isset($_POST['saveobject'])) {
+if (isset($_POST['saveobject']) && $error == "") {
 	$name = sanitizeMySQL($connection, $_POST['name']);
 	$description = sanitizeMySQL($connection, $_POST['description']);
 	$dateadded = sanitizeMySQL($connection, $_POST['dateadded']);
@@ -108,7 +115,9 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 
 <html>
 <body>
-<?php include 'menu.php';?>
+<?php include 'menu.php';
+if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+?>
 
 <h1>Objekt bearbeiten</h1>
 <form method="post" action="editobject.php?ID=<?=$row['ID']?>"  enctype="multipart/form-data">

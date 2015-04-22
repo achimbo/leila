@@ -246,4 +246,16 @@ function addquotes($mystring){
 	return $mystring = "'" . $mystring . "'";
 }
 
+function checkname($name) {
+	if (preg_match("/[^\w- ]/", $name)) return "Nur Buchstaben, Ziffern und Bindestriche in Namen <br>";
+	elseif ($name == "") return "Name leer <br>";
+	else return "";
+}
+
+function mycheckdate($date) {
+	if ($date == "") {return "";}
+	elseif (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/", $date)) { return "";}
+	else {	return "Datum ung&uuml;ltig <br>";}
+}
+
 ?>

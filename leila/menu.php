@@ -30,7 +30,8 @@ switch ($scriptname){
 		break;
 	
 	default:
-		echo "default <a href='listobjects.php'>Objekte</a>";
+		echo "<b><a href='listobjects.php'>Objekte</a></b>&nbsp;<a href='listmembers.php'>Mitglieder</a><br>";
+		echo "<a href='listobjects.php'>Objekte listen</a>&nbsp;<a href='addobject.php'>Objekt anlegen</a>&nbsp;<a href='categoriesadmin.php'>Kategorien verwalten</a>";		
 		break;
 }
 echo "</div> <hr>";

@@ -2,7 +2,14 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
-if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name'] != '')){
+if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
+	$error = checkname($_POST['name']);
+	$error .= mycheckdate($_POST['dateadded']);
+	$error .= mycheckdate($_POST['loaneduntil']);
+}
+
+
+if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == ""){
 	
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
@@ -19,6 +26,13 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 		$imagename = sanitizeMySQL($connection, $_FILES['image']['name']);
 		$imagetype = sanitizeMySQL($connection, $_FILES['image']['type']);
 		$tmpname  = $_FILES['image']['tmp_name'];
+		
+		switch ($imagetype) {
+			case 'image/jpeg': break;
+			case 'image/png': break;
+			case 'image/gif': break;
+			default: die("Error, only jpg, png or gif images allowed!");
+		}
 		
 		$image = file_get_contents($tmpname);
 		$image = $connection->real_escape_string($image);
@@ -81,7 +95,9 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 <title>Objekt hinzuf&uuml;gen</title>
 </head>
 <body>
-<?php include 'menu.php';?>
+<?php include 'menu.php';
+if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+?>
 <?= isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>
 <form method="post" action="addobject.php"  enctype="multipart/form-data">
@@ -102,15 +118,13 @@ Kategorie 	<select name="topcategory" size="1">
 	} 
 	?> 
 	<input type="submit" name="getsubcategories" value="Sub Kat anzeigen"> <br>
-Beschreibung <textarea name ="description" rows="5" cols="20"><?php if(isset($_POST['description']) && isset($_POST['getsubcategories'])){ echo $_POST['description']; } ?></textarea> <br>
+Beschreibung <textarea name ="description" rows="5" cols="20"><?php if(isset($_POST['description'])){ echo $_POST['description']; } ?></textarea> <br>
 Foto <input type="file" name="image"> <br>
 Eingangsdatum JJJJ-MM-DD <input type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
-Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && isset($_POST['getsubcategories'])){ echo $_POST['internalcomment']; } ?>
+Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment'])){ echo $_POST['internalcomment']; } ?>
 </textarea> <br>
-Eigent&uuml;mer ID <input type="text" name="owner" value="<?php 
-	if(isset($_POST['owner']) && isset($_POST['owner'])){ echo $_POST['owner']; } ?>"> <br>
-Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php 
-	if(isset($_POST['loaneduntil']) && isset($_POST['loaneduntil'])){ echo $_POST['loaneduntil']; } ?>"> <br>
+Eigent&uuml;mer ID <input type="text" name="owner" value="<?php if(isset($_POST['owner'])){ echo $_POST['owner']; } ?>"> <br>
+Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil'])){ echo $_POST['loaneduntil']; } ?>"> <br>
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
 
