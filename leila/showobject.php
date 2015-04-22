@@ -23,6 +23,8 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 
 <html>
 <body>
+<?php include 'menu.php';?>
+
 <h1>Objekt anzeigen</h1>
 <a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a><br>
 Objekt ID <input disabled="disabled" type="text" value="<?= $row['ID']?>"> <br>

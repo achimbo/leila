@@ -108,6 +108,8 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 
 <html>
 <body>
+<?php include 'menu.php';?>
+
 <h1>Objekt bearbeiten</h1>
 <form method="post" action="editobject.php?ID=<?=$row['ID']?>"  enctype="multipart/form-data">
 	<!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->

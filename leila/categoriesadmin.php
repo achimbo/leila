@@ -54,6 +54,8 @@ if (isset($_POST['deletecategories'])){
 <title>Kategorie Administration</title>
 </head>
 <body>
+<?php include 'menu.php';?>
+
 <h1> Kategorien verwalten</h1>
 <h3>Top Kategorie hinzuf&uuml;gen</h3>
 <form method="post" action="categoriesadmin.php">

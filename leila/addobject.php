@@ -81,6 +81,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && ($_POST['name
 <title>Objekt hinzuf&uuml;gen</title>
 </head>
 <body>
+<?php include 'menu.php';?>
 <?= isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>
 <form method="post" action="addobject.php"  enctype="multipart/form-data">

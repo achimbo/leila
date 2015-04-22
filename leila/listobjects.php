@@ -51,8 +51,13 @@ for ($r = 0; $r < $rows; ++$r) {
 <html>
 <body>
 
+<?php include 'menu.php';?>
+
 <h3>Objekte suchen</h3>
-<?=getcategoriesaslinks();?>
+<?php echo "<div id='cats'>";
+	 getcategoriesaslinks();
+	 echo "</div>";
+?>
 <br><br>
 In Beschreibung und Titel suchen: 
 <form method="get" action="listobjects.php">
