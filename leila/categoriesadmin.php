@@ -58,7 +58,8 @@ if (isset($_POST['deletecategories'])){
 
 <html>
 <head>
-<title>Kategorie Administration</title>
+	<title>Kategorie Administration</title>
+	<link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
 <?php include 'menu.php';

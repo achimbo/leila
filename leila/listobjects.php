@@ -49,6 +49,9 @@ for ($r = 0; $r < $rows; ++$r) {
 ?>
 
 <html>
+<head>
+   <link rel="stylesheet" href="leila.css" type="text/css">
+</head>
 <body>
 
 <?php include 'menu.php';?>

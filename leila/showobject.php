@@ -22,6 +22,9 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 ?>
 
 <html>
+<head>
+   <link rel="stylesheet" href="leila.css" type="text/css">
+</head>
 <body>
 <?php include 'menu.php';?>
 

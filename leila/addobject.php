@@ -92,7 +92,8 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 
 <html>
 <head>
-<title>Objekt hinzuf&uuml;gen</title>
+	<title>Objekt hinzuf&uuml;gen</title>
+	<link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
 <?php include 'menu.php';
