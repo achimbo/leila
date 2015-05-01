@@ -34,5 +34,5 @@ switch ($scriptname){
 		echo "<a href='listobjects.php'>Objekte listen</a>&nbsp;<a href='addobject.php'>Objekt anlegen</a>&nbsp;<a href='categoriesadmin.php'>Kategorien verwalten</a>";		
 		break;
 }
-echo "</div> <hr>";
+echo "<hr></div>\n";
 ?>

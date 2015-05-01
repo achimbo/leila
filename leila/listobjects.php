@@ -35,19 +35,22 @@ $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
 
+$mylist .= "<table class='objectlist'>";
+
 for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	
-	$mylist .= 'Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
-			<img src="showimage.php?ID=' . $row['ID'] . '&showthumb"><br>
-			
-			<br>';
+	$mylist .= '<tr><td> Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
+			<img src="showimage.php?ID=' . $row['ID'] . '&showthumb"></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
+$mylist .= "</table>";
+
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
    <link rel="stylesheet" href="leila.css" type="text/css">
@@ -55,7 +58,7 @@ for ($r = 0; $r < $rows; ++$r) {
 <body>
 
 <?php include 'menu.php';?>
-
+<div id="content">
 <h3>Objekte suchen</h3>
 <?php echo "<div id='cats'>";
 	 getcategoriesaslinks();
@@ -70,5 +73,6 @@ In Beschreibung und Titel suchen:
 	
 <h3>Objekte <?= $message?></h3>
 <?= $mylist?>
+</div>
 </body>
 </html>

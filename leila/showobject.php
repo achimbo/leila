@@ -21,13 +21,14 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
    <link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
 <?php include 'menu.php';?>
-
+<div id="content">
 <h1>Objekt anzeigen</h1>
 <a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a><br>
 Objekt ID <input disabled="disabled" type="text" value="<?= $row['ID']?>"> <br>
@@ -45,5 +46,6 @@ Geliehen bis <input disabled="disabled" type="text" value="<?= $row['loaneduntil
 Ist verf&uuml;gbar <input disabled="disabled" type="text" value="<?= $row['isavailable']?>"> <br>
 <br>
 <a href="editobject.php?ID=<?=$row['ID']?>"><b>Objekt Editieren</b></a>
+</div>
 </body>
 </html>

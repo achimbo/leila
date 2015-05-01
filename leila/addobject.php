@@ -89,7 +89,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 }
 ?>
 
-
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Objekt hinzuf&uuml;gen</title>
@@ -97,6 +97,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 </head>
 <body>
 <?php include 'menu.php';
+echo "<div id='content'>";
 if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
 ?>
 <?= isset($message) ? $message : ''?>
@@ -128,6 +129,6 @@ Eigent&uuml;mer ID <input type="text" name="owner" value="<?php if(isset($_POST[
 Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil'])){ echo $_POST['loaneduntil']; } ?>"> <br>
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
-
+</div>
 </body>
 </html>

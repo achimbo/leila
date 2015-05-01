@@ -112,13 +112,14 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 
 ?>
 
-
+<!DOCTYPE html>
 <html>
 <head>
    <link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
 <?php include 'menu.php';
+echo "<div id='content'>";
 if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
 ?>
 
@@ -168,5 +169,6 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error"
 	<input type="submit" name="saveobject" value="&Auml;nderungen speichern"><br>
 	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen">
 </form>
+</div>
 </body>
 </html>

@@ -56,6 +56,7 @@ if (isset($_POST['deletecategories'])){
 
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Kategorie Administration</title>
@@ -63,6 +64,8 @@ if (isset($_POST['deletecategories'])){
 </head>
 <body>
 <?php include 'menu.php';
+echo "<div id='content'>";
+
 if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
 ?>
 
@@ -103,7 +106,7 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error"
 	<input type="submit" name="deletecategories" value="Kat l&ouml;schen">
 	
 </form>
-
+</div>
 </body>
 </html>
 
