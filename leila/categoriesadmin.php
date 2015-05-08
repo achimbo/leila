@@ -6,9 +6,9 @@ if (isset($_POST['addtopcategory'])){
 
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-
+	
 	$categoryname = sanitizeMySQL($connection, $_POST['categoryname']);
-	$error = checkname($categoryname);
+	$error = isempty($categoryname, "Kategoriename");
 	
 	if ($error == ""){
 		$query = "INSERT INTO categories (name) VALUES ('$categoryname')" ;
@@ -25,8 +25,8 @@ if (isset($_POST['addsubcategory'])){
 	$categoryname = sanitizeMySQL($connection, $_POST['topcategory']);
 	$subcategoryname = sanitizeMySQL($connection, $_POST['subcategoryname']);
 
-	$error = checkname($categoryname);
-	$error .= checkname($subcategoryname);
+	$error = isempty($categoryname, "Kategoriename");
+	$error .= isempty($subcategoryname, "Subkategoriename");
 	
 	if ($error == ""){
 		$query = "INSERT INTO categories (ischildof, name) VALUES ('$categoryname','$subcategoryname')" ;
@@ -63,10 +63,11 @@ if (isset($_POST['deletecategories'])){
 	<link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
-<?php include 'menu.php';
-echo "<div id='content'>";
+<?php include 'menu.php';?>
 
-if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+<div id='content'>
+
+<?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
 ?>
 
 <h1> Kategorien verwalten</h1>

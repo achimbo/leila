@@ -42,7 +42,7 @@ for ($r = 0; $r < $rows; ++$r) {
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	
 	$mylist .= '<tr><td> Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
-			<img src="showimage.php?ID=' . $row['ID'] . '&showthumb"></td></tr> ';
+			<img src="showimage.php?ID=' . $row['ID'] . '&amp;showthumb" alt="Objekt Bild"></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
@@ -53,6 +53,7 @@ $mylist .= "</table>";
 <!DOCTYPE html>
 <html>
 <head>
+	<title>List Objects</title>
    <link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
@@ -64,7 +65,6 @@ $mylist .= "</table>";
 	 getcategoriesaslinks();
 	 echo "</div>";
 ?>
-<br><br>
 In Beschreibung und Titel suchen: 
 <form method="get" action="listobjects.php">
 	<input type="text" name="searchstring">

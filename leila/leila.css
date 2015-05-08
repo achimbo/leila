@@ -33,6 +33,10 @@ a:hover	    {text-decoration: underline;}
     position: absolute;
 } 
 
+#cats {
+	margin-bottom: 20px;
+}
+
 /*
 .objectlist {
 	width: 400px;
@@ -46,4 +50,18 @@ a:hover	    {text-decoration: underline;}
 
 .objectlist tr:nth-child(odd) {
     background: lavender;
+}
+
+form label {
+	display:block;
+	float:left;
+	width:150px;
+	}
+	
+form input {
+	width: 170px;
+}
+
+.errorclass {
+	background-color: orangered;
 }

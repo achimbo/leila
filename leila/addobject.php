@@ -3,7 +3,7 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
-	$error = checkname($_POST['name']);
+	$error = isempty($_POST['name'], "Name");
 	$error .= mycheckdate($_POST['dateadded']);
 	$error .= mycheckdate($_POST['loaneduntil']);
 }
@@ -75,7 +75,8 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 	} else {
 		if (isset($_POST['subcategory'])) {$cat = sanitizeMySQL($connection, $_POST['subcategory']); } 
 			else {$cat = sanitizeMySQL($connection, $_POST['topcategory']);	}
-			$insid = mysqli_insert_id($connection);
+		
+		$insid = mysqli_insert_id($connection);
 		$query = "INSERT INTO objects_has_categories (objects_ID, categories_ID) 
 				VALUES ('$insid', '$cat' )";
 //		echo "Query ist " . $query;
@@ -98,14 +99,13 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 <body>
 <?php include 'menu.php';
 echo "<div id='content'>";
-if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
 ?>
 <?= isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>
 <form method="post" action="addobject.php"  enctype="multipart/form-data">
 <!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 <input type="submit" value="hs" style="visibility: hidden;" /><br>
-<?= isset($_POST['name']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
 Name <input type="text" name="name" Name ="name" value="<?php 
 	if(isset($_POST['name']) && isset($_POST['getsubcategories'])){ echo $_POST['name']; } ?>" >  <br>
 

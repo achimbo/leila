@@ -4,4 +4,5 @@ $db_database = 'leila';
 $db_username = 'leila';
 $db_password = 'blabla';
 
+$salt = "esh7Kie5";
 ?>

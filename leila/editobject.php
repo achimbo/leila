@@ -3,7 +3,7 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
-	$error = checkname($_POST['name']);
+	$error = isempty($_POST['name'], "Name");
 	$error .= mycheckdate($_POST['dateadded']);
 	$error .= mycheckdate($_POST['loaneduntil']);
 }
@@ -39,8 +39,9 @@ if (isset($_POST['deleteobject'])) {
 	$query = "DELETE FROM objects WHERE ID = $id";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
+	echo '<head> <link rel="stylesheet" href="leila.css" type="text/css"></head>';
 	include "menu.php";
-	die ("Objekt gel&ouml;scht <br> Zur <a href=\"listobjects.php\">&Uuml;bersicht</a>");
+	die ("<div id='content'><h3>Objekt gel&ouml;scht </h3></div>");
 }
 
 
@@ -120,11 +121,11 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <body>
 <?php include 'menu.php';
 echo "<div id='content'>";
-if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error";
+if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
 ?>
 
 <h1>Objekt bearbeiten</h1>
-<form method="post" action="editobject.php?ID=<?=$row['ID']?>"  enctype="multipart/form-data">
+<form method="post" action="editobject.php?ID=<?=$row['ID']?>" enctype="multipart/form-data">
 	<!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 	<input type="submit" name="saveobject" value="hs" style="visibility: hidden;" /><br>
 	Objekt ID <input disabled="disabled" name="id" type="text" value="<?= $row['ID']?>"> <br>

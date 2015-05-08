@@ -246,10 +246,15 @@ function addquotes($mystring){
 	return $mystring = "'" . $mystring . "'";
 }
 
-function checkname($name) {
-	if (preg_match("/[^\w- ]/", $name)) return "Nur Buchstaben, Ziffern und Bindestriche in Namen <br>";
-	elseif ($name == "") return "Name leer <br>";
+function isempty($name, $erroritem) {
+	// check wether name is empty or does not contain alphabetic characters
+	if (($name == "") || !preg_match("/[\w]/", $name)) return "$erroritem ist leer <br>";
 	else return "";
+}
+
+function passwordvalid($password) {
+	// 6 or more characters + special chars
+	if (strlen($password) < 6 || !preg_match("/[^\w]/", $password)) {return false;} else {return true;};
 }
 
 function mycheckdate($date) {
