@@ -13,6 +13,11 @@ switch ($scriptname){
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b><br>";
 		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<b><a href='addmember.php'>Mitglied anlegen</a></b>";
 		break;
+
+	case "editmember.php":
+			echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b><br>";
+			echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>";
+			break;		
 		
 	case "listobjects.php":
 		echo "<b><a href='listobjects.php'>Objekte</a></b>&nbsp;<a href='listmembers.php'>Mitglieder</a><br>";

@@ -49,7 +49,7 @@ if (isset($_POST['addmember'])) {
 			$message = '<div class="errorclass">Fehler, Objekt nicht erstellt</div>';
 		} else {
 			$insid = mysqli_insert_id($connection);
-			$message = '<div class="message"><a href="showmember.php?ID=' .$insid . '"> Member</a> erstellt</div>';
+			$message = '<div class="message"><a href="editmember.php?ID=' .$insid . '"> Member</a> erstellt</div>';
 		}
 	}
 	
@@ -84,7 +84,7 @@ if (isset($_POST['addmember'])) {
 	<label for="lastname">Nachname</label>
 	<input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname'])) echo $_POST['lastname'];?>"><br>
 	<label for="password">Passwort</label>
-	<input type="text" name="password" id="password"><br>
+	<input type="password" name="password" id="password"><br>
 	<label for="street">Straße</label>
 	<input type="text" name="street" id="street" value="<?php if (isset($_POST['street'])) echo $_POST['street'];?>"><br>
 	<label for="city">Stadt</label>
@@ -100,10 +100,9 @@ if (isset($_POST['addmember'])) {
 	<label for="idnumber">Ausweisnummer</label>
 	<input type="text" name="idnumber" id="idnumber" value="<?php if (isset($_POST['idnumber'])) echo $_POST['idnumber'];?>"><br>
 	<label for="comment">Kommentar</label>
-	<textarea name ="comment" id="comment" rows="5" cols="20"><?php if(isset($_POST['comment'])) echo $_POST['comment'];?>
-	</textarea> <br>	
+	<textarea name ="comment" id="comment" rows="5" cols="20"><?php if(isset($_POST['comment'])) echo $_POST['comment'];?></textarea> <br>	
 	<label for="comember">Mitbenutzer_in</label>
-	<input type="text" name="comember" id="comember" value="<?php if (isset($_POST['comember'])) echo $_POST['comember'];?> "><br>	
+	<input type="text" name="comember" id="comember" value="<?php if (isset($_POST['comember'])) echo $_POST['comember'];?>"><br>	
 <input type="submit" name="addmember" value="Mitglied anlegen">
 
 </form>
