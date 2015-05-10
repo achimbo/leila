@@ -16,6 +16,10 @@ if (isset($_GET['searchstring']) ){
 	$searchstring = sanitizeMySQL($connection, $_GET['searchstring']);
 };
 
+if (isset($_GET['searchid']) ){
+	$searchid = sanitizeMySQL($connection, $_GET['searchid']);
+};
+
 if (isset($catid) ){
 	$query = "SELECT o.* FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID		
@@ -25,12 +29,15 @@ if (isset($catid) ){
 } elseif (isset($searchstring)){
 	$query = "SELECT * FROM objects WHERE MATCH(name, description) AGAINST ('$searchstring' IN BOOLEAN MODE)";
 	$message = "mit Inhalt " . $searchstring;
+} elseif (isset($searchid)) {
+	$query = "SELECT * FROM objects WHERE ID = '$searchid'";
+	$message = "mit ID " . $searchid;	
 } else {
 	$query = "SELECT * FROM objects";
 }
 
 
-// echo $query;
+ echo $query;
 $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
@@ -65,12 +72,16 @@ $mylist .= "</table>";
 	 getcategoriesaslinks();
 	 echo "</div>";
 ?>
-In Beschreibung und Titel suchen: 
 <form method="get" action="listobjects.php">
-	<input type="text" name="searchstring">
+	<label for="searchstring">In Beschreibung und Titel suchen: </label>
+	<input type="text" id="searchstring" name="searchstring">
 	<input type="submit" value="Suchen">
 </form>
-	
+<form method="get" action="listobjects.php">
+	<label for="searchid">In ID suchen: </label>
+	<input type="text" id="searchid" name="searchid">
+	<input type="submit" value="ID suchen">
+</form>
 <h3>Objekte <?= $message?></h3>
 <?= $mylist?>
 </div>

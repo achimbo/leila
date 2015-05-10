@@ -1,4 +1,42 @@
 <?php
+require_once 'variables.php';
+require_once 'tools.php';
+
+$mylist = '';
+$message = '';
+
+$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+if ($connection->connect_error) die($connection->connect_error);
+
+if (isset($_GET['searchstring'])){
+	$searchstring = sanitizeMySQL($connection, $_GET['searchstring']);
+	$query = "SELECT * FROM users WHERE MATCH(firstname, lastname) AGAINST ('$searchstring' IN BOOLEAN MODE)";
+	$message = "mit Namen " . $searchstring;
+} elseif (isset($_GET['searchid'])) {
+	$searchid = sanitizeMySQL($connection, $_GET['searchid']);
+	$query = "SELECT * FROM users WHERE ID = '$searchid'";
+	$message = "mit ID " . $searchid;
+} else {
+	$query = "SELECT * FROM users";
+}
+
+$result = $connection->query($query);
+if (!$result) die ("Database query error" . $connection->error);
+$rows = $result->num_rows;
+
+$mylist .= "<table class='memberlist'>";
+
+for ($r = 0; $r < $rows; ++$r) {
+	$result->data_seek($r);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+
+	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['ID'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td></tr>";
+	
+	// $mylist .= "<tr><td> Name <a href='showmember.php?ID=' .$row['ID'] > $row['firstname'] . </a></td></tr> ";
+	//$mylist .= 'Description ' . $row['description'] . '<br>';
+}
+
+$mylist .= "</table>";
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +49,19 @@
 <div id="content">
 
 <h1>List members</h1>
-
+<form method="get" action="listmembers.php">
+	<label for="searchstring">In Vorname und Nachname suchen:</label> 
+	<input type="text" id="searchstring" name="searchstring">
+	<input type="submit" value="Suchen">
+</form>
+<form method="get" action="listmembers.php">
+	<label for="searchid">In ID suchen: </label>
+	<input type="text" id="searchid" name="searchid">
+	<input type="submit" value="ID suchen">
+</form>
+	
+<h3>Objekte <?= $message?></h3>
+<?= $mylist?>
 </div>
 </body>
 </html>
