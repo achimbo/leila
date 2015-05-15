@@ -2,6 +2,9 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+session_start();
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+
 if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
 	$error = isempty($_POST['name'], "Name");
 	$error .= mycheckdate($_POST['dateadded']);
@@ -168,7 +171,7 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 	</select>
 	<br>
 	<input type="submit" name="saveobject" value="&Auml;nderungen speichern"><br>
-	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen">
+	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen" onclick="return confirm('Sicher l&ouml;schen?');">
 </form>
 </div>
 </body>

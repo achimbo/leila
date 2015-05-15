@@ -3,6 +3,12 @@ $scriptname = basename($_SERVER['PHP_SELF']);
 
 echo "<div id='nav'>";
 
+if (isset($_SESSION['username'])) {
+	echo "<span class='login' ><a href='login.php?logout=1'>Logout " . $_SESSION['username'] . "</a></span>";
+} else {
+	echo "<span class='login' ><a href='login.php'>login</a></span>";
+}
+
 switch ($scriptname){
 	case "listmembers.php":
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b><br>";
@@ -39,5 +45,7 @@ switch ($scriptname){
 		echo "<a href='listobjects.php'>Objekte listen</a>&nbsp;<a href='addobject.php'>Objekt anlegen</a>&nbsp;<a href='categoriesadmin.php'>Kategorien verwalten</a>";		
 		break;
 }
+
+
 echo "<hr></div>\n";
 ?>

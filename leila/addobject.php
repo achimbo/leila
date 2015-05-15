@@ -2,6 +2,11 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+session_start();
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+
+$created = false;
+
 if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
 	$error = isempty($_POST['name'], "Name");
 	$error .= mycheckdate($_POST['dateadded']);
@@ -38,7 +43,8 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 		$image = $connection->real_escape_string($image);
 		
 		$img = new imagick($_FILES['image']['tmp_name']);
-		$img->scaleImage(100, 75);
+		// pass 0 to scale automatically
+		$img->scaleImage(0, 75);
 		$imagescaled = $img->getimageblob();
 		$imagescaled = $connection->real_escape_string($imagescaled);		
 		
@@ -85,7 +91,10 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			die ("Angaben fehlerhaft, Kategorie nicht erstellt " . $connection->error);
 			$message = '<div class="errorclass">Fehler, Kategorie nicht erstellt</div>';
 		} 
-			else {$message = '<div class="message"><a href="editobject.php?ID=' .$insid . '"> Objekt</a> erstellt</div>';}
+			else {
+				$message = '<div class="message"><a href="editobject.php?ID=' .$insid . '"> Objekt</a> erstellt</div>';
+				$created = true;
+			}
 	}
 }
 ?>
@@ -106,7 +115,7 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 <form method="post" action="addobject.php"  enctype="multipart/form-data">
 <!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 <input type="submit" value="hs" style="visibility: hidden;" /><br>
-Name <input type="text" name="name" Name ="name" value="<?php 
+Name <input type="text" name="name" Name ="name" autofocus="autofocus" value="<?php 
 	if(isset($_POST['name']) && isset($_POST['getsubcategories'])){ echo $_POST['name']; } ?>" >  <br>
 
 Kategorie 	<select name="topcategory" size="1">
@@ -120,13 +129,13 @@ Kategorie 	<select name="topcategory" size="1">
 	} 
 	?> 
 	<input type="submit" name="getsubcategories" value="Sub Kat anzeigen"> <br>
-Beschreibung <textarea name ="description" rows="5" cols="20"><?php if(isset($_POST['description'])){ echo $_POST['description']; } ?></textarea> <br>
+Beschreibung <textarea name ="description" rows="5" cols="20"><?php if(isset($_POST['description']) && !$created){ echo $_POST['description']; } ?></textarea> <br>
 Foto <input type="file" name="image"> <br>
 Eingangsdatum JJJJ-MM-DD <input type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
-Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment'])){ echo $_POST['internalcomment']; } ?>
+Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>
 </textarea> <br>
-Eigent&uuml;mer ID <input type="text" name="owner" value="<?php if(isset($_POST['owner'])){ echo $_POST['owner']; } ?>"> <br>
-Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil'])){ echo $_POST['loaneduntil']; } ?>"> <br>
+Eigent&uuml;mer ID <input type="text" name="owner" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
+Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
 </div>

@@ -2,6 +2,9 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+session_start();
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+
 $mylist = '';
 $message = '';
 
@@ -10,14 +13,14 @@ if ($connection->connect_error) die($connection->connect_error);
 
 if (isset($_GET['searchstring'])){
 	$searchstring = sanitizeMySQL($connection, $_GET['searchstring']);
-	$query = "SELECT * FROM users WHERE MATCH(firstname, lastname) AGAINST ('$searchstring' IN BOOLEAN MODE)";
+	$query = "SELECT * FROM leila.users WHERE (firstname LIKE '%$searchstring%') OR (lastname LIKE '%$searchstring%') ORDER BY lastname";
 	$message = "mit Namen " . $searchstring;
 } elseif (isset($_GET['searchid'])) {
 	$searchid = sanitizeMySQL($connection, $_GET['searchid']);
 	$query = "SELECT * FROM users WHERE ID = '$searchid'";
 	$message = "mit ID " . $searchid;
 } else {
-	$query = "SELECT * FROM users";
+	$query = "SELECT * FROM users ORDER BY lastname";
 }
 
 $result = $connection->query($query);
@@ -48,9 +51,9 @@ $mylist .= "</table>";
 <?php include 'menu.php';?>
 <div id="content">
 
-<h1>List members</h1>
+<h3>Mitglieder suchen</h3>
 <form method="get" action="listmembers.php">
-	<label for="searchstring">In Vorname und Nachname suchen:</label> 
+	<label for="searchstring">In Namen suchen:</label> 
 	<input type="text" id="searchstring" name="searchstring">
 	<input type="submit" value="Suchen">
 </form>
@@ -60,8 +63,9 @@ $mylist .= "</table>";
 	<input type="submit" value="ID suchen">
 </form>
 	
-<h3>Objekte <?= $message?></h3>
+<h3>Mitglieder <?= $message?></h3>
 <?= $mylist?>
 </div>
+
 </body>
 </html>

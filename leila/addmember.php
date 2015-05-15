@@ -3,6 +3,11 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+session_start();
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+
+$created = false;
+
 if (isset($_POST['addmember'])) {
 	
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
@@ -50,6 +55,7 @@ if (isset($_POST['addmember'])) {
 		} else {
 			$insid = mysqli_insert_id($connection);
 			$message = '<div class="message"><a href="editmember.php?ID=' .$insid . '"> Member</a> erstellt</div>';
+			$created = true;
 		}
 	}
 	
@@ -67,7 +73,7 @@ if (isset($_POST['addmember'])) {
 <?php include 'menu.php';?>
 <div id="content">
 
-<h1>Add member</h1>
+<h1>Mitglied hinzuf&uuml;gen</h1>
 
 <?php 
 	if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
@@ -80,29 +86,29 @@ if (isset($_POST['addmember'])) {
 		<option value="3">Verleiher_in</option>
 	</select><br>
 	<label for="firstname">Vorname</label>
-	<input type="text" name="firstname" id="firstname" value="<?php if (isset($_POST['firstname'])) echo $_POST['firstname'];?>"><br>
+	<input type="text" name="firstname" id="firstname" autofocus="autofocus" value="<?php if (isset($_POST['firstname']) && !$created) echo $_POST['firstname'];?>"><br>
 	<label for="lastname">Nachname</label>
-	<input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname'])) echo $_POST['lastname'];?>"><br>
+	<input type="text" name="lastname" id="lastname" value="<?php if (isset($_POST['lastname']) && !$created) echo $_POST['lastname'];?>"><br>
 	<label for="password">Passwort</label>
 	<input type="password" name="password" id="password"><br>
 	<label for="street">Straße</label>
-	<input type="text" name="street" id="street" value="<?php if (isset($_POST['street'])) echo $_POST['street'];?>"><br>
+	<input type="text" name="street" id="street" value="<?php if (isset($_POST['street']) && !$created) echo $_POST['street'];?>"><br>
 	<label for="city">Stadt</label>
-	<input type="text" name="city" id="city" value="<?php if (isset($_POST['city'])) echo $_POST['city'];?>"><br>
+	<input type="text" name="city" id="city" value="<?php if (isset($_POST['city']) && !$created) echo $_POST['city'];?>"><br>
 	<label for="zipcode">Postleitzahl</label>
-	<input type="text" name="zipcode" id="zipcode" value="<?php if (isset($_POST['zipcode'])) echo $_POST['zipcode'];?>"><br>
+	<input type="text" name="zipcode" id="zipcode" value="<?php if (isset($_POST['zipcode']) && !$created) echo $_POST['zipcode'];?>"><br>
 	<label for="country">Land</label>
-	<input type="text" name="country" id="country" value="<?php if (isset($_POST['country'])) {echo $_POST['country'];} else {echo "&Ouml;sterreich";}?>"><br>
+	<input type="text" name="country" id="country" value="<?php if (isset($_POST['country']) && !$created) {echo $_POST['country'];} else {echo "&Ouml;sterreich";}?>"><br>
 	<label for="telephone">Telefonnummer</label>
-	<input type="text" name="telephone" id="telephone" value="<?php if (isset($_POST['telephone'])) echo $_POST['telephone'];?>"><br>
+	<input type="text" name="telephone" id="telephone" value="<?php if (isset($_POST['telephone']) && !$created) echo $_POST['telephone'];?>"><br>
 	<label for="email">Email</label>
-	<input type="text" name="email" id="email" value="<?php if (isset($_POST['email'])) echo $_POST['email'];?>"><br>
+	<input type="text" name="email" id="email" value="<?php if (isset($_POST['email']) && !$created) echo $_POST['email'];?>"><br>
 	<label for="idnumber">Ausweisnummer</label>
-	<input type="text" name="idnumber" id="idnumber" value="<?php if (isset($_POST['idnumber'])) echo $_POST['idnumber'];?>"><br>
+	<input type="text" name="idnumber" id="idnumber" value="<?php if (isset($_POST['idnumber']) && !$created) echo $_POST['idnumber'];?>"><br>
 	<label for="comment">Kommentar</label>
-	<textarea name ="comment" id="comment" rows="5" cols="20"><?php if(isset($_POST['comment'])) echo $_POST['comment'];?></textarea> <br>	
+	<textarea name ="comment" id="comment" rows="5" cols="20"><?php if(isset($_POST['comment']) && !$created) echo $_POST['comment'];?></textarea> <br>	
 	<label for="comember">Mitbenutzer_in</label>
-	<input type="text" name="comember" id="comember" value="<?php if (isset($_POST['comember'])) echo $_POST['comember'];?>"><br>	
+	<input type="text" name="comember" id="comember" value="<?php if (isset($_POST['comember']) && !$created) echo $_POST['comember'];?>"><br>	
 <input type="submit" name="addmember" value="Mitglied anlegen">
 
 </form>

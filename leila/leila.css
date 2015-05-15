@@ -48,7 +48,11 @@ a:hover	    {text-decoration: underline;}
 	 padding: 3px 3px 3px 7px;
 }
 
-.objectlist tr:nth-child(odd) {
+.login {
+	float: right;
+}
+
+.objectlist tr:nth-child(odd), .memberlist tr:nth-child(odd) {
     background: lavender;
 }
 

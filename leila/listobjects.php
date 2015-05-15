@@ -2,6 +2,10 @@
 require_once 'variables.php';
 require_once 'tools.php';
 
+session_start();
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+
+
 $mylist = '';
 $message = '';
 
@@ -24,20 +28,20 @@ if (isset($catid) ){
 	$query = "SELECT o.* FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID		
     INNER JOIN categories c on ohc.categories_ID = c.ID 
-	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid";	
+	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid ORDER BY o.name";	
 	$message = "in Kategorie " . getcategoryname($catid);
 } elseif (isset($searchstring)){
-	$query = "SELECT * FROM objects WHERE MATCH(name, description) AGAINST ('$searchstring' IN BOOLEAN MODE)";
+	$query = "SELECT * FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name";
 	$message = "mit Inhalt " . $searchstring;
 } elseif (isset($searchid)) {
 	$query = "SELECT * FROM objects WHERE ID = '$searchid'";
 	$message = "mit ID " . $searchid;	
 } else {
-	$query = "SELECT * FROM objects";
+	$query = "SELECT * FROM objects ORDER BY name";
 }
 
 
- echo $query;
+// echo $query;
 $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
@@ -73,7 +77,7 @@ $mylist .= "</table>";
 	 echo "</div>";
 ?>
 <form method="get" action="listobjects.php">
-	<label for="searchstring">In Beschreibung und Titel suchen: </label>
+	<label for="searchstring">Beschr & Titel: </label>
 	<input type="text" id="searchstring" name="searchstring">
 	<input type="submit" value="Suchen">
 </form>
