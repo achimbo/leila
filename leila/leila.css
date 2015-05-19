@@ -69,3 +69,8 @@ form input {
 .errorclass {
 	background-color: orangered;
 }
+
+#feelist td, #feelist th {
+	padding: 3px 10px 3px 10px;
+	border: 1px solid black;
+}

@@ -186,7 +186,7 @@ function getsubcategories($subcatid){
 	return;
 }
 
-// get the categories ob object defined by $id
+// get the categories of object defined by $id
 function getcategories($id){
 	include 'variables.php'; 
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
@@ -257,10 +257,44 @@ function passwordvalid($password) {
 	if (strlen($password) < 6 || !preg_match("/[^\w]/", $password)) {return false;} else {return true;};
 }
 
+function isint($int) {
+	if (!is_numeric($int)) return "Kein g&uuml;ltiger Mitgliedsbeitrag";
+	else return "";
+}
+
 function mycheckdate($date) {
 	if ($date == "") {return "";}
 	elseif (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/", $date)) { return "";}
 	else {	return "Datum ung&uuml;ltig <br>";}
+}
+
+function datepresent($date) {
+	if (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}$/", $date)) { return "";}
+	else {	return "Datum ung&uuml;ltig <br>";}
+}
+
+function getfees($id) {
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT * FROM membershipfees WHERE users_ID = '$id'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+	
+	$rows = $result->num_rows;	
+	$feelist[] = NULL;
+	
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$feelist[$r]['from'] = $row['from'];
+		$feelist[$r]['until'] = $row['until'];
+		$feelist[$r]['amount'] = $row['amount'];
+	}
+	$connection->close();
+	return $feelist;
+	
+	
 }
 
 ?>

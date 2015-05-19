@@ -11,14 +11,33 @@ if ($connection->connect_error)
 if (isset ( $_GET ['ID'] )) {
 	$id = sanitizeMySQL ( $connection, $_GET ['ID'] );
 } else {
-	die ( "missing query" );
+	die ( "missing ID" );
+}
+
+if (isset($_POST['addfee'])) {
+		$fromfee = sanitizeMySQL ( $connection, $_POST ['fromfee'] );
+		$untilfee = sanitizeMySQL ( $connection, $_POST ['untilfee'] );
+		$amount = sanitizeMySQL ($connection, $_POST ['amount']);
+		
+		$error = datepresent($fromfee);
+		$error .= datepresent($untilfee);
+		$error .= isint($amount);
+		
+		if ($error == "") {
+			$query = "INSERT INTO membershipfees (`users_ID`, `from`, `until`, `amount`) VALUES ('$id', '$fromfee', '$untilfee', '$amount')";
+			$result = $connection->query ( $query );
+			if (! $result) {
+				die ( "Mitgliedsbeitrag bereits vorhanden " . $connection->error );
+			} else {
+				$message = '<div class="message">Beitrag hinzugef&uuml;gt</div>';
+			}
+		}
 }
 
 if (isset ( $_POST ['deletemember'] )) {
 	$query = "DELETE FROM users WHERE ID = $id";
 	$result = $connection->query ( $query );
-	if (! $result)
-		die ( "Database query error" . $connection->error );
+	if (! $result) die ( "Database query error" . $connection->error );
 	echo '<head> <link rel="stylesheet" href="leila.css" type="text/css"></head>';
 	include "menu.php";
 	die ( "<div id='content'><h3>Member gel&ouml;scht </h3></div>" );
@@ -107,8 +126,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 	?>
 	<h1>member editieren</h1>
 
-		<form method="post" action="editmember.php?ID=<?=$row['ID']?>"
-			enctype="multipart/form-data">
+		<form method="post" action="editmember.php?ID=<?=$row['ID']?>">
 
 			<label for="id">ID</label> <input disabled="disabled" name="id"
 				id="id" type="text" value="<?= $row['ID']?>"> <br> <label
@@ -151,11 +169,28 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				onclick="return confirm('Sicher l&ouml;schen?');">
 		</form>
 		<div id="feelist">
-			<br> Liste beitr&auml;ge<br> Von 5.1. 2014 bis 1.3.2015 Betrag 2 Euro<br>
-			Von 1.5. 2014 bis 1.10.2015 Betrag 4 Euro<br> Von 1.1.2015 bis
-			1.1.2016 Betrag 10 Euro<br> Von <input type="text"> Bis <input
-				type="text"> Betrag<input type="text"> <input type="submit"
-				value="Beitrag hinzuf&uuml;gen">
+			<br><br>
+			
+			<?php 
+			$fees = getfees($id);
+			echo "<table>";
+			echo "<caption>Mitgliedsbeitr&auml;ge</caption>";
+			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th></thead>";
+			foreach ($fees as $fee) {
+				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td></tr>" ;
+			}
+			echo "</table><br>";
+			?>
+			
+			<form method="post" action="editmember.php?ID=<?=$row['ID']?>">
+				<label for="fromfee">Beitrag ab</label> 
+				<input type="text" name="fromfee" id="fromfee" value="<?= getcurrentdate()?>"> <br>
+				<label for="untilfee">Beitrag bis</label>
+				<input type="text" name="untilfee" id="untilfee"> <br>
+				<label for="amount">Beitragsh&ouml;he</label> 
+				<input type="text" name="amount" id="amount"> <br>
+				<input type="submit" name="addfee" value="Beitrag hinzuf&uuml;gen">
+			</form>
 		</div>
 		<br> <a href="lendobject.php">Ausleihen</a>
 
