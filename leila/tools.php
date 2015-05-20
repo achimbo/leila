@@ -273,6 +273,11 @@ function datepresent($date) {
 	else {	return "Datum ung&uuml;ltig <br>";}
 }
 
+function datetimepresent($date) {
+	if (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-4]{1,2}:[0-9]{1,2}:?[0-9]{0,2}/", $date)) { return "";}
+	else {	return "Datum oder Zeit ung&uuml;ltig <br>";}
+}
+
 function getfees($id) {
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
@@ -295,6 +300,39 @@ function getfees($id) {
 	return $feelist;
 	
 	
+}
+
+function isvaliduser($id) {
+	// -1 = wrong usertype 0 = invalid, 1 = valid for less than 6 weeks, 2 = valid longer than 6 weeks
+	$valid = 0;
+	
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT usertype FROM users WHERE ID = '$id'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+	$result->data_seek(0);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	if ($row['usertype'] > 2) return -1;
+	
+	$fees = getfees($id);
+	$now = date_create('now');
+	foreach ($fees as $fee) {
+		// getfees may return empty array
+		if ($fee['from'] == NULL) return 0;
+		$from = date_create($fee['from']);
+		$until = date_create($fee['until']);
+		$toend = date_diff($now, $until);
+		$tobeginning = date_diff($from, $now);
+
+		if ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') > 42) {
+			return 2;
+		} elseif ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') < 42 && $toend->format('%R%a') >= 0) {
+			$valid = 1;
+		}
+	}
+	return $valid;
 }
 
 ?>

@@ -8,6 +8,7 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bit
 $connection = new mysqli ( $db_hostname, $db_username, $db_password, $db_database );
 if ($connection->connect_error)
 	die ( $connection->connect_error );
+
 if (isset ( $_GET ['ID'] )) {
 	$id = sanitizeMySQL ( $connection, $_GET ['ID'] );
 } else {
@@ -27,7 +28,7 @@ if (isset($_POST['addfee'])) {
 			$query = "INSERT INTO membershipfees (`users_ID`, `from`, `until`, `amount`) VALUES ('$id', '$fromfee', '$untilfee', '$amount')";
 			$result = $connection->query ( $query );
 			if (! $result) {
-				die ( "Mitgliedsbeitrag bereits vorhanden " . $connection->error );
+				die ( "Mitgliedsbeitrag bereits vorhanden oder Datum falsch " . $connection->error );
 			} else {
 				$message = '<div class="message">Beitrag hinzugef&uuml;gt</div>';
 			}
@@ -126,7 +127,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 	?>
 	<h1>member editieren</h1>
 
-		<form method="post" action="editmember.php?ID=<?=$row['ID']?>">
+		<form method="post" action="editmember.php?ID=<?=$id?>">
 
 			<label for="id">ID</label> <input disabled="disabled" name="id"
 				id="id" type="text" value="<?= $row['ID']?>"> <br> <label
@@ -174,7 +175,23 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			<?php 
 			$fees = getfees($id);
 			echo "<table>";
-			echo "<caption>Mitgliedsbeitr&auml;ge</caption>";
+			switch (isvaliduser($id)) {
+				case -1:
+				echo "<caption><div class='invalid'>Kein User</span></caption>";
+				break;
+				
+				case 0:
+				echo "<caption><div class='invalid'>Kein Mitgliedsbeitrag</span></caption>";
+				break;
+
+				case 1:
+				echo "<caption><div class='tempvalid'>Mitgliedschaft l&auml;ft aus</span></caption>";
+				break;
+				
+				case 2:
+				echo "<caption><div class='valid'>Mitgliedsbeitr&auml;ge gezahlt</span></caption>";
+				break;
+			}			
 			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th></thead>";
 			foreach ($fees as $fee) {
 				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td></tr>" ;
@@ -182,17 +199,17 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			echo "</table><br>";
 			?>
 			
-			<form method="post" action="editmember.php?ID=<?=$row['ID']?>">
+			<form method="post" action="editmember.php?ID=<?=$id?>">
 				<label for="fromfee">Beitrag ab</label> 
 				<input type="text" name="fromfee" id="fromfee" value="<?= getcurrentdate()?>"> <br>
 				<label for="untilfee">Beitrag bis</label>
-				<input type="text" name="untilfee" id="untilfee"> <br>
+				<input type="text" name="untilfee" id="untilfee" value="<?= date("Y-m-d", (time() + 60 * 60 * 24 * 365))?>"> <br>
 				<label for="amount">Beitragsh&ouml;he</label> 
 				<input type="text" name="amount" id="amount"> <br>
 				<input type="submit" name="addfee" value="Beitrag hinzuf&uuml;gen">
 			</form>
 		</div>
-		<br> <a href="lendobject.php">Ausleihen</a>
+		<br> <a href="lendobject.php?userid=<?=$id?>">Ausleihen</a>
 
 	</div>
 </body>

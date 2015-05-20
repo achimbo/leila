@@ -74,3 +74,18 @@ form input {
 	padding: 3px 10px 3px 10px;
 	border: 1px solid black;
 }
+
+.valid {
+	color: black;
+	background-color: lightgreen;
+}
+
+.tempvalid {
+	color: black;
+	background-color: orange;
+}
+
+.invalid {
+	color: black;
+	background-color: orangered;
+}
