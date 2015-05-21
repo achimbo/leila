@@ -27,6 +27,10 @@ if (isset($_POST['lendobject'])) {
 		$error .= "User ist ung&uuml;ltig";
 	}
 	
+	if (objectisavailable($objectid) == 0) $error .= "Objekt bereits verliehen";
+	if (objectisavailable($objectid) == -1) $error .= "Objekt Status falsch";
+	// wenn loanedout in der Zukunft Abbruch?
+	
 	if ($error == "") {
 		$query = "INSERT INTO rented (objects_ID, users_ID, loanedout, duedate, comment) 
 			VALUES ('$objectid', '$userid', '$loanedout', '$duedate', '$comment') ";

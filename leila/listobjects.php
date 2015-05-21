@@ -51,8 +51,13 @@ $mylist .= "<table class='objectlist'>";
 for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
+	if (objectisavailable($row['ID']) < 1 ) {
+		$class = "class=unavailable";
+	} else {
+		$class = "class=available";
+	}
 	
-	$mylist .= '<tr><td> Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
+	$mylist .= '<tr ' . $class . '><td> Name <a href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
 			<img src="showimage.php?ID=' . $row['ID'] . '&amp;showthumb" alt="Objekt Bild"></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }

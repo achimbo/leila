@@ -48,7 +48,33 @@ Eigent&uuml;er ID <input disabled="disabled" type="text" value="<?= $row['owner'
 Geliehen bis <input disabled="disabled" type="text" value="<?= $row['loaneduntil']?>"> <br>
 Ist verf&uuml;gbar <input disabled="disabled" type="text" value="<?= $row['isavailable']?>"> <br>
 <br>
-<a href="editobject.php?ID=<?=$row['ID']?>"><b>Objekt Editieren</b></a>
+<a href="editobject.php?ID=<?=$id?>"><b>Objekt Editieren</b></a><p>
+<a href="lendobject.php?objectid=<?=$id?>"><b>Objekt verleihen</b></a><p>
+<?php 
+
+$rentals = getrentalsbyobject($id);
+echo "<table id='rentallist'>";
+switch (objectisavailable($id)) {
+	case -1:
+		echo "<caption><div class='invalid'>Falscher Status</span></caption>";
+		break;
+
+	case 0:
+		echo "<caption><div class='invalid'>Objekt verliehen</span></caption>";
+		break;
+
+	case 1:
+		echo "<caption><div class='valid'>Objekt verleihbar</span></caption>";
+		break;
+}
+echo "<thead><tr><th>Username</th><th>Von</th><th>Bis</th><th>Zur&uuml;ck</th><th>Kommentar</th></thead>";
+
+foreach ($rentals as $rent) {
+	echo "<tr><td><a href='editmember.php?ID=" . $rent['userid'] . "'>" . $rent['firstname'] . " " . $rent['lastname'] . "</a></td>";
+	echo "<td>" . $rent['loanedout'] . "</td><td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
+}
+echo "</table>"
+?>
 </div>
 </body>
 </html>

@@ -302,6 +302,33 @@ function getfees($id) {
 	
 }
 
+function getrentalsbyobject($id) {
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT loanedout, duedate, givenback, r.comment, firstname, lastname, u.ID AS userid FROM rented r INNER JOIN users u ON r.users_ID = u.ID WHERE r.objects_ID = '$id' ORDER BY loanedout ASC";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+	
+	$rows = $result->num_rows;
+	$rentals[] = NULL;
+	
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$rentals[$r]['loanedout'] = $row['loanedout'];
+		$rentals[$r]['duedate'] = $row['duedate'];
+		$rentals[$r]['givenback'] = $row['givenback'];
+		$rentals[$r]['comment'] = $row['comment'];
+		$rentals[$r]['firstname'] = $row['firstname'];
+		$rentals[$r]['lastname'] = $row['lastname'];
+		$rentals[$r]['userid'] = $row['userid'];
+	}
+	$connection->close();
+	return $rentals;
+	
+}
+
 function isvaliduser($id) {
 	// -1 = wrong usertype 0 = invalid, 1 = valid for less than 6 weeks, 2 = valid longer than 6 weeks
 	$valid = 0;
@@ -333,6 +360,34 @@ function isvaliduser($id) {
 		}
 	}
 	return $valid;
+}
+
+// return -1 - wrong status, 0 rented away, 1 available
+function objectisavailable($id) {
+	$available = 0;
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+
+	$query = "SELECT isavailable FROM objects WHERE ID = '$id'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+	$result->data_seek(0);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	if ($row['isavailable'] > 1) return -1;
+	
+	// $query = "SELECT loanedout, duedate, givenback, isavailable FROM rented r INNER JOIN objects o ON r.objects_ID = o.ID WHERE o.ID = '$id'";
+	$query = "SELECT givenback FROM rented WHERE objects_ID = '$id'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+
+	$rows = $result->num_rows;
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		if ($row['givenback'] == NULL) return 0	;	
+	}
+	return 1;
 }
 
 ?>
