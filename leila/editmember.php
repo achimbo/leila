@@ -185,7 +185,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				break;
 
 				case 1:
-				echo "<caption><div class='tempvalid'>Mitgliedschaft l&auml;ft aus</span></caption>";
+				echo "<caption><div class='tempvalid'>Mitgliedschaft l&auml;uft aus</span></caption>";
 				break;
 				
 				case 2:
@@ -210,7 +210,23 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			</form>
 		</div>
 		<br> <a href="lendobject.php?userid=<?=$id?>">Ausleihen</a>
-
+		<?php 
+		
+		$rentals = getrentalsbyuser($id);
+		echo "<table id='rentallist'>";
+		echo "<caption>Verleih Historie</caption>";
+		echo "<thead><tr><th>Objektname</th><th>Von</th><th>Bis</th><th>Zur&uuml;ck</th><th>Kommentar</th></thead>";
+		
+		foreach ($rentals as $rent) {
+			// echo "<tr><td><a href='showobject.php?ID=" . $rent['objectid'] . "'>" . $rent['objectname'] . "</a></td>";
+			// echo "<td>" . $rent['loanedout'] . "</td><td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
+			echo "<tr><td><a href='showobject.php?ID=" . $rent['objectid'] . "'>" . $rent['objectname'] . "</a></td>";
+			echo "<td><a href='lendobject.php?edit=1&userid=" . $id . "&objectid=" . $rent['objectid'] . "&loanedout=" . $rent['loanedout'] . "'>". $rent['loanedout'] . "</a></td>" ;
+			echo "<td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
+				
+		}
+		echo "</table><p>"
+		?>
 	</div>
 </body>
 </html>

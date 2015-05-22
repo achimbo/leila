@@ -274,7 +274,7 @@ function datepresent($date) {
 }
 
 function datetimepresent($date) {
-	if (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-4]{1,2}:[0-9]{1,2}:?[0-9]{0,2}/", $date)) { return "";}
+	if (preg_match("/^[0-9]{4}-[0-9]{1,2}-[0-9]{1,2} [0-9]{1,2}:[0-9]{1,2}:?[0-9]{0,2}/", $date)) { return "";}
 	else {	return "Datum oder Zeit ung&uuml;ltig <br>";}
 }
 
@@ -326,7 +326,31 @@ function getrentalsbyobject($id) {
 	}
 	$connection->close();
 	return $rentals;
-	
+}
+
+function getrentalsbyuser($id) {
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT loanedout, duedate, givenback, r.comment, name AS objectname, o.ID AS objectid FROM rented r INNER JOIN objects o ON r.objects_ID = o.ID WHERE r.users_ID = '$id' ORDER BY loanedout ASC";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error " . $connection->error );
+
+	$rows = $result->num_rows;
+	$rentals[] = NULL;
+
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$rentals[$r]['loanedout'] = $row['loanedout'];
+		$rentals[$r]['duedate'] = $row['duedate'];
+		$rentals[$r]['givenback'] = $row['givenback'];
+		$rentals[$r]['comment'] = $row['comment'];
+		$rentals[$r]['objectname'] = $row['objectname'];
+		$rentals[$r]['objectid'] = $row['objectid'];
+	}
+	$connection->close();
+	return $rentals;
 }
 
 function isvaliduser($id) {

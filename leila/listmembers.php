@@ -33,7 +33,7 @@ for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 
-	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['ID'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td></tr>";
+	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['ID'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td></tr>\n";
 	
 	// $mylist .= "<tr><td> Name <a href='showmember.php?ID=' .$row['ID'] > $row['firstname'] . </a></td></tr> ";
 	//$mylist .= 'Description ' . $row['description'] . '<br>';

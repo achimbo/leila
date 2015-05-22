@@ -56,22 +56,23 @@ $rentals = getrentalsbyobject($id);
 echo "<table id='rentallist'>";
 switch (objectisavailable($id)) {
 	case -1:
-		echo "<caption><div class='invalid'>Falscher Status</span></caption>";
+		echo "<caption><div class='invalid'>Falscher Status</div></caption>";
 		break;
 
 	case 0:
-		echo "<caption><div class='invalid'>Objekt verliehen</span></caption>";
+		echo "<caption><div class='invalid'>Objekt verliehen</div></caption>";
 		break;
 
 	case 1:
-		echo "<caption><div class='valid'>Objekt verleihbar</span></caption>";
+		echo "<caption><div class='valid'>Objekt verleihbar</div></caption>";
 		break;
 }
 echo "<thead><tr><th>Username</th><th>Von</th><th>Bis</th><th>Zur&uuml;ck</th><th>Kommentar</th></thead>";
 
 foreach ($rentals as $rent) {
 	echo "<tr><td><a href='editmember.php?ID=" . $rent['userid'] . "'>" . $rent['firstname'] . " " . $rent['lastname'] . "</a></td>";
-	echo "<td>" . $rent['loanedout'] . "</td><td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
+	echo "<td><a href='lendobject.php?edit=1&userid=" . $rent['userid'] . "&objectid=" . $id . "&loanedout=" . $rent['loanedout'] . "'>". $rent['loanedout'] . "</a></td>" ;
+	echo "<td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
 }
 echo "</table>"
 ?>

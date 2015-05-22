@@ -10,8 +10,34 @@ if ($connection->connect_error)
 	die ( $connection->connect_error );
 
 $message = "";
+$comment = "";
+$noquotegivenback = "";
 
-if (isset($_POST['lendobject'])) {
+if (isset($_GET['edit'])) {
+	$userid = sanitizeMySQL ( $connection, $_GET ['userid'] );
+	$objectid = sanitizeMySQL ( $connection, $_GET ['objectid'] );
+	$loanedout = sanitizeMySQL ( $connection, $_GET ['loanedout'] );
+	$query = "SELECT duedate, givenback, comment FROM rented WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";
+	$result = $connection->query ( $query );
+	$result->data_seek ( 0 );
+	$row = $result->fetch_array ( MYSQLI_ASSOC );
+	$duedate = $row['duedate'];
+	$givenback = $row['givenback'];
+	$noquotesgivenback = $givenback;
+	$comment = $row['comment'];
+}
+
+if (isset($_POST['delete'])) {
+	$userid = sanitizeMySQL ( $connection, $_POST ['userid'] );
+	$objectid = sanitizeMySQL ( $connection, $_POST ['objectid'] );
+	$loanedout = sanitizeMySQL ( $connection, $_POST ['loanedout'] );
+	$query = "DELETE FROM rented WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";
+	$result = $connection->query ( $query );
+	$message = "Verleihvorgang gel&ouml;scht";
+}
+
+
+if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	$userid = sanitizeMySQL ( $connection, $_POST ['userid'] );
 	$objectid = sanitizeMySQL ( $connection, $_POST ['objectid'] );
 	$loanedout = sanitizeMySQL ( $connection, $_POST ['loanedout'] );
@@ -23,17 +49,31 @@ if (isset($_POST['lendobject'])) {
 	$error .= datetimepresent($loanedout);
 	$error .= datepresent($duedate);
 	
-	if (isvaliduser($userid) < 1) {
-		$error .= "User ist ung&uuml;ltig";
+	if (isset($_POST['updatelease'])) {
+		$givenback = sanitizeMySQL($connection, $_POST['givenback']);
+		$noquotesgivenback = $givenback;
+		if ($givenback == "") {
+			$givenback = 'NULL';
+		} else {
+			$error .= datetimepresent($givenback);
+			$givenback = addquotes($givenback);
+		}
+	}	
+		
+	if (isset($_POST['lendobject'])) {	
+		if (isvaliduser($userid) < 1) $error .= "User ist ung&uuml;ltig";
+		if (objectisavailable($objectid) == 0) $error .= "Objekt bereits verliehen";
+		if (objectisavailable($objectid) == -1) $error .= "Objekt Status falsch";
+		// wenn loanedout in der Zukunft Abbruch?
 	}
-	
-	if (objectisavailable($objectid) == 0) $error .= "Objekt bereits verliehen";
-	if (objectisavailable($objectid) == -1) $error .= "Objekt Status falsch";
-	// wenn loanedout in der Zukunft Abbruch?
-	
 	if ($error == "") {
+		if (isset($_POST['lendobject'])) {
 		$query = "INSERT INTO rented (objects_ID, users_ID, loanedout, duedate, comment) 
 			VALUES ('$objectid', '$userid', '$loanedout', '$duedate', '$comment') ";
+		} elseif (isset($_POST['updatelease'])) {
+			$query = "UPDATE rented SET duedate='$duedate', givenback = $givenback, comment = '$comment'
+				WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";		
+		} 
 		$result = $connection->query ( $query );
 		
 		if (! $result) {
@@ -41,8 +81,7 @@ if (isset($_POST['lendobject'])) {
 		} else {
 			$message = "Verleihvorgang Gespeichert<p>";
 		}
-	}
-	
+	}	
 }
 
 ?>
@@ -55,28 +94,45 @@ if (isset($_POST['lendobject'])) {
 <body>
 <?php include 'menu.php';?>
 <div id="content">
-	<h1>Objekt verleihen</h1>
+	<h1>Objekt Verleih <?php if (isset($_GET['edit'])) echo "updaten"?></h1>
 	<?php
 	if (isset ( $error ) && $error != "")
 		echo "<div class='errorclass'>Fehler: $error </div><p>";
 	if (isset ( $message ))
 		echo $message;
 	?>
-	<form action="lendobject.php" method="post">
+	<form action="lendobject.php<?=  '?' . $_SERVER['QUERY_STRING']?>" method="post">
 	<label for="userid">User ID</label>
-	<input type="text" name="userid" id="userid" <?php if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";}?>>
+	<input type="text" name="userid" id="userid" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>>
 	<input type="text" disabled="disabled" name="firstname" id="firstname">
 	<input type="text" disabled="disabled" name="lastname" id="lastname"><p>
 	<label for="objectid">Objekt ID</label>
-	<input type="text" name="objectid" id="objectid" <?php if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";}?>>
+	<input type="text" name="objectid" id="objectid" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>>
 	<input type="text" disabled="disabled" name="objectname" id="objectname"><p>
 	<label for="loanedout">Von</label>
-	<input type="text" name="loanedout" id="loanedout" value="<?= date("Y-m-d G:i:s", time())?>"><p>
+	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
 	<label for="duedate">Bis</label>
-	<input type="text" name="duedate" id="duedate" value="<?= date("Y-m-d", (time() + 60 * 60 * 24 * 14))?>"><p>
+	<input type="text" name="duedate" id="duedate" value='<?php if (isset($_GET['edit'])) echo $duedate; else echo date("Y-m-d", (time() + 60 * 60 * 24 * 14))?>'><p>
+	<?php 
+		if (isset($_GET['edit'])) {
+			echo "<label for='givenback'>R&uuml;ckgabedatum</label>";
+			if (isset($givenback) && $givenback != 'NULL') {
+				echo "<input type='text' name='givenback' id='givenback' value='" . $noquotesgivenback . "'><p>";
+			} else {
+				echo "<input type='text' name='givenback' id='givenback' value=''><p>";
+			}
+		}
+	?>
 	<label for="comment">Kommentar</label>
-	<textarea name="comment" id="comment"></textarea><p>
-	<input type="submit" name="lendobject" value="objekt verleihen">
+	<textarea name="comment" id="comment"><?=$comment?></textarea><p>
+	<?php
+	if (isset($_GET['edit'])) {
+		echo "<input type='submit' name='updatelease' value='Verleih updaten'><p>";
+		echo "<input type='submit' name='delete' value='Verleih l&ouml;schen'>";
+	} else {
+		echo "<input type='submit' name='lendobject' value='objekt verleihen'>";
+	}
+	?>
 	</form>
 </div>
 </body>
