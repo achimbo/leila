@@ -51,7 +51,7 @@ $mylist .= "</table>";
 <?php include 'menu.php';?>
 <div id="content">
 
-<h3>Mitglieder suchen</h3>
+<h1>Mitglieder suchen</h1>
 <form method="get" action="listmembers.php">
 	<label for="searchstring">In Namen suchen:</label> 
 	<input type="text" id="searchstring" name="searchstring">

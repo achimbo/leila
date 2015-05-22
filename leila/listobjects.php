@@ -91,7 +91,7 @@ $mylist .= "</table>";
 	<input type="text" id="searchid" name="searchid">
 	<input type="submit" value="ID suchen">
 </form>
-<h3>Objekte <?= $message?></h3>
+<h1>Objekte <?= $message?></h1>
 <?= $mylist?>
 </div>
 </body>

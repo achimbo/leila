@@ -74,7 +74,7 @@ form input {
 	background-color: orangered;
 }
 
-#feelist td, #feelist th, #rentallist td, #rentallist th {
+#feelist td, #feelist th, #rentallist td, #rentallist th,  #rentedlist td, #rentedlist th {
 	padding: 3px 10px 3px 10px;
 	border: 1px solid black;
 	max-width: 400px;
