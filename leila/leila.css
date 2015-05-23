@@ -56,7 +56,7 @@ a:hover	    {text-decoration: underline;}
     background-color: lavender;
 }
 
-.objectlist tr.unavailable {
+.objectlist tr a.unavailable {
 	background-color: lightpink;
 }
 

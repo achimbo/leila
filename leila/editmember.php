@@ -15,6 +15,18 @@ if (isset ( $_GET ['ID'] )) {
 	die ( "missing ID" );
 }
 
+if (isset($_GET['deletefee'])) {
+	$fromfee = sanitizeMySQL ( $connection, $_GET ['from'] );
+	$untilfee = sanitizeMySQL ( $connection, $_GET ['until'] );	
+	$query = "DELETE FROM membershipfees WHERE membershipfees.users_ID= '$id' AND membershipfees.from = '$fromfee' AND membershipfees.until = '$untilfee'";
+	$result = $connection->query ( $query );
+	if (! $result) {
+		die ( "Mitgliedsbeitrag nicht vorhanden oder Datum falsch " . $connection->error );
+	} else {
+		$message = '<div class="message">Beitrag gel&ouml;scht</div>';
+	}
+}
+
 if (isset($_POST['addfee'])) {
 		$fromfee = sanitizeMySQL ( $connection, $_POST ['fromfee'] );
 		$untilfee = sanitizeMySQL ( $connection, $_POST ['untilfee'] );
@@ -164,8 +176,8 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				value="<?= $row['idnumber']?>"> <br> <label for="comment">Kommentar</label>
 			<textarea name="comment" id="comment" rows="5" cols="20"><?=$row['comment']?></textarea>
 			<br> <label for="comember">Co Member</label> <input type="text"
-				name="comember" id="comember" value="<?=$row['comember']?>"> <br> <input
-				type="submit" name="savemember" value="&Auml;nderungen speichern"><br>
+				name="comember" id="comember" value="<?=$row['comember']?>"> <p> 
+				<input type="submit" name="savemember" value="&Auml;nderungen speichern"><p>
 			<input type="submit" name="deletemember" value="Member l&ouml;schen"
 				onclick="return confirm('Sicher l&ouml;schen?');">
 		</form>
@@ -192,9 +204,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				echo "<caption><div class='valid'>Mitgliedsbeitr&auml;ge gezahlt</span></caption>";
 				break;
 			}			
-			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th></thead>";
+			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th><th>L&ouml;schen</thead>";
 			foreach ($fees as $fee) {
-				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td></tr>" ;
+				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td><td><a onclick=\"return confirm('Sicher l&ouml;schen?');\" href='?deletefee=1&ID=" . $id . "&from=" . $fee['from'] . "&until=" . $fee['until'] . "'>L&ouml;schen</a></td></tr>" ;
 			}
 			echo "</table><br>";
 			?>

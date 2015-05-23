@@ -416,7 +416,7 @@ function objectisavailable($id) {
 
 
 function paginate($total) {
-	$limit = 5;
+	$limit = 10;
 	$retval['footer'] = "";
 	$retval['query'] = "";
 
@@ -445,8 +445,8 @@ function paginate($total) {
 		 $myquery= "?" . preg_replace("/(\?|&)page=[0-9]+/", "", $_SERVER['QUERY_STRING']) . "&page=";	 	
 	}
 
-	$prevlink = ($page > 1) ? '<a class="larrows" href="' . $myquery . '1" title="Erste Seite">&laquo;</a> &nbsp; <a class="larrows" href="' . $myquery . ($page - 1) . '" title="Vorige Seite">&lsaquo;</a>' : '<span class="disabled larrows">&laquo;</span> &nbsp; <span class="disabled larrows">&lsaquo;</span>';
-	$nextlink = ($page < $pages) ? ' <a class="rarrows" href="' . $myquery . $pages . '" title="Letzte Seite">&raquo;</a>  &nbsp; <a class="rarrows" href="' . $myquery . ($page + 1) . '" title="N&auml;chste Seite">&rsaquo;</a>' : '<span class="disabled rarrows">&raquo;</span> &nbsp; <span class="disabled rarrows">&rsaquo;</span>';
+	$prevlink = ($page > 1) ? '<a class="larrows" href="' . $myquery . '1" title="Erste Seite">&laquo;</a> &ensp; <a class="larrows" href="' . $myquery . ($page - 1) . '" title="Vorige Seite">&lsaquo;</a>' : '<span class="disabled larrows">&laquo;</span> &ensp; <span class="disabled larrows">&lsaquo;</span>';
+	$nextlink = ($page < $pages) ? ' <a class="rarrows" href="' . $myquery . $pages . '" title="Letzte Seite">&raquo;</a>  &ensp; <a class="rarrows" href="' . $myquery . ($page + 1) . '" title="N&auml;chste Seite">&rsaquo;</a>' : '<span class="disabled rarrows">&raquo;</span> &ensp; <span class="disabled rarrows">&rsaquo;</span>';
 
 	$retval['footer'] = "<div id='paging'><p>" . $prevlink . $nextlink . " Seite " . $page . " von " . $pages . " Seiten <br> Datens&auml;tze " . $start . " bis " . $end . " von insgesamt " . $total . "</p></div>";
 	$retval['query'] =" LIMIT $limit OFFSET $offset ";

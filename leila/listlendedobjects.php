@@ -21,7 +21,7 @@ if (isset($_GET['showoverdue'])) {
 	
 	$query = "SELECT o.ID AS objectid, o.name, u.ID AS userid, u.firstname, u.lastname, r.loanedout, r.duedate, r.givenback
 		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID 
-			WHERE DATEDIFF(duedate, curdate()) < 0  AND givenback IS NULL" . $pag['query'];
+			WHERE DATEDIFF(duedate, curdate()) < 0  AND givenback IS NULL ORDER BY r.loanedout ASC " . $pag['query'];
 	$message = "die &uuml;berzogen sind";
 } elseif (isset($_GET['showrented'])) {
 	$query = "SELECT COUNT(*) AS count FROM rented WHERE givenback IS NULL ";
@@ -32,7 +32,7 @@ if (isset($_GET['showoverdue'])) {
 	
 	$query = "SELECT o.ID AS objectid, o.name, u.ID AS userid, u.firstname, u.lastname, r.loanedout, r.duedate, r.givenback
 		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID
-			WHERE givenback IS NULL " . $pag['query'];
+			WHERE givenback IS NULL ORDER BY r.loanedout ASC " . $pag['query'];
 	$message = "die gerade verliehen sind";
 } elseif (isset($_GET['datefrom']) && isset($_GET['dateuntil'])) {
 	$from = sanitizeMySQL($connection, $_GET['datefrom']);
@@ -47,7 +47,7 @@ if (isset($_GET['showoverdue'])) {
 	
 	$query = "SELECT o.ID AS objectid, o.name, u.ID AS userid, u.firstname, u.lastname, r.loanedout, r.duedate, r.givenback
 		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID
-					WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) " . $pag['query'];	
+					WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) ORDER BY r.loanedout ASC " . $pag['query'];	
 	$message = "die zwischen $from und $until verliehen wurden";
 	} else {
 		$query = "SELECT COUNT(*) AS count FROM rented";
@@ -56,8 +56,10 @@ if (isset($_GET['showoverdue'])) {
 		$count = $row['count'];
 		$pag = paginate($count);
 		
+		$error = "Datum fehlerhaft";
+		
 		$query = "SELECT o.ID AS objectid, o.name, u.ID AS userid, u.firstname, u.lastname, r.loanedout, r.duedate, r.givenback
-		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID " . $pag['query'];
+		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID ORDER BY r.loanedout ASC " . $pag['query'];
 	}
 } else {
 	$query = "SELECT COUNT(*) AS count FROM rented";
@@ -75,8 +77,7 @@ if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
 
 $mylist .= "<table id='rentedlist'>";
-$mylist .= "<caption>Verleihliste</caption>";
-$mylist .= "<thead><tr><th>Objekt</th><th>User</th><th>Von</th><th>Bis</th><th>Zur&uuml;ck</th></tr></thead>";
+$mylist .= "<tr><th>Objekt</th><th>User</th><th>Ausgeliehen</th><th>F&auml;llig</th><th>Zur&uuml;ckgegeben</th></tr>";
 
 for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
