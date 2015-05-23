@@ -414,4 +414,43 @@ function objectisavailable($id) {
 	return 1;
 }
 
+
+function paginate($total) {
+	$limit = 5;
+	$retval['footer'] = "";
+	$retval['query'] = "";
+
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+
+	$pages = ceil($total / $limit);
+	$getpage = isset($_GET['page']) ? sanitizeMySQL($connection, $_GET['page']) : 1 ; 
+	$page = min($pages, $getpage);
+	$offset = ($page - 1)  * $limit;
+
+	// prevent negative offset
+	$offset = ($offset < 0) ? 0 : $offset;
+	// if no data set start to 0
+	$start = ($total == 0) ? 0: $offset + 1;
+	
+	
+	$end = min(($offset + $limit), $total);
+
+	// if query string is empty or only contains 'page=123' start with a ?
+	if ($_SERVER['QUERY_STRING'] == '' || preg_match("/^page=[0-9]+$/", $_SERVER['QUERY_STRING'])) {
+		 $myquery = "?page=" ;
+	} else {
+		// strip out &page or ?page out of the query string and append with &
+		 $myquery= "?" . preg_replace("/(\?|&)page=[0-9]+/", "", $_SERVER['QUERY_STRING']) . "&page=";	 	
+	}
+
+	$prevlink = ($page > 1) ? '<a class="larrows" href="' . $myquery . '1" title="Erste Seite">&laquo;</a> &nbsp; <a class="larrows" href="' . $myquery . ($page - 1) . '" title="Vorige Seite">&lsaquo;</a>' : '<span class="disabled larrows">&laquo;</span> &nbsp; <span class="disabled larrows">&lsaquo;</span>';
+	$nextlink = ($page < $pages) ? ' <a class="rarrows" href="' . $myquery . $pages . '" title="Letzte Seite">&raquo;</a>  &nbsp; <a class="rarrows" href="' . $myquery . ($page + 1) . '" title="N&auml;chste Seite">&rsaquo;</a>' : '<span class="disabled rarrows">&raquo;</span> &nbsp; <span class="disabled rarrows">&rsaquo;</span>';
+
+	$retval['footer'] = "<div id='paging'><p>" . $prevlink . $nextlink . " Seite " . $page . " von " . $pages . " Seiten <br> Datens&auml;tze " . $start . " bis " . $end . " von insgesamt " . $total . "</p></div>";
+	$retval['query'] =" LIMIT $limit OFFSET $offset ";
+	return $retval;
+}
+
 ?>

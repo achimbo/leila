@@ -13,14 +13,28 @@ if ($connection->connect_error) die($connection->connect_error);
 
 if (isset($_GET['searchstring'])){
 	$searchstring = sanitizeMySQL($connection, $_GET['searchstring']);
-	$query = "SELECT * FROM leila.users WHERE (firstname LIKE '%$searchstring%') OR (lastname LIKE '%$searchstring%') ORDER BY lastname";
+	$query = "SELECT COUNT(*) AS count FROM leila.users WHERE (firstname LIKE '%$searchstring%') OR (lastname LIKE '%$searchstring%') ORDER BY lastname";
+	$result = $connection->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$count = $row['count'];
+	$pag = paginate($count);
 	$message = "mit Namen " . $searchstring;
+
+	$query = "SELECT * FROM leila.users WHERE (firstname LIKE '%$searchstring%') OR (lastname LIKE '%$searchstring%') ORDER BY lastname" . $pag['query'];
+	
 } elseif (isset($_GET['searchid'])) {
 	$searchid = sanitizeMySQL($connection, $_GET['searchid']);
 	$query = "SELECT * FROM users WHERE ID = '$searchid'";
 	$message = "mit ID " . $searchid;
+	$pag['footer'] = "";
 } else {
-	$query = "SELECT * FROM users ORDER BY lastname";
+	$query = "SELECT COUNT(*) AS count FROM users;";
+	$result = $connection->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$count = $row['count'];
+	$pag = paginate($count);
+	
+	$query = "SELECT * FROM users ORDER BY lastname" . $pag['query'];
 }
 
 $result = $connection->query($query);
@@ -51,7 +65,7 @@ $mylist .= "</table>";
 <?php include 'menu.php';?>
 <div id="content">
 
-<h1>Mitglieder suchen</h1>
+<h1>Mitglieder &Uuml;bersicht</h1>
 <form method="get" action="listmembers.php">
 	<label for="searchstring">In Namen suchen:</label> 
 	<input type="text" id="searchstring" name="searchstring">
@@ -65,6 +79,7 @@ $mylist .= "</table>";
 	
 <h3>Mitglieder <?= $message?></h3>
 <?= $mylist?>
+<?= $pag['footer']?>
 </div>
 
 </body>

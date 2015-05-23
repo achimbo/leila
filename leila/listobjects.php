@@ -25,19 +25,41 @@ if (isset($_GET['searchid']) ){
 };
 
 if (isset($catid) ){
-	$query = "SELECT o.* FROM objects o
+	$query = "SELECT COUNT(*) AS count FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID		
     INNER JOIN categories c on ohc.categories_ID = c.ID 
 	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid ORDER BY o.name";	
 	$message = "in Kategorie " . getcategoryname($catid);
+	$result = $connection->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$count = $row['count'];
+	$pag = paginate($count);
+	
+	$query = "SELECT o.* FROM objects o
+	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID
+	INNER JOIN categories c on ohc.categories_ID = c.ID
+	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid ORDER BY o.name" . $pag['query'];	
 } elseif (isset($searchstring)){
-	$query = "SELECT * FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name";
+	$query = "SELECT COUNT(*) AS count FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name";
 	$message = "mit Inhalt " . $searchstring;
+	$result = $connection->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$count = $row['count'];
+	$pag = paginate($count);	
+	
+	$query = "SELECT * FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name" . $pag['query'];
 } elseif (isset($searchid)) {
 	$query = "SELECT * FROM objects WHERE ID = '$searchid'";
-	$message = "mit ID " . $searchid;	
+	$pag['footer'] = "";
+	$message = "mit ID " . $searchid;
 } else {
-	$query = "SELECT * FROM objects ORDER BY name";
+	$query = "SELECT COUNT(*) AS count FROM objects;";
+	$result = $connection->query($query);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	$count = $row['count'];
+	$pag = paginate($count);
+	
+	$query = "SELECT * FROM objects ORDER BY name" . $pag['query'];
 }
 
 
@@ -63,7 +85,6 @@ for ($r = 0; $r < $rows; ++$r) {
 }
 
 $mylist .= "</table>";
-
 ?>
 
 <!DOCTYPE html>
@@ -76,7 +97,7 @@ $mylist .= "</table>";
 
 <?php include 'menu.php';?>
 <div id="content">
-<h3>Objekte suchen</h3>
+<h1>Objekt &Uuml;bersicht</h1>
 <?php echo "<div id='cats'>";
 	 getcategoriesaslinks();
 	 echo "</div>";
@@ -91,8 +112,9 @@ $mylist .= "</table>";
 	<input type="text" id="searchid" name="searchid">
 	<input type="submit" value="ID suchen">
 </form>
-<h1>Objekte <?= $message?></h1>
+<h3>Objekte <?= $message?></h3>
 <?= $mylist?>
+<?= $pag['footer']?>
 </div>
 </body>
 </html>

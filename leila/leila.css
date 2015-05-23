@@ -94,3 +94,20 @@ form input {
 	color: black;
 	background-color: orangered;
 }
+
+.larrows {
+	float: left;
+	font-size: 220%;
+}
+
+.rarrows {
+	float: right;
+	font-size: 220%;
+}
+
+#paging {
+	text-align: center;
+	max-width: 400px;
+	margin-left: auto;
+    margin-right: auto;
+}

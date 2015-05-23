@@ -86,6 +86,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 
 ?>
 
+<!DOCTYPE html>
 <html>
 <head>
 <link rel="stylesheet" href="leila.css" type="text/css">
@@ -101,7 +102,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	if (isset ( $message ))
 		echo $message;
 	?>
-	<form action="lendobject.php<?=  '?' . $_SERVER['QUERY_STRING']?>" method="post">
+	<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
 	<label for="userid">User ID</label>
 	<input type="text" name="userid" id="userid" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>>
 	<input type="text" disabled="disabled" name="firstname" id="firstname">
@@ -128,7 +129,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	<?php
 	if (isset($_GET['edit'])) {
 		echo "<input type='submit' name='updatelease' value='Verleih updaten'><p>";
-		echo "<input type='submit' name='delete' value='Verleih l&ouml;schen'>";
+		echo "<input type='submit' name='delete' value='Verleih l&ouml;schen' onclick='return confirm(\"Sicher l&ouml;schen?\");'>";
 	} else {
 		echo "<input type='submit' name='lendobject' value='objekt verleihen'>";
 	}

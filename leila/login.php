@@ -27,7 +27,8 @@ if (isset($_POST['username'])) {
 	}
 }
 	?>
-
+	
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Login</title>
