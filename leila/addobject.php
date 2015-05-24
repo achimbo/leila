@@ -115,7 +115,7 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 <form method="post" action="addobject.php"  enctype="multipart/form-data">
 <!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 <input type="submit" value="hs" style="visibility: hidden;" /><br>
-Name <input type="text" name="name" Name ="name" autofocus="autofocus" value="<?php 
+<label for="name">Name</label> <input id="name" type="text" name="name" Name ="name" autofocus="autofocus" value="<?php 
 	if(isset($_POST['name']) && isset($_POST['getsubcategories'])){ echo $_POST['name']; } ?>" >  <br>
 
 Kategorie 	<select name="topcategory" size="1">
@@ -129,13 +129,13 @@ Kategorie 	<select name="topcategory" size="1">
 	} 
 	?> 
 	<input type="submit" name="getsubcategories" value="Sub Kat anzeigen"> <br>
-Beschreibung <textarea name ="description" rows="5" cols="20"><?php if(isset($_POST['description']) && !$created){ echo $_POST['description']; } ?></textarea> <br>
-Foto <input type="file" name="image"> <br>
-Eingangsdatum JJJJ-MM-DD <input type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
-Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>
+<label for="description">Beschreibung</label> <textarea id="description" name ="description" rows="5" cols="20"><?php if(isset($_POST['description']) && !$created){ echo $_POST['description']; } ?></textarea> <br>
+<label for="image">Foto</label> <input id="image" type="file" name="image"> <br>
+<label for="dateadded">Eingangsdatum</label> <input id="dateadded" type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
+<label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>
 </textarea> <br>
-Eigent&uuml;mer ID <input type="text" name="owner" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
-Geliehen bis JJJJ-MM-DD <input type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
+<label for="owner">Eigent&uuml;mer ID</label> <input id="owner" type="text" name="owner" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
+<label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
 </div>
