@@ -1,6 +1,6 @@
 <?php
 
-// call daily via cron job
+// call daily via cron job, send email when item is due in three days
 
 require_once 'variables.php';
 
@@ -33,8 +33,8 @@ Eine kleine Erinnerung: Du hast dir ein(e) {$row['objectname']} im Leihladen aus
 Liebe Grüße Leihladen Wien\n";
 	
 	if (mail($row['email'], $subject, $message, $headers)) {
-		echo "Email sent to {$row['email']}\n";
+		echo date('Y-m-d G:i:s', time()) . " Email sent to {$row['email']}\n";
 	} else {
-		echo "Email failed";
+		echo date('Y-m-d G:i:s', time()) . " Email to {$row['email']} failed\n";
 	}
 }
