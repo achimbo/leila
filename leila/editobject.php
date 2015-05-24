@@ -131,15 +131,16 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 <form method="post" action="editobject.php?ID=<?=$row['ID']?>" enctype="multipart/form-data">
 	<!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 	<input type="submit" name="saveobject" value="hs" style="visibility: hidden;" /><br>
-	Objekt ID <input disabled="disabled" name="id" type="text" value="<?= $row['ID']?>"> <br>
-	Kategorien <br>
+<label for="id">Objekt ID</label> <input id="id" disabled="disabled" name="id" type="text" value="<?= $row['ID']?>"> <br>
+	<p>
+	<b>Kategorien</b> <br>
 	<?php 
 	foreach (getcategories($id) as $cat){
-		echo $cat['name'] . "<input type=\"checkbox\" name=\"deletecat[]\" value=\"" . $cat['catid'] . "\"> l&ouml;schen<br>";
+		echo $cat['name'] . "<input class='nowidth' type=\"checkbox\" name=\"deletecat[]\" value=\"" . $cat['catid'] . "\"> l&ouml;schen<br>";
 		//echo "Kategorie" . $cat['name'] . $cat['catid'];
 	}
 	?>
-	
+	<br>
 	Kategorie hinzuf&uuml;gen 	<select name="topcategory" size="1">
 		<?php gettopcategories(); ?>
 	</select>
@@ -150,21 +151,22 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 		echo '</select>';
 	} 
 	?> 
+	
 	<input type="submit" name="getsubcategories" value="Sub Kat anzeigen">
-	<input type="submit" name="addcategory" value="Kat hinzuf&uuml;gen"> <br>
+	<input type="submit" name="addcategory" value="Kat hinzuf&uuml;gen"> <p>
 	
 	<?= isset($_POST['name']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
-	Objekt Name <input type="text" name="name" value="<?= $row['name']?>"> <br>
-	Objekt Beschreibung <textarea name ="description" rows="5" cols="20"><?= $row['description']?></textarea> <br>
+	<label for="name">Objekt Name</label> <input id="name" type="text" name="name" value="<?= $row['name']?>"> <br>
+	<label for="description">Objekt Beschreibung</label> <textarea id="description" name ="description" rows="5" cols="20"><?= $row['description']?></textarea> <p>
 	<a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a>
-	<?php if ($row['image'] != NULL) {echo "<input type=\"submit\" name=\"deleteimage\" value=\"Bild l&ouml;schen\"><br>" ;}?>
-	Foto &auml;ndern<input type="file" name="image"> <br>
-	Datum hinzugef&uuml;gt <input type="text" name="dateadded" value="<?= $row['dateadded']?>"> <br>
-	Interner Kommentar <textarea name ="internalcomment" rows="5" cols="20"><?= $row['internalcomment']?></textarea> <br>
-	Eigent&uuml;er ID <input type="text" name="owner" value="<?= $row['owner']?>"> <br>
-	Geliehen bis <input type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
-	Status 
-	<select name="isavailable" size="1">
+	<?php if ($row['image'] != NULL) {echo "<br><input type=\"submit\" name=\"deleteimage\" value=\"Bild l&ouml;schen\" onclick=\"return confirm('Sicher l&ouml;schen?');\"><br>" ;}?>
+	Foto &auml;ndern<input type="file" name="image"> <p>
+	<label for="dateadded">Hinzugef&uuml;gt am</label> <input id="dateadded" type="text" name="dateadded" value="<?= $row['dateadded']?>"> <br>
+	<label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?= $row['internalcomment']?></textarea> <br>
+	<label for="owner">Eigent&uuml;er ID</label> <input id="owner" type="text" name="owner" value="<?= $row['owner']?>"> <br>
+	<label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
+	<label for="isavailable">Status </label>
+	<select id="isavailable" name="isavailable" size="1">
 		<option value="1" <?php if ($row['isavailable'] == 1) {echo "selected=\"selected\" ";}?> >Ist da</option>
 		<option value="2" <?php if ($row['isavailable'] == 2) {echo "selected=\"selected\" ";}?> >Ist kaputt </option>
 		<option value="3" <?php if ($row['isavailable'] == 3) {echo "selected=\"selected\" ";}?> >Ist verschwunden </option>

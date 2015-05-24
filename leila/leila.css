@@ -43,7 +43,7 @@ a:hover	    {text-decoration: underline;}
 }
 */
 
-.objectlist img {
+.objectlist img, .floatright img {
 	 float: right;
 	 padding: 3px 3px 3px 7px;
 }
@@ -60,14 +60,19 @@ a:hover	    {text-decoration: underline;}
 	background-color: lightpink;
 }
 
-form label {
+ label {
 	display:block;
 	float:left;
 	width:150px;
 	}
 	
-form input {
+ input {
 	width: 170px;
+	margin: 3px;
+}
+
+input.nowidth {
+	width: 30px;
 }
 
 .errorclass {

@@ -33,20 +33,20 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <?php include 'menu.php';?>
 <div id="content">
 <h1>Objekt anzeigen</h1>
-<a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a><br>
-Objekt ID <input disabled="disabled" type="text" value="<?= $row['ID']?>"> <br>
+<a class="floatright" href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a><br>
+<label for="id">Objekt ID</label> <input class="nowidth" id="id" disabled="disabled" type="text" value="<?= $row['ID']?>"> <p>
 <?php 
 foreach (getcategories($id) as $cat){
 	echo 'Kategorie <a href="listobjects.php?catid=' . $cat['catid'] . '">' . $cat['name'] . '</a><br>';
 }
-?>
-Objekt Name <input disabled="disabled" type="text" value="<?= $row['name']?>"> <br>
-Objekt Beschreibung <textarea disabled="disabled"><?= $row['description']?></textarea> <br>
-Datum hinzugef&uuml;gt <input disabled="disabled" type="text" value="<?= $row['dateadded']?>"> <br>
-Interner Kommentar <textarea disabled="disabled"><?= $row['internalcomment']?></textarea> <br>
-Eigent&uuml;er ID <input disabled="disabled" type="text" value="<?= $row['owner']?>"> <br>
-Geliehen bis <input disabled="disabled" type="text" value="<?= $row['loaneduntil']?>"> <br>
-Ist verf&uuml;gbar <input disabled="disabled" type="text" value="<?= $row['isavailable']?>"> <br>
+?><p>
+<label for="name">Objekt Name</label> <input id="name" disabled="disabled" type="text" value="<?= $row['name']?>"> <br>
+<label for="description">Objekt Beschreibung</label> <textarea id="description" disabled="disabled"><?= $row['description']?></textarea> <br>
+<label for="dateadded">Hinzugef&uuml;gt am</label> <input id="dateadded" disabled="disabled" type="text" value="<?= $row['dateadded']?>"> <br>
+<label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" disabled="disabled"><?= $row['internalcomment']?></textarea> <br>
+<label for="owner">Eigent&uuml;mer ID</label> <input id="owner" disabled="disabled" type="text" value="<?= $row['owner']?>"> <br>
+<label for="loaneduntil">Geliehen bis </label><input id="loaneduntil" disabled="disabled" type="text" value="<?= $row['loaneduntil']?>"> <br>
+<label for="isavailable">Ist verf&uuml;gbar </label><input id="isavailable" disabled="disabled" type="text" value="<?= $row['isavailable']?>"> <br>
 <br>
 <a href="editobject.php?ID=<?=$id?>"><b>Objekt Editieren</b></a><p>
 <a href="lendobject.php?objectid=<?=$id?>"><b>Objekt verleihen</b></a><p>

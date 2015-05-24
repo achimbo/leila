@@ -69,7 +69,7 @@ if (isset($_GET['showoverdue'])) {
 	$pag = paginate($count);
 	
 	$query = "SELECT o.ID AS objectid, o.name, u.ID AS userid, u.firstname, u.lastname, r.loanedout, r.duedate, r.givenback
-		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID " . $pag['query'];
+		 FROM objects o INNER JOIN rented r ON o.ID = r.objects_ID INNER JOIN users u on r.users_ID = u.ID ORDER BY r.loanedout ASC " . $pag['query'];
 }
 
 $result = $connection->query($query);
