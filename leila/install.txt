@@ -1,0 +1,27 @@
+Leila ist a software package originally developed for Leihladen Wien or www.leihladen.at, 
+a lending shop in Vienna, hence there is currently only a german version available - but 
+feel free to translate it.
+
+Currently there are the following features:
+Add and edit members
+Add and edit member fees
+Add and edit objects
+Search for members or objects
+Categorize objects in categories and subcategories
+Lend out objects to users
+Reporting and search of lended out objects
+Reporting on membership fees
+
+
+Installation:
+Edit user password in the sql-create.sql script
+Run sql-create.sql in you MySQL server with appropiate rights
+A database leila and a user leila have been created
+Edit variables.php set the database password and change the salt
+Upload the PHP files to your webserver
+Eventually restrict access via .htaccess
+Comment the session line in addmember.php so you can create an admin user
+Add an admin user, login ist last name
+Uncomment the session line in addmember.php so the installation is secure again
+Log in via login.php
+Done!

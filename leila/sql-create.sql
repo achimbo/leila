@@ -186,6 +186,9 @@ SET SQL_MODE = '';
 GRANT USAGE ON *.* TO leila;
  DROP USER leila;
 SET SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+-- 
+-- EDIT PASSWORD! 
+--
 CREATE USER 'leila' IDENTIFIED BY 'blabla';
 
 GRANT ALL ON `leila`.* TO 'leila';

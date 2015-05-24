@@ -4,6 +4,7 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 session_start();
+// comment this line out for install, add admin user, then uncomment immediatly!
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
 
 $created = false;
