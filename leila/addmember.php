@@ -48,7 +48,7 @@ if (isset($_POST['addmember'])) {
 	if ($error == "") {
 		$query = "INSERT INTO users (usertype, password, firstname, lastname, street, city, zipcode, country, telephone, email, idnumber, comment, comember )
 		VALUES ($usertype, $password, '$firstname', '$lastname', '$street', '$city', '$zipcode', '$country', '$telephone', '$email', '$idnumber', '$comment', '$comember' )" ;
-			echo "Query ist " . $query;
+			// echo "Query ist " . $query;
 		$result = $connection->query($query);
 		if (!$result) {
 			die ("Angaben fehlerhaft, Objekt nicht erstellt " . $connection->error);
