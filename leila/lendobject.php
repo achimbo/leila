@@ -104,12 +104,13 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	?>
 	<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
 	<label for="userid">User ID</label>
-	<input type="text" name="userid" id="userid" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>>
-	<input type="text" disabled="disabled" name="firstname" id="firstname">
-	<input type="text" disabled="disabled" name="lastname" id="lastname"><p>
+	<input type="text" name="userid" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
+	<label for="username">User Name</label>
+	<input type="text" name="username" id="username" oninput="searchUserName(this)"><p>
 	<label for="objectid">Objekt ID</label>
-	<input type="text" name="objectid" id="objectid" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>>
-	<input type="text" disabled="disabled" name="objectname" id="objectname"><p>
+	<input type="text" name="objectid" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
+	<label for="objectname">Objekt Name</label>
+	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)"><p>
 	<label for="loanedout">Von</label>
 	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
 	<label for="duedate">Bis</label>
@@ -136,5 +137,71 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	?>
 	</form>
 </div>
+<script type="text/javascript">
+	
+request = new ajaxRequest()
+
+function displayUserName(input) {
+	request.open("GET", "leilaservice.php?userid=" + input.value, true)
+	request.mytype = "displayUserName"
+    request.send(null)			
+}
+
+function displayObjectName(input) {
+	request.open("GET", "leilaservice.php?objectid=" + input.value, true)
+	request.mytype = "displayObjectName"
+    request.send(null)			
+}
+
+request.onreadystatechange = function()
+      {
+        if (this.readyState == 4)
+        {
+          if (this.status == 200)
+          {
+            if (this.responseText != null)
+            {
+				switch (this.mytype) {
+				case "displayUserName":
+            		document.getElementById('username').value = this.responseText
+					break
+				case "displayObjectName":
+            		document.getElementById('objectname').value = this.responseText
+					break
+				}
+            }
+            else alert("Ajax error: No data received")
+          }
+          else alert( "Ajax error: " + this.statusText)
+        }
+      }
+
+function ajaxRequest()
+{
+try
+{
+	var request = new XMLHttpRequest()
+}
+catch(e1)
+{
+	try
+	{
+		request = new ActiveXObject("Msxml2.XMLHTTP")
+	}
+	catch(e2)
+	{
+		try
+		{
+			request = new ActiveXObject("Microsoft.XMLHTTP")
+		}
+		catch(e3)
+		{
+			request = false
+		}
+	}
+}
+return request
+}
+</script>
 </body>
 </html>
