@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `leila`.`rented` (
   `user_id` INT NOT NULL,
   `loanedout` DATETIME NOT NULL COMMENT 'When was the item loaned out?',
   `duedate` DATE NOT NULL COMMENT 'When is the item due',
-  `givenback` DATETIME NULL,
+  `givenback` DATE NULL,
   `comment` VARCHAR(200) NULL,
   INDEX `fk_rented_objects1_idx` (`object_id` ASC),
   INDEX `fk_rented_users1_idx` (`user_id` ASC),

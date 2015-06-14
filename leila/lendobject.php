@@ -55,7 +55,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 		if ($givenback == "") {
 			$givenback = 'NULL';
 		} else {
-			$error .= datetimepresent($givenback);
+			$error .= datepresent($givenback);
 			$givenback = addquotes($givenback);
 		}
 	}	

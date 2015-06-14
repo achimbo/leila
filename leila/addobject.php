@@ -42,11 +42,15 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 		$image = file_get_contents($tmpname);
 		$image = $connection->real_escape_string($image);
 		
-		$img = new imagick($_FILES['image']['tmp_name']);
-		// pass 0 to scale automatically
-		$img->scaleImage(0, 75);
-		$imagescaled = $img->getimageblob();
-		$imagescaled = $connection->real_escape_string($imagescaled);		
+		if ($imagelibrary == 'imagick') {
+			$img = new imagick($_FILES['image']['tmp_name']);
+			// pass 0 to scale automatically
+			$img->scaleImage(0, 75);
+			$imagescaled = $img->getimageblob();
+			$imagescaled = $connection->real_escape_string($imagescaled);
+		} elseif ($imagelibrary == 'gd')	{
+			echo "Error GD not implemented";			
+		}	
 		
 		$imagename = addquotes($imagename);
 		$imagetype = addquotes($imagetype);
@@ -107,7 +111,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 </head>
 <body>
 <?php include 'menu.php';?>
-<div id='content'>"
+<div id='content'>
 <?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
 echo isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>

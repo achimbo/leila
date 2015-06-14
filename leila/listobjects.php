@@ -3,7 +3,7 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 session_start();
-if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+if ($allowguests == 0 && (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin")) die ("Bitte <a href='login.php'>anmelden</a>");
 
 
 $mylist = '';
@@ -95,10 +95,13 @@ $mylist .= "</table>";
 </head>
 <body>
 
-<?php include 'menu.php';?>
+<?php 
+if (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") include 'menu.php';
+?>
 <div id="content">
 <h1>Objekt &Uuml;bersicht</h1>
 <?php echo "<div id='cats'>";
+	echo "<a href='listobjects.php'>Alle </a>";
 	 getcategoriesaslinks();
 	 echo "</div>";
 ?>

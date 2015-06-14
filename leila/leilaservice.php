@@ -31,7 +31,8 @@ if (isset($_GET['userid']) ){
 
 if (isset($_GET['username']) ){
 	$searchstring = sanitizeMySQL($connection, $_GET['username']);
-	$query = "SELECT user_id, firstname, lastname FROM users WHERE (firstname LIKE '%$searchstring%') OR (lastname LIKE '%$searchstring%') ORDER BY lastname" ;
+	// $query = "SELECT user_id, firstname, lastname FROM users WHERE MATCH (firstname, lastname) AGAINST ('$searchstring') ORDER BY lastname" ;
+	$query = "SELECT user_id, firstname, lastname FROM users WHERE CONCAT(firstname, ' ', lastname) LIKE '%$searchstring%' ORDER BY lastname" ;
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;

@@ -150,10 +150,10 @@ function getsiblings($catid){
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 	
-		if ($row['ID'] == $catid){
-			echo  '<b><a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a></b>&nbsp;';
+		if ($row['category_id'] == $catid){
+			echo  '<b><a href="listobjects.php?catid=' .$row['category_id'] . '">' . $row['name'] . ' </a></b>&nbsp;';
 		} else {
-			echo '<a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a>&nbsp;';
+			echo '<a href="listobjects.php?catid=' .$row['category_id'] . '">' . $row['name'] . ' </a>&nbsp;';
 		}
 	}
 	$connection->close();
@@ -210,7 +210,7 @@ function getcategories($oid){
 		$categories[$r]['catid'] = $row['catid'];	
 		$childof = $row['ischildof'];
 		if ($childof != NULL){
-			$query2 = "SELECT * FROM categories WHERE id = $childof";
+			$query2 = "SELECT * FROM categories WHERE category_id = $childof";
 			$result2 = $connection->query($query2);	
 			if (!$result) die ("Database query error" . $connection->error);
 			$result2->data_seek(0);
@@ -367,7 +367,11 @@ function isvaliduser($uid) {
 	if (! $result) die ( "Database error " . $connection->error );
 	$result->data_seek(0);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
+	// if user ins only object owner -> invalid
 	if ($row['usertype'] > 2) return -1;
+	// if user is admin -> valid without fees
+	if ($row['usertype'] == 1) return 2;
+	
 	
 	$fees = getfees($uid);
 	$now = date_create('now');
@@ -395,6 +399,7 @@ function objectisavailable($oid) {
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
 
+	// check wether object is marked broken or stolen
 	$query = "SELECT isavailable FROM objects WHERE object_id = '$oid'";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );

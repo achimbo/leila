@@ -3,7 +3,7 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 session_start();
-if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+if ($allowguests == 0 && (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin")) die ("Bitte <a href='login.php'>anmelden</a>");
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 

@@ -14,35 +14,16 @@ a:active	{text-decoration: underline;}
 a:hover	    {text-decoration: underline;}
 
 
-#nav {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	padding: 10px;
-	margin: 0px;
-	width: 700px;
-	height: 50px;
-	z-index: 1;
-	opacity: 1;
-	background-color: #FFFFFF;     
+#nav, #content {
+	padding: 10px; 
+	max-width: 600px; 
 }
 
-
-#content {
-    margin-top: 70px;
-    z-index: 0;
-    position: absolute;
-} 
 
 #cats {
+	padding: 10px;
 	margin-bottom: 20px;
 }
-
-/*
-.objectlist {
-	width: 400px;
-}
-*/
 
 .objectlist img, .floatright img {
 	 float: right;
@@ -61,13 +42,13 @@ a:hover	    {text-decoration: underline;}
 	background-color: lightpink;
 }
 
- label {
+label {
 	display:block;
 	float:left;
 	width:150px;
 	}
 	
- input {
+input {
 	width: 170px;
 	margin: 3px;
 }

@@ -186,7 +186,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			
 			<?php 
 			$fees = getfees($uid);
-			echo "<table>";
+			echo "<table id='feelist'>";
 			switch (isvaliduser($uid)) {
 				case -1:
 				echo "<caption><div class='invalid'>Kein User</div></caption>";

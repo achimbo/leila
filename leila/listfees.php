@@ -89,9 +89,11 @@ $mylist .= "</table>";
 	<input type="submit" value="Suchen">
 </form><p>
 
+
 <h3><?= $feesum ?></h3><p>
 <?= $mylist ?>
 <?= $pag['footer']?>
+
 
 </div>
 </body>
