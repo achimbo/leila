@@ -98,3 +98,13 @@ input.nowidth {
 	margin-left: auto;
     margin-right: auto;
 }
+
+#usersearchbox, #objectsearchbox {
+	display: none;
+	position: relative;
+	z-index: 3;
+	width: 300px; 
+	height: 200px;
+	background: #F0F0F0;
+	color: #000000;
+}
