@@ -83,7 +83,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			else {$cat = sanitizeMySQL($connection, $_POST['topcategory']);	}
 		
 		$insid = mysqli_insert_id($connection);
-		$query = "INSERT INTO objects_has_categories (objects_ID, categories_ID) 
+		$query = "INSERT INTO objects_has_categories (object_id, category_id) 
 				VALUES ('$insid', '$cat' )";
 //		echo "Query ist " . $query;
 		$result = $connection->query($query);
@@ -106,11 +106,10 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 	<link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
-<?php include 'menu.php';
-echo "<div id='content'>";
-if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
-?>
-<?= isset($message) ? $message : ''?>
+<?php include 'menu.php';?>
+<div id='content'>"
+<?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
+echo isset($message) ? $message : ''?>
 <h1>Objekt hinzuf&uuml;gen</h1>
 <form method="post" action="addobject.php"  enctype="multipart/form-data">
 <!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->

@@ -27,10 +27,10 @@ function gettopcategories(){
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 
-		if (isset($_POST['getsubcategories']) && $row['ID'] == $_POST['topcategory']){
-			echo  '<option selected="selected" value="' .$row['ID'] . '">' . $row['name'] . '</option>';
+		if (isset($_POST['getsubcategories']) && $row['category_id'] == $_POST['topcategory']){
+			echo  '<option selected="selected" value="' .$row['category_id'] . '">' . $row['name'] . '</option>';
 		} else {
-			echo '<option value="' .$row['ID'] . '">' . $row['name'] . '</option>';
+			echo '<option value="' .$row['category_id'] . '">' . $row['name'] . '</option>';
 		}
 	}
 	$connection->close();
@@ -58,10 +58,10 @@ function getcategoriesaslinks(){
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 
-		if ($row['ID'] == $catid || $row['ID'] == getparentid($catid)){
-			echo  '<b><a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a></b>&nbsp;';
+		if ($row['category_id'] == $catid || $row['category_id'] == getparentid($catid)){
+			echo  '<b><a href="listobjects.php?catid=' .$row['category_id'] . '">' . $row['name'] . ' </a></b>&nbsp;';
 		} else {
-			echo '<a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a>&nbsp;';
+			echo '<a href="listobjects.php?catid=' .$row['category_id'] . '">' . $row['name'] . ' </a>&nbsp;';
 		}
 		
 	}
@@ -81,7 +81,7 @@ function getparentid($catid){
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT * FROM categories WHERE id = $catid";
+	$query = "SELECT * FROM categories WHERE category_id = $catid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$result->data_seek(0);
@@ -94,7 +94,7 @@ function istopcategory($catid){
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
 	$catid = sanitizeMySQL($connection, $catid);
-	$query = "SELECT * FROM categories WHERE id = $catid";
+	$query = "SELECT * FROM categories WHERE category_id = $catid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$result->data_seek(0);
@@ -124,7 +124,7 @@ function getkids($catid){
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 
-		echo '<a href="listobjects.php?catid=' .$row['ID'] . '">' . $row['name'] . ' </a>&nbsp;';
+		echo '<a href="listobjects.php?catid=' .$row['category_id'] . '">' . $row['name'] . ' </a>&nbsp;';
 	}
 	$connection->close();
 	return;
@@ -135,7 +135,7 @@ function getsiblings($catid){
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
 	$catid = sanitizeMySQL($connection, $catid);
-	$query = "SELECT * FROM categories WHERE id = $catid";
+	$query = "SELECT * FROM categories WHERE category_id = $catid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$result->data_seek(0);
@@ -162,16 +162,16 @@ function getsiblings($catid){
 	
 }
 
-// get subcategories of category $subcatid
-function getsubcategories($subcatid){
+// get subcategories of category $topcatid
+function getsubcategories($topcatid){
 	include 'variables.php'; // require funktioniert nicht ???
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 
 	if ($connection->connect_error) die($connection->connect_error);
 
-	$subcatid = sanitizeMySQL($connection, $subcatid);
+	$topcatid = sanitizeMySQL($connection, $topcatid);
 
-	$query = "SELECT * FROM categories WHERE ischildof = $subcatid";
+	$query = "SELECT * FROM categories WHERE ischildof = $topcatid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
@@ -180,23 +180,23 @@ function getsubcategories($subcatid){
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
 
-		echo '<option value="' .$row['ID'] . '">' . $row['name'] . '</option>';
+		echo '<option value="' .$row['category_id'] . '">' . $row['name'] . '</option>';
 	}
 	$connection->close();
 	return;
 }
 
-// get the categories of object defined by $id
-function getcategories($id){
+// get the categories of object defined by $oid
+function getcategories($oid){
 	include 'variables.php'; 
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$id = sanitizeMySQL($connection, $id);
+	$oid = sanitizeMySQL($connection, $oid);
 	
-	$query = "SELECT o.ID AS oid, o.name AS oname, c.ID AS catid, c.name AS catname, c.ischildof FROM objects o
-		INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID
-		INNER JOIN categories c on ohc.categories_ID = c.ID 
-		WHERE o.ID = $id";
+	$query = "SELECT o.object_id AS oid, o.name AS oname, c.category_id AS catid, c.name AS catname, c.ischildof FROM objects o
+		INNER JOIN objects_has_categories ohc ON o.object_id = ohc.object_id
+		INNER JOIN categories c on ohc.category_id = c.category_id 
+		WHERE o.object_id = $oid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
@@ -222,13 +222,13 @@ function getcategories($id){
 	return $categories;
 }
 
-// return name of category $id
-function getcategoryname($id){
+// return name of category $catid
+function getcategoryname($catid){
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$id = sanitizeMySQL($connection, $id);
-	$query = "SELECT * FROM categories WHERE ID = $id";
+	$catid = sanitizeMySQL($connection, $catid);
+	$query = "SELECT * FROM categories WHERE category_id = $catid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
@@ -278,13 +278,13 @@ function datetimepresent($date) {
 	else {	return "Datum oder Zeit ung&uuml;ltig <br>";}
 }
 
-function getfees($id) {
+function getfees($uid) {
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT * FROM membershipfees WHERE users_ID = '$id'";
+	$query = "SELECT * FROM membershipfees WHERE user_id = '$uid'";
 	$result = $connection->query ( $query );
-	if (! $result) die ( "Database error " . $connection->error );
+	if (! $result) die ( "Database error in getfees" . $connection->error );
 	
 	$rows = $result->num_rows;	
 	$feelist[] = NULL;
@@ -302,11 +302,12 @@ function getfees($id) {
 	
 }
 
-function getrentalsbyobject($id) {
+function getrentalsbyobject($oid) {
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT loanedout, duedate, givenback, r.comment, firstname, lastname, u.ID AS userid FROM rented r INNER JOIN users u ON r.users_ID = u.ID WHERE r.objects_ID = '$id' ORDER BY loanedout ASC";
+	$query = "SELECT loanedout, duedate, givenback, r.comment, firstname, lastname, u.user_id AS userid 
+		FROM rented r INNER JOIN users u ON r.user_id = u.user_id WHERE r.object_id = '$oid' ORDER BY loanedout ASC";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 	
@@ -328,11 +329,12 @@ function getrentalsbyobject($id) {
 	return $rentals;
 }
 
-function getrentalsbyuser($id) {
+function getrentalsbyuser($uid) {
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT loanedout, duedate, givenback, r.comment, name AS objectname, o.ID AS objectid FROM rented r INNER JOIN objects o ON r.objects_ID = o.ID WHERE r.users_ID = '$id' ORDER BY loanedout ASC";
+	$query = "SELECT loanedout, duedate, givenback, r.comment, name AS objectname, o.object_id AS objectid 
+		FROM rented r INNER JOIN objects o ON r.object_id = o.object_id WHERE r.user_id = '$uid' ORDER BY loanedout ASC";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 
@@ -353,21 +355,21 @@ function getrentalsbyuser($id) {
 	return $rentals;
 }
 
-function isvaliduser($id) {
+function isvaliduser($uid) {
 	// -1 = wrong usertype 0 = invalid, 1 = valid for less than 6 weeks, 2 = valid longer than 6 weeks
 	$valid = 0;
 	
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT usertype FROM users WHERE ID = '$id'";
+	$query = "SELECT usertype FROM users WHERE user_id = '$uid'";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 	$result->data_seek(0);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	if ($row['usertype'] > 2) return -1;
 	
-	$fees = getfees($id);
+	$fees = getfees($uid);
 	$now = date_create('now');
 	foreach ($fees as $fee) {
 		// getfees may return empty array
@@ -387,13 +389,13 @@ function isvaliduser($id) {
 }
 
 // return -1 - wrong status, 0 rented away, 1 available
-function objectisavailable($id) {
+function objectisavailable($oid) {
 	$available = 0;
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
 
-	$query = "SELECT isavailable FROM objects WHERE ID = '$id'";
+	$query = "SELECT isavailable FROM objects WHERE object_id = '$oid'";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 	$result->data_seek(0);
@@ -401,7 +403,7 @@ function objectisavailable($id) {
 	if ($row['isavailable'] > 1) return -1;
 	
 	// $query = "SELECT loanedout, duedate, givenback, isavailable FROM rented r INNER JOIN objects o ON r.objects_ID = o.ID WHERE o.ID = '$id'";
-	$query = "SELECT givenback FROM rented WHERE objects_ID = '$id'";
+	$query = "SELECT givenback FROM rented WHERE object_id = '$oid'";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 

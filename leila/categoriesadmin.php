@@ -44,19 +44,21 @@ if (isset($_POST['deletecategories'])){
 	
 	if (isset($_POST['subcategory'])) {
 		$subcat = sanitizeMySQL($connection, $_POST['subcategory']);
-		$query = "DELETE FROM categories WHERE ID = $subcat";
+		$query = "DELETE FROM categories WHERE category_id = $subcat";
+		echo "subcat " . $_POST['subcategory'];
+		echo $query;
 		$result = $connection->query($query);
-		if (!$result) die ("Database query error" . $connection->error);
+		if (!$result) die ("Database delete error" . $connection->error);
 	} else {
 		// enabled cascading delete in mySQL
 		$topcat = sanitizeMySQL($connection, $_POST['topcategory']);
-		$query = "DELETE FROM categories WHERE ID = $topcat";
+		$query = "DELETE FROM categories WHERE category_id = $topcat";
+		echo $query;
 		$result = $connection->query($query);
-		if (!$result) die ("Database query error" . $connection->error);
+		if (!$result) die ("Database delete error" . $connection->error);
 	}
 
 }
-
 ?>
 
 <!DOCTYPE html>

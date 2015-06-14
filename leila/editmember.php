@@ -10,7 +10,7 @@ if ($connection->connect_error)
 	die ( $connection->connect_error );
 
 if (isset ( $_GET ['ID'] )) {
-	$id = sanitizeMySQL ( $connection, $_GET ['ID'] );
+	$uid = sanitizeMySQL ( $connection, $_GET ['ID'] );
 } else {
 	die ( "missing ID" );
 }
@@ -18,7 +18,7 @@ if (isset ( $_GET ['ID'] )) {
 if (isset($_GET['deletefee'])) {
 	$fromfee = sanitizeMySQL ( $connection, $_GET ['from'] );
 	$untilfee = sanitizeMySQL ( $connection, $_GET ['until'] );	
-	$query = "DELETE FROM membershipfees WHERE membershipfees.users_ID= '$id' AND membershipfees.from = '$fromfee' AND membershipfees.until = '$untilfee'";
+	$query = "DELETE FROM membershipfees WHERE membershipfees.user_id= '$uid' AND membershipfees.from = '$fromfee' AND membershipfees.until = '$untilfee'";
 	$result = $connection->query ( $query );
 	if (! $result) {
 		die ( "Mitgliedsbeitrag nicht vorhanden oder Datum falsch " . $connection->error );
@@ -37,7 +37,7 @@ if (isset($_POST['addfee'])) {
 		$error .= isint($amount);
 		
 		if ($error == "") {
-			$query = "INSERT INTO membershipfees (`users_ID`, `from`, `until`, `amount`) VALUES ('$id', '$fromfee', '$untilfee', '$amount')";
+			$query = "INSERT INTO membershipfees (`user_id`, `from`, `until`, `amount`) VALUES ('$uid', '$fromfee', '$untilfee', '$amount')";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Mitgliedsbeitrag bereits vorhanden oder Datum falsch " . $connection->error );
@@ -48,7 +48,7 @@ if (isset($_POST['addfee'])) {
 }
 
 if (isset ( $_POST ['deletemember'] )) {
-	$query = "DELETE FROM users WHERE ID = $id";
+	$query = "DELETE FROM users WHERE user_id = $uid";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database query error" . $connection->error );
 	echo '<head> <link rel="stylesheet" href="leila.css" type="text/css"></head>';
@@ -85,7 +85,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, password = '$password', firstname = '$firstname', lastname = '$lastname',
 			street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone',
-			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE ID = $id";
+			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -98,7 +98,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, firstname = '$firstname', lastname = '$lastname', 
 		street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone', 
-		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE ID = $id";
+		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -110,7 +110,7 @@ if (isset ( $_POST ['savemember'] )) {
 	}
 }
 
-$query = "SELECT * FROM users WHERE ID = " . $id;
+$query = "SELECT * FROM users WHERE user_id = " . $uid;
 $result = $connection->query ( $query );
 
 if (! $result)
@@ -139,10 +139,10 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 	?>
 	<h1>member editieren</h1>
 
-		<form method="post" action="editmember.php?ID=<?=$id?>">
+		<form method="post" action="editmember.php?ID=<?=$uid?>">
 
 			<label for="id">ID</label> <input disabled="disabled" name="id"
-				id="id" type="text" value="<?= $row['ID']?>"> <br> <label
+				id="id" type="text" value="<?= $row['user_id']?>"> <br> <label
 				for="usertype">Usertyp</label> <select name="usertype" id="usertype"
 				size="1">
 				<option value="1"
@@ -181,37 +181,37 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			<input type="submit" name="deletemember" value="Member l&ouml;schen"
 				onclick="return confirm('Sicher l&ouml;schen?');">
 		</form>
-		<div id="feelist">
-			<br><br>
+			<p>
+		 <a href="lendobject.php?userid=<?=$uid?>">Objekt an diesen User ausleihen</a><p>
 			
 			<?php 
-			$fees = getfees($id);
+			$fees = getfees($uid);
 			echo "<table>";
-			switch (isvaliduser($id)) {
+			switch (isvaliduser($uid)) {
 				case -1:
-				echo "<caption><div class='invalid'>Kein User</span></caption>";
+				echo "<caption><div class='invalid'>Kein User</div></caption>";
 				break;
 				
 				case 0:
-				echo "<caption><div class='invalid'>Kein Mitgliedsbeitrag</span></caption>";
+				echo "<caption><div class='invalid'>Kein Mitgliedsbeitrag</div></caption>";
 				break;
 
 				case 1:
-				echo "<caption><div class='tempvalid'>Mitgliedschaft l&auml;uft aus</span></caption>";
+				echo "<caption><div class='tempvalid'>Mitgliedschaft l&auml;uft aus</div></caption>";
 				break;
 				
 				case 2:
-				echo "<caption><div class='valid'>Mitgliedsbeitr&auml;ge gezahlt</span></caption>";
+				echo "<caption><div class='valid'>Mitgliedsbeitr&auml;ge gezahlt</div></caption>";
 				break;
 			}			
 			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th><th>L&ouml;schen</thead>";
 			foreach ($fees as $fee) {
-				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td><td><a onclick=\"return confirm('Sicher l&ouml;schen?');\" href='?deletefee=1&ID=" . $id . "&from=" . $fee['from'] . "&until=" . $fee['until'] . "'>L&ouml;schen</a></td></tr>" ;
+				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td><td><a onclick=\"return confirm('Sicher l&ouml;schen?');\" href='?deletefee=1&ID=" . $uid . "&from=" . $fee['from'] . "&until=" . $fee['until'] . "'>L&ouml;schen</a></td></tr>\n" ;
 			}
 			echo "</table><br>";
 			?>
 			
-			<form method="post" action="editmember.php?ID=<?=$id?>">
+			<form method="post" action="editmember.php?ID=<?=$uid?>">
 				<label for="fromfee">Beitrag ab</label> 
 				<input type="text" name="fromfee" id="fromfee" value="<?= getcurrentdate()?>"> <br>
 				<label for="untilfee">Beitrag bis</label>
@@ -220,11 +220,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				<input type="text" name="amount" id="amount"> <br>
 				<input type="submit" name="addfee" value="Beitrag hinzuf&uuml;gen">
 			</form>
-		</div>
-		<br> <a href="lendobject.php?userid=<?=$id?>">Ausleihen</a>
+		<p>
 		<?php 
-		
-		$rentals = getrentalsbyuser($id);
+		$rentals = getrentalsbyuser($uid);
 		echo "<table id='rentallist'>";
 		echo "<caption>Verleih Historie</caption>";
 		echo "<thead><tr><th>Objektname</th><th>Von</th><th>Bis</th><th>Zur&uuml;ck</th><th>Kommentar</th></thead>";
@@ -233,7 +231,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			// echo "<tr><td><a href='showobject.php?ID=" . $rent['objectid'] . "'>" . $rent['objectname'] . "</a></td>";
 			// echo "<td>" . $rent['loanedout'] . "</td><td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
 			echo "<tr><td><a href='showobject.php?ID=" . $rent['objectid'] . "'>" . $rent['objectname'] . "</a></td>";
-			echo "<td><a href='lendobject.php?edit=1&userid=" . $id . "&objectid=" . $rent['objectid'] . "&loanedout=" . $rent['loanedout'] . "'>". $rent['loanedout'] . "</a></td>" ;
+			echo "<td><a href='lendobject.php?edit=1&userid=" . $uid . "&objectid=" . $rent['objectid'] . "&loanedout=" . $rent['loanedout'] . "'>". $rent['loanedout'] . "</a></td>\n" ;
 			echo "<td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
 				
 		}

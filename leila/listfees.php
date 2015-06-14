@@ -29,7 +29,7 @@ if (isset($_GET['datefrom']) && isset($_GET['dateuntil'])) {
 		$feesum = "Summe im Zeitraum zwischen $from und $until: " . $row['amount'] . " Euro";
 		
 		$message = "die zwischen $from und $until verliehen wurden";
-		$query = "SELECT mf.*, u.firstname, u.lastname FROM membershipfees mf INNER JOIN users u ON mf.users_ID = u.ID WHERE mf.from BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) ORDER BY mf.from ASC " . $pag['query'];
+		$query = "SELECT mf.*, u.firstname, u.lastname FROM membershipfees mf INNER JOIN users u ON mf.user_id = u.user_id WHERE mf.from BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) ORDER BY mf.from ASC " . $pag['query'];
 	} else {
 		$error = "Datum fehlerhaft";
 	}
@@ -46,7 +46,7 @@ if (isset($_GET['datefrom']) && isset($_GET['dateuntil'])) {
 	$feesum = "Summe insgesamt: " . $row['amount'] . " Euro";
 	
 	$message = "insgesamt";
-	$query = "SELECT mf.*, u.firstname, u.lastname FROM membershipfees mf INNER JOIN users u ON mf.users_ID = u.ID ORDER BY mf.from ASC " . $pag['query'];
+	$query = "SELECT mf.*, u.firstname, u.lastname FROM membershipfees mf INNER JOIN users u ON mf.user_id = u.user_id ORDER BY mf.from ASC " . $pag['query'];
 }
 
 $result = $connection->query($query);
@@ -61,7 +61,7 @@ for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 
-	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['users_ID'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td>"
+	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['user_id'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td>"
 			. "<td>". $row['from'] . "</td><td>" . $row['until'] . "</td><td>" . $row['amount'] . "</td></tr>\n";
 }
 $mylist .= "</table>";

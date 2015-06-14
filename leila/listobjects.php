@@ -26,9 +26,9 @@ if (isset($_GET['searchid']) ){
 
 if (isset($catid) ){
 	$query = "SELECT COUNT(*) AS count FROM objects o
-	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID		
-    INNER JOIN categories c on ohc.categories_ID = c.ID 
-	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid ORDER BY o.name";	
+	INNER JOIN objects_has_categories ohc ON o.object_id = ohc.object_id		
+    INNER JOIN categories c on ohc.category_id = c.category_id 
+	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name";	
 	$message = "in Kategorie " . getcategoryname($catid);
 	$result = $connection->query($query);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -36,9 +36,9 @@ if (isset($catid) ){
 	$pag = paginate($count);
 	
 	$query = "SELECT o.* FROM objects o
-	INNER JOIN objects_has_categories ohc ON o.ID = ohc.objects_ID
-	INNER JOIN categories c on ohc.categories_ID = c.ID
-	WHERE ohc.categories_ID = $catid OR c.ischildof = $catid ORDER BY o.name" . $pag['query'];	
+	INNER JOIN objects_has_categories ohc ON o.object_id = ohc.object_ID
+	INNER JOIN categories c on ohc.category_id = c.category_id
+	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name" . $pag['query'];	
 } elseif (isset($searchstring)){
 	$query = "SELECT COUNT(*) AS count FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name";
 	$message = "mit Inhalt " . $searchstring;
@@ -73,14 +73,14 @@ $mylist .= "<table class='objectlist'>";
 for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
-	if (objectisavailable($row['ID']) < 1 ) {
+	if (objectisavailable($row['object_id']) < 1 ) {
 		$class = "class=unavailable";
 	} else {
 		$class = "class=available";
 	}
 	
-	$mylist .= '<tr><td> Name <a ' . $class . ' href="showobject.php?ID=' .$row['ID'] . '">' . $row['name'] . '</a>
-			<img src="showimage.php?ID=' . $row['ID'] . '&amp;showthumb" alt="Objekt Bild"></td></tr> ';
+	$mylist .= '<tr><td> Name <a ' . $class . ' href="showobject.php?ID=' .$row['object_id'] . '">' . $row['name'] . '</a>
+			<img src="showimage.php?ID=' . $row['object_id'] . '&amp;showthumb" alt="Objekt Bild"></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
@@ -103,7 +103,7 @@ $mylist .= "</table>";
 	 echo "</div>";
 ?>
 <form method="get" action="listobjects.php">
-	<label for="searchstring">Beschr & Titel: </label>
+	<label for="searchstring">Beschr &amp; Titel: </label>
 	<input type="text" id="searchstring" name="searchstring">
 	<input type="submit" value="Suchen">
 </form>

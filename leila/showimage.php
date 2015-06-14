@@ -10,12 +10,12 @@ $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database)
 if ($connection->connect_error) die($connection->connect_error);
 
 if (isset($_GET['ID']) ){
-	$id = sanitizeMySQL($connection, $_GET['ID']);
+	$oid = sanitizeMySQL($connection, $_GET['ID']);
 } else {
 	die("missing query");
 }
 
-$query = "SELECT * FROM objects WHERE ID = " . $id;
+$query = "SELECT * FROM objects WHERE object_id = " . $oid;
 $result = $connection->query($query);
 
 if (!$result) die ("Database query error" . $connection->error);

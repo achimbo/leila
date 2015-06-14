@@ -17,7 +17,7 @@ if (isset($_GET['edit'])) {
 	$userid = sanitizeMySQL ( $connection, $_GET ['userid'] );
 	$objectid = sanitizeMySQL ( $connection, $_GET ['objectid'] );
 	$loanedout = sanitizeMySQL ( $connection, $_GET ['loanedout'] );
-	$query = "SELECT duedate, givenback, comment FROM rented WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";
+	$query = "SELECT duedate, givenback, comment FROM rented WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";
 	$result = $connection->query ( $query );
 	$result->data_seek ( 0 );
 	$row = $result->fetch_array ( MYSQLI_ASSOC );
@@ -31,7 +31,7 @@ if (isset($_POST['delete'])) {
 	$userid = sanitizeMySQL ( $connection, $_POST ['userid'] );
 	$objectid = sanitizeMySQL ( $connection, $_POST ['objectid'] );
 	$loanedout = sanitizeMySQL ( $connection, $_POST ['loanedout'] );
-	$query = "DELETE FROM rented WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";
+	$query = "DELETE FROM rented WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";
 	$result = $connection->query ( $query );
 	$message = "Verleihvorgang gel&ouml;scht";
 }
@@ -68,11 +68,11 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	}
 	if ($error == "") {
 		if (isset($_POST['lendobject'])) {
-		$query = "INSERT INTO rented (objects_ID, users_ID, loanedout, duedate, comment) 
+		$query = "INSERT INTO rented (object_ID, user_ID, loanedout, duedate, comment) 
 			VALUES ('$objectid', '$userid', '$loanedout', '$duedate', '$comment') ";
 		} elseif (isset($_POST['updatelease'])) {
 			$query = "UPDATE rented SET duedate='$duedate', givenback = $givenback, comment = '$comment'
-				WHERE objects_id = '$objectid' AND users_id = '$userid' AND loanedout = '$loanedout'";		
+				WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";		
 		} 
 		$result = $connection->query ( $query );
 		
@@ -92,7 +92,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 <link rel="stylesheet" href="leila.css" type="text/css">
 <title>Objekt verleihen</title>
 </head>
-<body>
+<body onload="updateNames()">
 <?php include 'menu.php';?>
 <div id="content">
 	<h1>Objekt Verleih <?php if (isset($_GET['edit'])) echo "updaten"?></h1>
@@ -106,11 +106,11 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	<label for="userid">User ID</label>
 	<input type="text" name="userid" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
 	<label for="username">User Name</label>
-	<input type="text" name="username" id="username" oninput="searchUserName(this)"><p>
+	<input type="text" name="username" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
 	<label for="objectid">Objekt ID</label>
 	<input type="text" name="objectid" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
 	<label for="objectname">Objekt Name</label>
-	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)"><p>
+	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
 	<label for="loanedout">Von</label>
 	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
 	<label for="duedate">Bis</label>
@@ -136,71 +136,163 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	}
 	?>
 	</form>
+
+	<div id="test"></div>
 </div>
 <script type="text/javascript">
 	
-request = new ajaxRequest()
+
+function updateNames() {
+	displayUserName(document.getElementById('userid'))
+	displayObjectName(document.getElementById('objectid'))
+	
+}
 
 function displayUserName(input) {
+	var request = new ajaxRequest()
+
 	request.open("GET", "leilaservice.php?userid=" + input.value, true)
-	request.mytype = "displayUserName"
-    request.send(null)			
+    request.send(null)		
+
+    request.onreadystatechange = function()
+    {
+      if (this.readyState == 4)
+      {
+        if (this.status == 200)
+        {
+          if (this.responseText != null)
+          {
+          		document.getElementById('username').value = unescapeHtml(this.responseText)
+          }
+          else alert("Ajax error: No data received")
+        }
+        else alert( "Ajax error: " + this.statusText)
+      }
+    }
+  	
 }
 
 function displayObjectName(input) {
+	var request = new ajaxRequest()
+
 	request.open("GET", "leilaservice.php?objectid=" + input.value, true)
-	request.mytype = "displayObjectName"
-    request.send(null)			
+    request.send(null)		
+
+    request.onreadystatechange = function()
+    {
+      if (this.readyState == 4)
+      {
+        if (this.status == 200)
+        {
+          if (this.responseText != null)
+          {
+          		document.getElementById('objectname').value = unescapeHtml(this.responseText)
+          }
+          else alert("Ajax error: No data received")
+        }
+        else alert( "Ajax error: " + this.statusText)
+      }
+    }
+  	
 }
 
-request.onreadystatechange = function()
-      {
-        if (this.readyState == 4)
-        {
-          if (this.status == 200)
-          {
-            if (this.responseText != null)
-            {
-				switch (this.mytype) {
-				case "displayUserName":
-            		document.getElementById('username').value = this.responseText
-					break
-				case "displayObjectName":
-            		document.getElementById('objectname').value = this.responseText
-					break
-				}
-            }
-            else alert("Ajax error: No data received")
-          }
-          else alert( "Ajax error: " + this.statusText)
-        }
-      }
+function searchUserName(input) {
+
+	if (input.value.length > 2) {	
+		var request = new ajaxRequest()
+	
+		request.open("GET", "leilaservice.php?username=" + input.value, true)
+	    request.send(null)		
+	
+	    request.onreadystatechange = function()
+	    {
+	      if (this.readyState == 4)
+	      {
+	        if (this.status == 200)
+	        {
+	          if (this.responseText != null)
+	          {
+	          		document.getElementById('test').innerHTML = this.responseText
+	          }
+	          else alert("Ajax error: No data received")
+	        }
+	        else alert( "Ajax error: " + this.statusText)
+	      }
+	    }
+	}	else {
+		document.getElementById('test').innerHTML = ""
+	}
+}
+
+function searchObjectName(input) {
+
+	if (input.value.length > 2) {	
+		var request = new ajaxRequest()
+	
+		request.open("GET", "leilaservice.php?objectname=" + input.value, true)
+	    request.send(null)		
+	
+	    request.onreadystatechange = function()
+	    {
+	      if (this.readyState == 4)
+	      {
+	        if (this.status == 200)
+	        {
+	          if (this.responseText != null)
+	          {
+	          		document.getElementById('test').innerHTML = this.responseText
+	          }
+	          else alert("Ajax error: No data received")
+	        }
+	        else alert( "Ajax error: " + this.statusText)
+	      }
+	    }
+	}	else {
+		document.getElementById('test').innerHTML = ""
+	}
+}
 
 function ajaxRequest()
 {
-try
-{
-	var request = new XMLHttpRequest()
-}
-catch(e1)
-{
 	try
 	{
-		request = new ActiveXObject("Msxml2.XMLHTTP")
+		var request = new XMLHttpRequest()
 	}
-	catch(e2)
+	catch(e1)
 	{
 		try
 		{
-			request = new ActiveXObject("Microsoft.XMLHTTP")
+			request = new ActiveXObject("Msxml2.XMLHTTP")
 		}
-		catch(e3)
+		catch(e2)
 		{
-			request = false
+			try
+			{
+				request = new ActiveXObject("Microsoft.XMLHTTP")
+			}
+			catch(e3)
+			{
+				request = false
+			}
 		}
 	}
+	return request
 }
-return request
+
+function unescapeHtml(unsafe) {
+    return unsafe
+        .replace(/&amp;/g, "&")
+        .replace(/&ouml;/g, "ö")
+        .replace(/&Ouml;/g, "Ö")
+        .replace(/&auml;/g, "ä")
+        .replace(/&Auml;/g, "Ä")
+        .replace(/&uuml;/g, "ü")
+        .replace(/&Uuml;/g, "Ü")
+        .replace(/&szlig;/g, "ß")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
 }
 </script>
 </body>

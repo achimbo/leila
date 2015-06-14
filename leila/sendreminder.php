@@ -12,7 +12,7 @@ if ($connection->connect_error)
 	die ( $connection->connect_error );
 
 $query = "SELECT r.duedate, o.name AS objectname, u.firstname, u.lastname, u.email 
-		FROM rented r INNER JOIN objects o ON o.ID = r.objects_ID INNER JOIN users u ON u.ID = r.users_ID 
+		FROM rented r INNER JOIN objects o ON o.object_id = r.object_id INNER JOIN users u ON u.user_id = r.user_id 
 		WHERE DATEDIFF(duedate, curdate()) = 3  AND r.givenback IS NULL AND u.email != '' ";
 
 $result = $connection->query($query);

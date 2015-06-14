@@ -14,7 +14,7 @@ if (isset($_POST['name']) && !isset($_POST['getsubcategories'])) {
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 if ($connection->connect_error) die($connection->connect_error);
 if (isset($_GET['ID']) ){
-	$id = sanitizeMySQL($connection, $_GET['ID']);
+	$oid = sanitizeMySQL($connection, $_GET['ID']);
 } else {
 	die("missing object ID");
 }
@@ -23,23 +23,23 @@ if (isset($_GET['ID']) ){
 if (isset($_POST['addcategory'])) {
 	if (!isset($_POST['subcategory'])) {
 		$topcat = sanitizeMySQL($connection, $_POST['topcategory']);
-		$query = "INSERT INTO objects_has_categories (objects_ID, categories_ID) VALUES ('$id', '$topcat') ";
+		$query = "INSERT INTO objects_has_categories (object_id, category_id) VALUES ('$oid', '$topcat') ";
 	} else {
 		$subcat = sanitizeMySQL($connection, $_POST['subcategory']);
-		$query = "INSERT INTO objects_has_categories (objects_ID, categories_ID) VALUES ('$id', '$subcat') ";
+		$query = "INSERT INTO objects_has_categories (object_id, category_id) VALUES ('$oid', '$subcat') ";
 	}
 	$result = $connection->query($query);
 	if (!$result) die ("Kategorie kann nicht doppelt vergeben werden " . $connection->error);
 }
 
 if (isset($_POST['deleteimage'])) {
-	$query = "UPDATE objects SET image = NULL, imagename = NULL, imagetype = NULL, scaledimage = NULL WHERE ID = $id";
+	$query = "UPDATE objects SET image = NULL, imagename = NULL, imagetype = NULL, scaledimage = NULL WHERE object_id = $oid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 }
 
 if (isset($_POST['deleteobject'])) {
-	$query = "DELETE FROM objects WHERE ID = $id";
+	$query = "DELETE FROM objects WHERE object_id = $oid";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	echo '<head> <link rel="stylesheet" href="leila.css" type="text/css"></head>';
@@ -85,11 +85,11 @@ if (isset($_POST['saveobject']) && $error == "") {
 
 		$query = "UPDATE objects SET name = '$name', description = $description, image = $image, imagename = $imagename,
 		imagetype = $imagetype, scaledimage = $imagescaled, dateadded = $dateadded, internalcomment = $internalcomment,
-		owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE ID = $id";
+		owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE object_id = $oid";
 	} else {
 		// rewrite to NULL / addquotes() ?
 		$query = "UPDATE objects SET name = '$name', description = $description, dateadded = $dateadded, 
-		internalcomment = $internalcomment, owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE ID = $id";
+		internalcomment = $internalcomment, owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE object_id = $oid";
 	}
 	
 	//	echo "Query ist " . $query;
@@ -99,7 +99,7 @@ if (isset($_POST['saveobject']) && $error == "") {
 	if (isset($_POST['deletecat'])){
 		foreach($_POST['deletecat'] as $delcat) {
 			$delcat = sanitizeMySQL($connection, $delcat);
-			$query = "DELETE FROM objects_has_categories WHERE objects_id = $id AND categories_id = $delcat";
+			$query = "DELETE FROM objects_has_categories WHERE object_id = $oid AND category_id = $delcat";
 			$result = $connection->query($query);
 			if (!$result) die ("Database query error" . $connection->error);
 		}
@@ -107,7 +107,7 @@ if (isset($_POST['saveobject']) && $error == "") {
 }
 
 
-$query = "SELECT * FROM objects WHERE ID = " . $id;
+$query = "SELECT * FROM objects WHERE object_id = " . $oid;
 $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 
@@ -122,20 +122,19 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
    <link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
-<?php include 'menu.php';
-echo "<div id='content'>";
-if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";
-?>
+<?php include 'menu.php';?>
+<div id='content'>
+<?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";?>
 
 <h1>Objekt bearbeiten</h1>
-<form method="post" action="editobject.php?ID=<?=$row['ID']?>" enctype="multipart/form-data">
+<form method="post" action="editobject.php?ID=<?=$row['object_id']?>" enctype="multipart/form-data">
 	<!-- hidden submit, so that enter button in name field works, else "getsubcategories" would be default -->
 	<input type="submit" name="saveobject" value="hs" style="visibility: hidden;" /><br>
-<label for="id">Objekt ID</label> <input id="id" disabled="disabled" name="id" type="text" value="<?= $row['ID']?>"> <br>
+<label for="id">Objekt ID</label> <input id="id" disabled="disabled" name="id" type="text" value="<?= $row['object_id']?>"> <br>
 	<p>
 	<b>Kategorien</b> <br>
 	<?php 
-	foreach (getcategories($id) as $cat){
+	foreach (getcategories($oid) as $cat){
 		echo $cat['name'] . "<input class='nowidth' type=\"checkbox\" name=\"deletecat[]\" value=\"" . $cat['catid'] . "\"> l&ouml;schen<br>";
 		//echo "Kategorie" . $cat['name'] . $cat['catid'];
 	}
@@ -158,7 +157,7 @@ if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error 
 	<?= isset($_POST['name']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
 	<label for="name">Objekt Name</label> <input id="name" type="text" name="name" value="<?= $row['name']?>"> <br>
 	<label for="description">Objekt Beschreibung</label> <textarea id="description" name ="description" rows="5" cols="20"><?= $row['description']?></textarea> <p>
-	<a href="showimage.php?ID=<?=$row['ID']?>"><img src="showimage.php?ID=<?=$row['ID']?>&showthumb"></a>
+	<a href="showimage.php?ID=<?=$row['object_id']?>"><img src="showimage.php?ID=<?=$row['object_id']?>&showthumb"></a>
 	<?php if ($row['image'] != NULL) {echo "<br><input type=\"submit\" name=\"deleteimage\" value=\"Bild l&ouml;schen\" onclick=\"return confirm('Sicher l&ouml;schen?');\"><br>" ;}?>
 	Foto &auml;ndern<input type="file" name="image"> <p>
 	<label for="dateadded">Hinzugef&uuml;gt am</label> <input id="dateadded" type="text" name="dateadded" value="<?= $row['dateadded']?>"> <br>

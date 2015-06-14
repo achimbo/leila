@@ -24,7 +24,7 @@ if (isset($_GET['searchstring'])){
 	
 } elseif (isset($_GET['searchid'])) {
 	$searchid = sanitizeMySQL($connection, $_GET['searchid']);
-	$query = "SELECT * FROM users WHERE ID = '$searchid'";
+	$query = "SELECT * FROM users WHERE user_id = '$searchid'";
 	$message = "mit ID " . $searchid;
 	$pag['footer'] = "";
 } else {
@@ -47,9 +47,9 @@ for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 
-	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['ID'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td></tr>\n";
+	$mylist .= "<tr><td><a href='editmember.php?ID=" . $row['user_id'] . "'>" . $row['firstname'] . " " . $row['lastname'] . "</a></td></tr>\n";
 	
-	// $mylist .= "<tr><td> Name <a href='showmember.php?ID=' .$row['ID'] > $row['firstname'] . </a></td></tr> ";
+	// $mylist .= "<tr><td> Name <a href='showmember.php?ID=' .$row['user_id'] > $row['firstname'] . </a></td></tr> ";
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
