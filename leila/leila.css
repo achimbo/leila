@@ -11,7 +11,7 @@ a:link		{color: #B886B0; text-decoration: none;}
 
 a:active	{text-decoration: underline;}
 
-a:hover	    {text-decoration: underline;}
+a:hover, #usersearchbox span:hover, #objectsearchbox span:hover    {text-decoration: underline;}
 
 
 #nav, #content {
@@ -97,4 +97,14 @@ input.nowidth {
 	max-width: 400px;
 	margin-left: auto;
     margin-right: auto;
+}
+
+#usersearchbox, #objectsearchbox {
+	display: none;
+	position: relative;
+	z-index: 3;
+	width: 250px; 
+	margin-left: 25px;
+	background: #F0F0F0;
+	color: #000000;
 }

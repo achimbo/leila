@@ -158,8 +158,8 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				value="<?= $row['firstname']?>"> <br> <label for="lastname">Nachname</label>
 			<input type="text" name="lastname" id="lastname"
 				value="<?= $row['lastname']?>"> <br> <label for="password">Passwort</label>
-			<input type="password" name="password" id="password"> Passwort
-			&auml;ndern <input type="checkbox" name="updatepassword"
+			<input type="password" name="password" id="password"> <br>
+			Passwort &auml;ndern <input type="checkbox" name="updatepassword"
 				value="update"> <br> <label for="street">Straße</label> <input
 				type="text" name="street" id="street" value="<?= $row['street']?>">
 			<br> <label for="city">Stadt</label> <input type="text" name="city"
