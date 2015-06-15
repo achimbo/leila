@@ -192,7 +192,7 @@ function searchUserName(input) {
 	          		document.getElementById('usersearchbox').innerHTML = ""
 	      		document.getElementById('usersearchbox').style.display = "block" 
 		      		for (x in objectlist) {	
-        				document.getElementById('usersearchbox').innerHTML += "<span onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</span><br>'
+        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</div>'
 		      		}
 	          }
 	          else alert("Ajax error: No data received")
