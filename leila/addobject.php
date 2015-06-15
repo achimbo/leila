@@ -137,10 +137,123 @@ Kategorie 	<select name="topcategory" size="1">
 <label for="dateadded">Eingangsdatum</label> <input id="dateadded" type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
 <label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>
 </textarea> <br>
-<label for="owner">Eigent&uuml;mer ID</label> <input id="owner" type="text" name="owner" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
+<label for="owner">Eigent&uuml;mer ID</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
+<label for="username">Eigent&uuml;mer Name</label>
+<input type="text" name="username" id="username" oninput="searchUserName(this)"><br>
+<div id="usersearchbox"></div>
 <label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
 </div>
 </body>
+<script type="text/javascript">
+
+function displayUserName(input) {
+	var request = new ajaxRequest()
+
+	request.open("GET", "leilaservice.php?userid=" + input.value, true)
+    request.send(null)		
+
+    request.onreadystatechange = function()
+    {
+      if (this.readyState == 4)
+      {
+        if (this.status == 200)
+        {
+          if (this.responseText != null)
+          {
+          		document.getElementById('username').value = unescapeHtml(this.responseText)
+          }
+          else alert("Ajax error: No data received")
+        }
+        else alert( "Ajax error: " + this.statusText)
+      }
+    }
+  	
+}
+
+function searchUserName(input) {
+
+	if (input.value.length > 2) {	
+		var request = new ajaxRequest()
+	
+		request.open("GET", "leilaservice.php?username=" + input.value, true)
+	    request.send(null)		
+	
+	    request.onreadystatechange = function()
+	    {
+	      if (this.readyState == 4)
+	      {
+	        if (this.status == 200)
+	        {
+	          if (this.responseText != null)
+	          {
+		          var objectlist = JSON.parse(this.responseText)
+	          		document.getElementById('usersearchbox').innerHTML = ""
+	      		document.getElementById('usersearchbox').style.display = "block" 
+		      		for (x in objectlist) {	
+        				document.getElementById('usersearchbox').innerHTML += "<span onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</span><br>'
+		      		}
+	          }
+	          else alert("Ajax error: No data received")
+	        }
+	        else alert( "Ajax error: " + this.statusText)
+	      }
+	    }
+	}	else {
+		document.getElementById('usersearchbox').innerHTML = ""
+		document.getElementById('usersearchbox').style.display = "none"
+	}
+}
+
+function setUserId(id) {
+	document.getElementById('owner').value = id
+	document.getElementById('usersearchbox').style.display = "none" 
+	updateNames()
+}
+
+function ajaxRequest()
+{
+	try
+	{
+		var request = new XMLHttpRequest()
+	}
+	catch(e1)
+	{
+		try
+		{
+			request = new ActiveXObject("Msxml2.XMLHTTP")
+		}
+		catch(e2)
+		{
+			try
+			{
+				request = new ActiveXObject("Microsoft.XMLHTTP")
+			}
+			catch(e3)
+			{
+				request = false
+			}
+		}
+	}
+	return request
+}
+
+function unescapeHtml(unsafe) {
+    return unsafe
+        .replace(/&amp;/g, "&")
+        .replace(/&ouml;/g, "ö")
+        .replace(/&Ouml;/g, "Ö")
+        .replace(/&auml;/g, "ä")
+        .replace(/&Auml;/g, "Ä")
+        .replace(/&uuml;/g, "ü")
+        .replace(/&Uuml;/g, "Ü")
+        .replace(/&szlig;/g, "ß")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
+}
+</script>
+
 </html>

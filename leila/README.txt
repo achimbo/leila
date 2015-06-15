@@ -13,6 +13,7 @@ Reporting and search of lended out objects
 Reporting on membership fees
 Send email reminders when items are due
 Optional Guest access to searchable object list
+Search as you type for users and objects
 
 
 Required Software:

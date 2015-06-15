@@ -107,12 +107,12 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	<input type="text" name="userid" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
 	<label for="username">User Name</label>
 	<input type="text" name="username" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
-	<div id="usersearchbox">XXX Test</div>
+	<div id="usersearchbox"></div>
 	<label for="objectid">Objekt ID</label>
 	<input type="text" name="objectid" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
 	<label for="objectname">Objekt Name</label>
 	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
-	<div id="objectsearchbox">XXX Test</div>
+	<div id="objectsearchbox"></div>
 	<label for="loanedout">Von</label>
 	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
 	<label for="duedate">Bis</label>
@@ -218,7 +218,6 @@ function searchUserName(input) {
 	          		document.getElementById('usersearchbox').innerHTML = ""
 	      		document.getElementById('usersearchbox').style.display = "block" 
 		      		for (x in objectlist) {	
-			      		
         				document.getElementById('usersearchbox').innerHTML += "<span onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</span><br>'
 		      		}
 	          }
