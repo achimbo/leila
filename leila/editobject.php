@@ -80,7 +80,26 @@ if (isset($_POST['saveobject']) && $error == "") {
 			$imagescaled = $img->getimageblob();
 			$imagescaled = $connection->real_escape_string($imagescaled);
 		} elseif ($imagelibrary == 'gd')	{
-			echo "Error GD not implemented";
+			// Loading the image and getting the original dimensions
+			$largeimage = imagecreatefromjpeg($_FILES['image']['tmp_name']);
+			$orig_width = imagesx($largeimage);
+			$orig_height = imagesy($largeimage);
+			
+			// Create new image to display
+			$new_image = imagecreatetruecolor(100, 75);
+			
+			// Create new image with changed dimensions
+			imagecopyresized($new_image, $largeimage,
+					0, 0, 0, 0,
+					100, 75,
+					$orig_width, $orig_height);
+			
+			// Print image
+			
+			ob_start();
+			imagejpeg($new_image);
+			$imagescaled = ob_get_clean();
+			$imagescaled = $connection->real_escape_string($imagescaled);
 		}
 		
 		$imagename = addquotes($imagename);
