@@ -49,26 +49,47 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			$imagescaled = $img->getimageblob();
 			$imagescaled = $connection->real_escape_string($imagescaled);
 		} elseif ($imagelibrary == 'gd')	{
-			// echo "Error GD not implemented";
-
 			// Loading the image and getting the original dimensions
-			$largeimage = imagecreatefromjpeg($_FILES['image']['tmp_name']);
+			$width = 100;
+			switch ($imagetype) {
+				case 'image/jpeg': 			
+					$largeimage = imagecreatefromjpeg($_FILES['image']['tmp_name']);
+					break;
+				case 'image/png': 
+					$largeimage = imagecreatefrompng($_FILES['image']['tmp_name']);
+					break;
+				case 'image/gif': 
+					$largeimage = imagecreatefromgif($_FILES['image']['tmp_name']);
+					break;
+				default: die("Error, only jpg, png or gif images allowed!");
+			}
 			$orig_width = imagesx($largeimage);
 			$orig_height = imagesy($largeimage);
-			
+			$height = (($orig_height * $width) / $orig_width);
 			// Create new image to display
 			$new_image = imagecreatetruecolor(100, 75);
 			
 			// Create new image with changed dimensions
 			imagecopyresized($new_image, $largeimage,
 					0, 0, 0, 0,
-					100, 75,
+					$width, $height,
 					$orig_width, $orig_height);
 			
 			// Print image
 			
 			ob_start();
-			imagejpeg($new_image);
+			switch ($imagetype) {
+				case 'image/jpeg':
+				imagejpeg($new_image);
+				break;
+				case 'image/png':
+				imagepng($new_image);
+				break;
+				case 'image/gif':
+				imagegif($new_image);
+				break;
+				default: die("Error, only jpg, png or gif images allowed!");
+			}
 			$imagescaled = ob_get_clean();
 			$imagescaled = $connection->real_escape_string($imagescaled);
 		}	
