@@ -147,7 +147,6 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 function updateNames() {
 	displayUserName(document.getElementById('userid'))
 	displayObjectName(document.getElementById('objectid'))
-	
 }
 
 function displayUserName(input) {
@@ -218,7 +217,7 @@ function searchUserName(input) {
 	          		document.getElementById('usersearchbox').innerHTML = ""
 	      		document.getElementById('usersearchbox').style.display = "block" 
 		      		for (x in objectlist) {	
-        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</div>'
+        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
 		      		}
 	          }
 	          else alert("Ajax error: No data received")
@@ -252,7 +251,7 @@ function searchObjectName(input) {
 		          		document.getElementById('objectsearchbox').innerHTML = ""
 		      		document.getElementById('objectsearchbox').style.display = "block" 
 			      		for (x in objectlist) {	
-	          				document.getElementById('objectsearchbox').innerHTML += "<div onclick=\"setObjectId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</div>'
+	          				document.getElementById('objectsearchbox').innerHTML += "<div onclick=\"setObjectId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
 			      		}
 	          }
 	          else alert("Ajax error: No data received")

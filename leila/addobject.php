@@ -49,7 +49,28 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			$imagescaled = $img->getimageblob();
 			$imagescaled = $connection->real_escape_string($imagescaled);
 		} elseif ($imagelibrary == 'gd')	{
-			echo "Error GD not implemented";			
+			// echo "Error GD not implemented";
+
+			// Loading the image and getting the original dimensions
+			$largeimage = imagecreatefromjpeg($_FILES['image']['tmp_name']);
+			$orig_width = imagesx($largeimage);
+			$orig_height = imagesy($largeimage);
+			
+			// Create new image to display
+			$new_image = imagecreatetruecolor(100, 75);
+			
+			// Create new image with changed dimensions
+			imagecopyresized($new_image, $largeimage,
+					0, 0, 0, 0,
+					100, 75,
+					$orig_width, $orig_height);
+			
+			// Print image
+			
+			ob_start();
+			imagejpeg($new_image);
+			$imagescaled = ob_get_clean();
+			$imagescaled = $connection->real_escape_string($imagescaled);
 		}	
 		
 		$imagename = addquotes($imagename);
@@ -148,6 +169,10 @@ Kategorie 	<select name="topcategory" size="1">
 </body>
 <script type="text/javascript">
 
+function updateNames() {
+	displayUserName(document.getElementById('owner'))
+}
+	
 function displayUserName(input) {
 	var request = new ajaxRequest()
 
@@ -192,7 +217,7 @@ function searchUserName(input) {
 	          		document.getElementById('usersearchbox').innerHTML = ""
 	      		document.getElementById('usersearchbox').style.display = "block" 
 		      		for (x in objectlist) {	
-        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">" + objectlist[x].name + '</div>'
+        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
 		      		}
 	          }
 	          else alert("Ajax error: No data received")

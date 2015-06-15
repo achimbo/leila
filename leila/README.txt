@@ -17,5 +17,5 @@ Search as you type for users and objects
 
 
 Required Software:
-PHP with imagemagick
+PHP with imagemagick or GD
 MySQL Database
