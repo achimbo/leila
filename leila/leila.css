@@ -11,7 +11,7 @@ a:link		{color: #B886B0; text-decoration: none;}
 
 a:active	{text-decoration: underline;}
 
-a:hover, #usersearchbox span:hover, #objectsearchbox span:hover    {text-decoration: underline;}
+a:hover, #usersearchbox div:hover, #objectsearchbox div:hover    {text-decoration: underline;}
 
 
 #nav, #content {
@@ -34,7 +34,7 @@ a:hover, #usersearchbox span:hover, #objectsearchbox span:hover    {text-decorat
 	float: right;
 }
 
-.objectlist tr:nth-child(odd), .memberlist tr:nth-child(odd) {
+.objectlist tr:nth-child(odd), .memberlist tr:nth-child(odd), #usersearchbox div:nth-child(odd) , #objectsearchbox div:nth-child(odd) {
     background-color: lavender;
 }
 
@@ -107,4 +107,11 @@ input.nowidth {
 	margin-left: 25px;
 	background: #F0F0F0;
 	color: #000000;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	box-shadow: 5px 5px 3px #888888;
+	text-align: center;
+	padding: 5px;	
 }
+
