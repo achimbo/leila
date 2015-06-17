@@ -168,7 +168,7 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <head>
    <link rel="stylesheet" href="leila.css" type="text/css">
 </head>
-<body>
+<body onload="updateNames()">
 <?php include 'menu.php';?>
 <div id='content'>
 <?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";?>
@@ -209,7 +209,10 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	Foto &auml;ndern<input type="file" name="image"> <p>
 	<label for="dateadded">Hinzugef&uuml;gt am</label> <input id="dateadded" type="text" name="dateadded" value="<?= $row['dateadded']?>"> <br>
 	<label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?= $row['internalcomment']?></textarea> <br>
-	<label for="owner">Eigent&uuml;er ID</label> <input id="owner" type="text" name="owner" value="<?= $row['owner']?>"> <br>
+	<label for="owner">Eigent&uuml;er ID</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?= $row['owner']?>"> <br>
+	<label for="username">Eigent&uuml;mer Name</label>
+	<input type="text" name="username" id="username" oninput="searchUserName(this)"><br>
+	<div id="usersearchbox"></div>
 	<label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
 	<label for="isavailable">Status </label>
 	<select id="isavailable" name="isavailable" size="1">
@@ -222,5 +225,120 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen" onclick="return confirm('Sicher l&ouml;schen?');">
 </form>
 </div>
+
+<script type="text/javascript">
+
+function updateNames() {
+	displayUserName(document.getElementById('owner'))
+}
+	
+function displayUserName(input) {
+	var request = new ajaxRequest()
+
+	request.open("GET", "leilaservice.php?userid=" + input.value, true)
+    request.send(null)		
+
+    request.onreadystatechange = function()
+    {
+      if (this.readyState == 4)
+      {
+        if (this.status == 200)
+        {
+          if (this.responseText != null)
+          {
+          		document.getElementById('username').value = unescapeHtml(this.responseText)
+          }
+          else alert("Ajax error: No data received")
+        }
+        else alert( "Ajax error: " + this.statusText)
+      }
+    }
+  	
+}
+
+function searchUserName(input) {
+
+	if (input.value.length > 2) {	
+		var request = new ajaxRequest()
+	
+		request.open("GET", "leilaservice.php?username=" + input.value, true)
+	    request.send(null)		
+	
+	    request.onreadystatechange = function()
+	    {
+	      if (this.readyState == 4)
+	      {
+	        if (this.status == 200)
+	        {
+	          if (this.responseText != null)
+	          {
+		          var objectlist = JSON.parse(this.responseText)
+	          		document.getElementById('usersearchbox').innerHTML = ""
+	      		document.getElementById('usersearchbox').style.display = "block" 
+		      		for (x in objectlist) {	
+        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
+		      		}
+	          }
+	          else alert("Ajax error: No data received")
+	        }
+	        else alert( "Ajax error: " + this.statusText)
+	      }
+	    }
+	}	else {
+		document.getElementById('usersearchbox').innerHTML = ""
+		document.getElementById('usersearchbox').style.display = "none"
+	}
+}
+
+function setUserId(id) {
+	document.getElementById('owner').value = id
+	document.getElementById('usersearchbox').style.display = "none" 
+	updateNames()
+}
+
+function ajaxRequest()
+{
+	try
+	{
+		var request = new XMLHttpRequest()
+	}
+	catch(e1)
+	{
+		try
+		{
+			request = new ActiveXObject("Msxml2.XMLHTTP")
+		}
+		catch(e2)
+		{
+			try
+			{
+				request = new ActiveXObject("Microsoft.XMLHTTP")
+			}
+			catch(e3)
+			{
+				request = false
+			}
+		}
+	}
+	return request
+}
+
+function unescapeHtml(unsafe) {
+    return unsafe
+        .replace(/&amp;/g, "&")
+        .replace(/&ouml;/g, "ö")
+        .replace(/&Ouml;/g, "Ö")
+        .replace(/&auml;/g, "ä")
+        .replace(/&Auml;/g, "Ä")
+        .replace(/&uuml;/g, "ü")
+        .replace(/&Uuml;/g, "Ü")
+        .replace(/&szlig;/g, "ß")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, "\"")
+        .replace(/&#039;/g, "'");
+}
+</script>
+
 </body>
 </html>

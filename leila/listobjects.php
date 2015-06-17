@@ -100,6 +100,7 @@ if (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") include 'm
 ?>
 <div id="content">
 <h1>Objekt &Uuml;bersicht</h1>
+<h3>Kategorien durchsuchen</h3>
 <?php echo "<div id='cats'>";
 	echo "<a href='listobjects.php'>Alle </a>";
 	 getcategoriesaslinks();
