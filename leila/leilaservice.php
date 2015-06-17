@@ -65,3 +65,4 @@ if (isset($_GET['objectname']) ){
 	}
 	echo json_encode($mylist);
 }
+?>
