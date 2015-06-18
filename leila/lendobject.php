@@ -251,7 +251,7 @@ function searchObjectName(input) {
 		          		document.getElementById('objectsearchbox').innerHTML = ""
 		      		document.getElementById('objectsearchbox').style.display = "block" 
 			      		for (x in objectlist) {	
-	          				document.getElementById('objectsearchbox').innerHTML += "<div onclick=\"setObjectId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
+	          				document.getElementById('objectsearchbox').innerHTML += "<div " + objectlist[x].style + " onclick=\"setObjectId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
 			      		}
 	          }
 	          else alert("Ajax error: No data received")

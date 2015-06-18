@@ -7,7 +7,7 @@ $db_password = 'blabla';
 $salt = "esh7Kie5";
 
 // either imagick or gd. prefer imagick since it keeps aspect ratio
-$imagelibrary = 'gd';
+$imagelibrary = 'imagick';
 
 // set 1 to enable guest to view the object list
 // set 0 to disable guest access

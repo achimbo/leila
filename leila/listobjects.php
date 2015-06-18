@@ -49,7 +49,7 @@ if (isset($catid) ){
 	
 	$query = "SELECT * FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name" . $pag['query'];
 } elseif (isset($searchid)) {
-	$query = "SELECT * FROM objects WHERE ID = '$searchid'";
+	$query = "SELECT * FROM objects WHERE object_id = '$searchid'";
 	$pag['footer'] = "";
 	$message = "mit ID " . $searchid;
 } else {

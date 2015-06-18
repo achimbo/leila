@@ -38,7 +38,7 @@ a:hover, #usersearchbox div:hover, #objectsearchbox div:hover    {text-decoratio
     background-color: lavender;
 }
 
-.objectlist tr a.unavailable {
+.objectlist tr a.unavailable, #objectsearchbox div.unavailable {
 	background-color: lightpink;
 }
 

@@ -60,8 +60,14 @@ if (isset($_GET['objectname']) ){
 	for ($r = 0; $r < $rows; ++$r) {
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
+		
+		if (objectisavailable($row['object_id']) == 1 ) {
+			$style= "class='available'";
+		} else {
+			$style = "class='unavailable'";
+		}
 
-		$mylist[$r] = array('id' => $row['object_id'], 'name' => $row['name']);
+		$mylist[$r] = array('id' => $row['object_id'], 'name' => $row['name'], 'style' => $style);
 	}
 	echo json_encode($mylist);
 }
