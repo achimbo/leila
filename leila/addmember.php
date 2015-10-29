@@ -27,6 +27,11 @@ if (isset($_POST['addmember'])) {
 	$idnumber = sanitizeMySQL($connection, $_POST['idnumber']);
 	$comment = sanitizeMySQL($connection, $_POST['comment']);
 	$comember = sanitizeMySQL($connection, $_POST['comember']);
+	if (isset($_POST['getsnewsletter']) ){
+		$getsnewsletter = 1;	}
+		else {
+			$getsnewsletter = 0;
+		}
 	
 	$error = isempty($firstname, "Vorname");
 	$error .= isempty($lastname, "Nachname");
@@ -46,8 +51,8 @@ if (isset($_POST['addmember'])) {
 	
 
 	if ($error == "") {
-		$query = "INSERT INTO users (usertype, password, firstname, lastname, street, city, zipcode, country, telephone, email, idnumber, comment, comember )
-		VALUES ($usertype, $password, '$firstname', '$lastname', '$street', '$city', '$zipcode', '$country', '$telephone', '$email', '$idnumber', '$comment', '$comember' )" ;
+		$query = "INSERT INTO users (usertype, password, firstname, lastname, street, city, zipcode, country, telephone, email, idnumber, comment, comember, getsnewsletter )
+		VALUES ($usertype, $password, '$firstname', '$lastname', '$street', '$city', '$zipcode', '$country', '$telephone', '$email', '$idnumber', '$comment', '$comember', '$getsnewsletter' )" ;
 			// echo "Query ist " . $query;
 		$result = $connection->query($query);
 		if (!$result) {
@@ -110,6 +115,11 @@ if (isset($_POST['addmember'])) {
 	<textarea name ="comment" id="comment" rows="5" cols="20"><?php if(isset($_POST['comment']) && !$created) echo $_POST['comment'];?></textarea> <br>	
 	<label for="comember">Mitbenutzer_in</label>
 	<input type="text" name="comember" id="comember" value="<?php if (isset($_POST['comember']) && !$created) echo $_POST['comember'];?>"><br>	
+
+	<label for="getsnewsletter">Newsletter empfangen</label>
+	<input type="checkbox" name="getsnewsletter" id="getsnewsletter" value=1 <?php if (!isset($_POST['addmember'])) {echo "checked='checked'";} elseif ((isset($_POST['getsnewsletter']) && !$created) || $created) {echo "checked='checked'";} ?>><p>	
+	
+	
 <input type="submit" name="addmember" value="Mitglied anlegen">
 
 </form>

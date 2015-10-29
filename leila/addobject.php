@@ -25,6 +25,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 	$internalcomment = sanitizeMySQL($connection, $_POST['internalcomment']);
 	$owner = sanitizeMySQL($connection, $_POST['owner']);
 	$loaneduntil = sanitizeMySQL($connection, $_POST['loaneduntil']);
+	$shelf = sanitizeMySQL($connection, $_POST['shelf']);
 
 //	print_R($_FILES['image']);
 	if (file_exists($_FILES['image']['tmp_name'])){
@@ -115,10 +116,11 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 	$dateadded != '' ? $dateadded = addquotes($dateadded) : $dateadded = 'NULL';
 	$description != '' ? $description = addquotes($description) : $description = 'NULL';
 	$internalcomment != '' ? $internalcomment = addquotes($internalcomment) : $internalcomment = 'NULL';
+	$shelf != '' ? $shelf = addquotes($shelf) : $shelf = 'NULL';
 	
 	
-	$query = "INSERT INTO objects (name, description, image, imagename, imagetype, scaledimage, dateadded, internalcomment, owner, loaneduntil, isavailable) 
-		VALUES ('$name', $description, $image, $imagename, $imagetype, $imagescaled, $dateadded, $internalcomment, $owner, $loaneduntil, '1')" ;
+	$query = "INSERT INTO objects (name, description, shelf, image, imagename, imagetype, scaledimage, dateadded, internalcomment, owner, loaneduntil, isavailable) 
+		VALUES ('$name', $description, $shelf, $image, $imagename, $imagetype, $imagescaled, $dateadded, $internalcomment, $owner, $loaneduntil, '1')" ;
 //	echo "Query ist " . $query;
 	$result = $connection->query($query);
 	if (!$result) { 
@@ -175,6 +177,7 @@ Kategorie 	<select name="topcategory" size="1">
 	?> 
 	<input type="submit" name="getsubcategories" value="Sub Kat anzeigen"> <br>
 <label for="description">Beschreibung</label> <textarea id="description" name ="description" rows="5" cols="20"><?php if(isset($_POST['description']) && !$created){ echo $_POST['description']; } ?></textarea> <br>
+<label for="shelf">Regal</label> <input id="shelf" type="text" name="shelf" value="<?php if(isset($_POST['shelf']) && !$created){ echo $_POST['shelf']; } ?>"><br>
 <label for="image">Foto</label> <input id="image" type="file" name="image"> <br>
 <label for="dateadded">Eingangsdatum</label> <input id="dateadded" type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
 <label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>

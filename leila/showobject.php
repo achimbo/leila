@@ -43,6 +43,7 @@ foreach (getcategories($oid) as $cat){
 }
 ?><p>
 Beschreibung: <?= $row['description']?><br>
+Regal: <?= $row['shelf']?><br>
 Hinzugef&uuml;gt am <?= $row['dateadded']?> <br>
 <br>
 <?php 

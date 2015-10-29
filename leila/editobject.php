@@ -56,6 +56,8 @@ if (isset($_POST['saveobject']) && $error == "") {
 	$owner = sanitizeMySQL($connection, $_POST['owner']);
 	$loaneduntil = sanitizeMySQL($connection, $_POST['loaneduntil']);
 	$isavailable = sanitizeMySQL($connection, $_POST['isavailable']);
+	$shelf = sanitizeMySQL($connection, $_POST['shelf']);
+	
 	
 	// set NULL or mysql complains
 	$owner != '' ? $owner = addquotes($owner) : $owner = 'NULL';
@@ -63,6 +65,8 @@ if (isset($_POST['saveobject']) && $error == "") {
 	$dateadded != '' ? $dateadded = addquotes($dateadded) : $dateadded = 'NULL';
 	$description != '' ? $description = addquotes($description) : $description = 'NULL';
 	$internalcomment != '' ? $internalcomment = addquotes($internalcomment) : $internalcomment = 'NULL';
+	$shelf != '' ? $shelf = addquotes($shelf) : $shelf = 'NULL';
+	
 	
 	//	print_R($_FILES['image']);
 	if (file_exists($_FILES['image']['tmp_name'])){
@@ -130,12 +134,12 @@ if (isset($_POST['saveobject']) && $error == "") {
 		$image = addquotes($image);
 		$imagescaled = addquotes($imagescaled);
 
-		$query = "UPDATE objects SET name = '$name', description = $description, image = $image, imagename = $imagename,
+		$query = "UPDATE objects SET name = '$name', description = $description, shelf = $shelf, image = $image, imagename = $imagename,
 		imagetype = $imagetype, scaledimage = $imagescaled, dateadded = $dateadded, internalcomment = $internalcomment,
 		owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE object_id = $oid";
 	} else {
 		// rewrite to NULL / addquotes() ?
-		$query = "UPDATE objects SET name = '$name', description = $description, dateadded = $dateadded, 
+		$query = "UPDATE objects SET name = '$name', description = $description, shelf = $shelf, dateadded = $dateadded, 
 		internalcomment = $internalcomment, owner = $owner, loaneduntil = $loaneduntil, isavailable = $isavailable WHERE object_id = $oid";
 	}
 	
@@ -204,6 +208,7 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	<?= isset($_POST['name']) && ($_POST['name'] == '') ? '<div class="errorclass">Name eingeben</div>' : '' ?> 
 	<label for="name">Objekt Name</label> <input id="name" type="text" name="name" value="<?= $row['name']?>"> <br>
 	<label for="description">Objekt Beschreibung</label> <textarea id="description" name ="description" rows="5" cols="20"><?= $row['description']?></textarea> <p>
+	<label for="shelf">Regal</label> <input id="shelf" type="text" name="shelf" value="<?= $row['shelf']?>"> <br>
 	<a href="showimage.php?ID=<?=$row['object_id']?>"><img src="showimage.php?ID=<?=$row['object_id']?>&showthumb"></a>
 	<?php if ($row['image'] != NULL) {echo "<br><input type=\"submit\" name=\"deleteimage\" value=\"Bild l&ouml;schen\" onclick=\"return confirm('Sicher l&ouml;schen?');\"><br>" ;}?>
 	Foto &auml;ndern<input type="file" name="image"> <p>

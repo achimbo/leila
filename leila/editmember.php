@@ -71,6 +71,12 @@ if (isset ( $_POST ['savemember'] )) {
 	$comment = sanitizeMySQL ( $connection, $_POST ['comment'] );
 	$comember = sanitizeMySQL ( $connection, $_POST ['comember'] );
 	
+	if (isset($_POST['getsnewsletter']) ){
+			$getsnewsletter = 1;	} 
+	else {
+		$getsnewsletter = 0;
+	}	
+	
 	$error = isempty ( $firstname, "Vorname" );
 	$error .= isempty ( $lastname, "Nachname" );
 	$error .= isempty ( $street, "Straße" );
@@ -85,7 +91,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, password = '$password', firstname = '$firstname', lastname = '$lastname',
 			street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone',
-			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE user_id = $uid";
+			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -98,7 +104,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, firstname = '$firstname', lastname = '$lastname', 
 		street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone', 
-		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember' WHERE user_id = $uid";
+		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -160,7 +166,8 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				value="<?= $row['lastname']?>"> <br> <label for="password">Passwort</label>
 			<input type="password" name="password" id="password"> <br>
 			Passwort &auml;ndern <input type="checkbox" name="updatepassword"
-				value="update"> <br> <label for="street">Straße</label> <input
+				value="update"> <br> 
+			<label for="street">Straße</label> <input
 				type="text" name="street" id="street" value="<?= $row['street']?>">
 			<br> <label for="city">Stadt</label> <input type="text" name="city"
 				id="city" value="<?= $row['city']?>"> <br> <label for="zipcode">PLZ</label>
@@ -176,7 +183,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				value="<?= $row['idnumber']?>"> <br> <label for="comment">Kommentar</label>
 			<textarea name="comment" id="comment" rows="5" cols="20"><?=$row['comment']?></textarea>
 			<br> <label for="comember">Co Member</label> <input type="text"
-				name="comember" id="comember" value="<?=$row['comember']?>"> <p> 
+				name="comember" id="comember" value="<?=$row['comember']?>"> <br> 
+			Newsletter empfangen <input type="checkbox" name="getsnewsletter"
+				value="1" <?php if ($row['getsnewsletter'] == 1) echo "checked='checked'";?>> <p>
 				<input type="submit" name="savemember" value="&Auml;nderungen speichern"><p>
 			<input type="submit" name="deletemember" value="Member l&ouml;schen"
 				onclick="return confirm('Sicher l&ouml;schen?');">
