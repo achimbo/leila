@@ -1,7 +1,7 @@
 <?php
 function sanitizeString($var){
 	$var = stripslashes($var);
-	$var = htmlentities($var);
+	$var = htmlspecialchars($var);
 	$var = strip_tags($var);
 	return $var;
 }
