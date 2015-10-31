@@ -12,28 +12,33 @@ if (isset($_SESSION['username'])) {
 switch ($scriptname){
 	case "listmembers.php":
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
-		echo "<b><a href='listmembers.php'>Mitglieder listen</a></b>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>";
+		echo "<b><a href='listmembers.php'>Mitglieder listen</a></b>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>&nbsp;<a href='sendnewsletter.php'>Newsletter senden</a>";
 		break;
 	
 	case "addmember.php":
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
-		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<b><a href='addmember.php'>Mitglied anlegen</a></b>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>";
+		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<b><a href='addmember.php'>Mitglied anlegen</a></b>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>&nbsp;<a href='sendnewsletter.php'>Newsletter senden</a>";
 		break;
 
 	case "editmember.php":
 			echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
-			echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>";
+			echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>&nbsp;<a href='sendnewsletter.php'>Newsletter senden</a>";
 			break;		
 
 	case "listfees.php":
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
-		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<b><a href='listfees.php'>Geb&uuml;hren listen</a></b>";
+		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<b><a href='listfees.php'>Geb&uuml;hren listen</a></b>&nbsp;<a href='sendnewsletter.php'>Newsletter senden</a>";
 		break;
-			
+
+	case "sendnewsletter.php":
+		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<b><a href='listmembers.php'>Mitglieder</a></b>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
+		echo "<a href='listmembers.php'>Mitglieder listen</a>&nbsp;<a href='addmember.php'>Mitglied anlegen</a>&nbsp;<a href='listfees.php'>Geb&uuml;hren listen</a>&nbsp;<b><a href='sendnewsletter.php'>Newsletter senden</a></b>";
+		break;		
+		
 	case "listobjects.php":
 		echo "<b><a href='listobjects.php'>Objekte</a></b>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
 		echo "<b><a href='listobjects.php'>Objekte listen</a></b>&nbsp;<a href='addobject.php'>Objekt anlegen</a>&nbsp;<a href='categoriesadmin.php'>Kategorien verwalten</a>";		
-		break;
+		break;	
 		
 	case "addobject.php":
 		echo "<b><a href='listobjects.php'>Objekte</a></b>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";

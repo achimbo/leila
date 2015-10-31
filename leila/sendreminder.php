@@ -20,7 +20,7 @@ if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
 
 $subject = "Eine Erinnerung vom Leihladen";
-$headers = "From: info@leihladen.at\r\n";
+$headers = "From: $fromemail\r\n";
 $headers .= "Mime-Version: 1.0\r\n";
 $headers .= "Content-type: text/plain; charset=utf-8\r\n";
 

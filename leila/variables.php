@@ -12,4 +12,6 @@ $imagelibrary = 'imagick';
 // set 1 to enable guest to view the object list
 // set 0 to disable guest access
 $allowguests = 1;
+
+$fromemail = 'info@leihladen.at';
 ?>
