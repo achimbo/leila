@@ -61,7 +61,7 @@ input.nowidth {
 	background-color: orangered;
 }
 
-#feelist td, #feelist th, #rentallist td, #rentallist th,  #rentedlist td, #rentedlist th {
+#feelist td, #feelist th, #lendedobjectslist td, #lendedobjectslist th, #rentallist td, #rentallist th,  #rentedlist td, #rentedlist th {
 	padding: 3px 10px 3px 10px;
 	border: 1px solid black;
 	max-width: 400px;

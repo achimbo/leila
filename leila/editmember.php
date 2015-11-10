@@ -218,6 +218,23 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td><td><a onclick=\"return confirm('Sicher l&ouml;schen?');\" href='?deletefee=1&ID=" . $uid . "&from=" . $fee['from'] . "&until=" . $fee['until'] . "'>L&ouml;schen</a></td></tr>\n" ;
 			}
 			echo "</table><br>";
+			
+			$lendedobjects = getlendedobjects($uid);
+			echo "<table id='lendedobjectslist'>";
+			switch (isvaliduser($uid)) {
+				case -2:
+					echo "<caption><div class='invalid'>Kein Objekt geborgt</div></caption>";
+					break;
+			
+				case 4:
+					echo "<caption><div class='valid'>Objekt geborgt</div></caption>";
+					break;
+			}
+			echo "<thead><tr><th>Objekt Name</th><th>geliehen bis</th></thead>";
+			foreach ($lendedobjects as $object) {
+				echo "<tr><td><a href='showobject.php?ID=" . $object['oid'] . "'>" . $object['name'] . "</a></td><td>" . $object['until'] . "</td></tr>\n" ;
+			}
+			echo "</table><br>";
 			?>
 			
 			<form method="post" action="editmember.php?ID=<?=$uid?>">

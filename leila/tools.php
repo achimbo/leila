@@ -297,9 +297,29 @@ function getfees($uid) {
 		$feelist[$r]['amount'] = $row['amount'];
 	}
 	$connection->close();
-	return $feelist;
+	return $feelist;	
+}
+
+function getlendedobjects($uid) {
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT * FROM objects WHERE owner = '$uid'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error in getlendedobjects" . $connection->error );
 	
+	$rows = $result->num_rows;
+	$objectslist[] = NULL;
 	
+	for ($r = 0; $r < $rows; ++$r) {
+		$result->data_seek($r);
+		$row = $result->fetch_array(MYSQLI_ASSOC);
+		$objectslist[$r]['name'] = $row['name'];
+		$objectslist[$r]['until'] = $row['loaneduntil'];
+		$objectslist[$r]['oid'] = $row['object_id'];
+	}
+	$connection->close();
+	return $objectslist;
 }
 
 function getrentalsbyobject($oid) {
