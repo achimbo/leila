@@ -17,6 +17,5 @@ $allowguests = 1;
 // set 0 to make users valid by paying a fee
 $usermustlend = 0;
 
-
 $fromemail = 'info@leihladen.at';
 ?>

@@ -72,10 +72,16 @@ if (isset ( $_POST ['savemember'] )) {
 	$comember = sanitizeMySQL ( $connection, $_POST ['comember'] );
 	
 	if (isset($_POST['getsnewsletter']) ){
-			$getsnewsletter = 1;	} 
+		$getsnewsletter = 1;	} 
 	else {
 		$getsnewsletter = 0;
-	}	
+	}
+
+	if (isset($_POST['islocked']) ){
+		$islocked = 1;	}
+	else {
+		$islocked = 0;
+	}
 	
 	$error = isempty ( $firstname, "Vorname" );
 	$error .= isempty ( $lastname, "Nachname" );
@@ -91,7 +97,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, password = '$password', firstname = '$firstname', lastname = '$lastname',
 			street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone',
-			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter' WHERE user_id = $uid";
+			email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter', islocked = '$islocked' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -104,7 +110,7 @@ if (isset ( $_POST ['savemember'] )) {
 		if ($error == "") {
 			$query = "UPDATE users SET usertype = $usertype, firstname = '$firstname', lastname = '$lastname', 
 		street = '$street', city = '$city', zipcode = '$zipcode', country = '$country', telephone = '$telephone', 
-		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter' WHERE user_id = $uid";
+		email = '$email', idnumber = '$idnumber', comment = '$comment', comember = '$comember', getsnewsletter = '$getsnewsletter', islocked = '$islocked' WHERE user_id = $uid";
 			$result = $connection->query ( $query );
 			if (! $result) {
 				die ( "Angaben fehlerhaft, nicht gespeichert " . $connection->error );
@@ -185,7 +191,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			<br> <label for="comember">Co Member</label> <input type="text"
 				name="comember" id="comember" value="<?=$row['comember']?>"> <br> 
 			Newsletter empfangen <input type="checkbox" name="getsnewsletter"
-				value="1" <?php if ($row['getsnewsletter'] == 1) echo "checked='checked'";?>> <p>
+				value="1" <?php if ($row['getsnewsletter'] == 1) echo "checked='checked'";?>> <br>
+			User sperren <input type="checkbox" name="islocked"
+				value="1" <?php if ($row['islocked'] == 1) echo "checked='checked'";?>> <p>
 				<input type="submit" name="savemember" value="&Auml;nderungen speichern"><p>
 			<input type="submit" name="deletemember" value="Member l&ouml;schen"
 				onclick="return confirm('Sicher l&ouml;schen?');">
@@ -197,6 +205,10 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			$fees = getfees($uid);
 			echo "<table id='feelist'>";
 			switch (isvaliduser($uid)) {
+				case -3:
+				echo "<caption><div class='invalid'>User gesperrt</div></caption>";
+				break;
+				
 				case -1:
 				echo "<caption><div class='invalid'>Kein User</div></caption>";
 				break;
@@ -235,6 +247,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			</form>
 		<p>
 		<?php 
+		// rented object list
 		$lendedobjects = getlendedobjects($uid);
 		echo "<table id='lendedobjectslist'>";
 		switch (isvaliduser($uid)) {
@@ -252,6 +265,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 		}
 		echo "</table><br>";
 		
+		
 		$rentals = getrentalsbyuser($uid);
 		echo "<table id='rentallist'>";
 		echo "<caption>Verleih Historie</caption>";
@@ -262,8 +276,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			// echo "<td>" . $rent['loanedout'] . "</td><td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
 			echo "<tr><td><a href='showobject.php?ID=" . $rent['objectid'] . "'>" . $rent['objectname'] . "</a></td>";
 			echo "<td><a href='lendobject.php?edit=1&userid=" . $uid . "&objectid=" . $rent['objectid'] . "&loanedout=" . $rent['loanedout'] . "'>". $rent['loanedout'] . "</a></td>\n" ;
-			echo "<td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";
-				
+			echo "<td>" . $rent['duedate'] . "</td><td>" . $rent['givenback'] . "</td><td>" . $rent['comment'] . "</td></tr>";				
 		}
 		echo "</table><p>"
 		?>

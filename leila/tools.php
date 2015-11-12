@@ -376,13 +376,13 @@ function getrentalsbyuser($uid) {
 }
 
 function isvaliduser($uid) {
-	// -2 = did not lend object, -1 = wrong usertype, 0 = invalid, 1 = valid for less than 6 weeks, 
+	// -3 = is locked, -2 = did not lend object, -1 = wrong usertype, 0 = invalid, 1 = valid for less than 6 weeks, 
 	// 2 = valid longer than 6 weeks, 3 = did lend object, 4 = user is admin
 	
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 	if ($connection->connect_error) die($connection->connect_error);
-	$query = "SELECT usertype FROM users WHERE user_id = '$uid'";
+	$query = "SELECT usertype, islocked FROM users WHERE user_id = '$uid'";
 	$result = $connection->query ( $query );
 	if (! $result) die ( "Database error " . $connection->error );
 	$result->data_seek(0);
@@ -391,6 +391,8 @@ function isvaliduser($uid) {
 	if ($row['usertype'] > 2) return -1;
 	// if user is admin -> valid without fees
 	if ($row['usertype'] == 1) return 4;
+	if ($row['islocked'] == 1) return -3;
+	
 	
 	if ($usermustlend == 0) { 
 		$valid = 0;
