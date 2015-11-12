@@ -212,27 +212,14 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				case 2:
 				echo "<caption><div class='valid'>Mitgliedsbeitr&auml;ge gezahlt</div></caption>";
 				break;
+				
+				case 4:
+					echo "<caption><div class='valid'>User ist Admin</div></caption>";
+					break;
 			}			
 			echo "<thead><tr><th>Von</th><th>Bis</th><th>Betrag</th><th>L&ouml;schen</thead>";
 			foreach ($fees as $fee) {
 				echo "<tr><td>" . $fee['from'] . "</td><td>" . $fee['until'] . "</td><td>" . $fee['amount'] . "</td><td><a onclick=\"return confirm('Sicher l&ouml;schen?');\" href='?deletefee=1&ID=" . $uid . "&from=" . $fee['from'] . "&until=" . $fee['until'] . "'>L&ouml;schen</a></td></tr>\n" ;
-			}
-			echo "</table><br>";
-			
-			$lendedobjects = getlendedobjects($uid);
-			echo "<table id='lendedobjectslist'>";
-			switch (isvaliduser($uid)) {
-				case -2:
-					echo "<caption><div class='invalid'>Kein Objekt geborgt</div></caption>";
-					break;
-			
-				case 4:
-					echo "<caption><div class='valid'>Objekt geborgt</div></caption>";
-					break;
-			}
-			echo "<thead><tr><th>Objekt Name</th><th>geliehen bis</th></thead>";
-			foreach ($lendedobjects as $object) {
-				echo "<tr><td><a href='showobject.php?ID=" . $object['oid'] . "'>" . $object['name'] . "</a></td><td>" . $object['until'] . "</td></tr>\n" ;
 			}
 			echo "</table><br>";
 			?>
@@ -248,6 +235,23 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			</form>
 		<p>
 		<?php 
+		$lendedobjects = getlendedobjects($uid);
+		echo "<table id='lendedobjectslist'>";
+		switch (isvaliduser($uid)) {
+			case -2:
+				echo "<caption><div class='invalid'>Kein Objekt geborgt</div></caption>";
+				break;
+					
+			case 3:
+				echo "<caption><div class='valid'>Objekt geborgt</div></caption>";
+				break;
+		}
+		echo "<thead><tr><th>Objekt Name</th><th>geliehen bis</th></thead>";
+		foreach ($lendedobjects as $object) {
+			echo "<tr><td><a href='showobject.php?ID=" . $object['oid'] . "'>" . $object['name'] . "</a></td><td>" . $object['until'] . "</td></tr>\n" ;
+		}
+		echo "</table><br>";
+		
 		$rentals = getrentalsbyuser($uid);
 		echo "<table id='rentallist'>";
 		echo "<caption>Verleih Historie</caption>";

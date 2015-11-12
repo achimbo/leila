@@ -376,8 +376,8 @@ function getrentalsbyuser($uid) {
 }
 
 function isvaliduser($uid) {
-	// -1 = wrong usertype 0 = invalid, 1 = valid for less than 6 weeks, 2 = valid longer than 6 weeks
-	$valid = 0;
+	// -2 = did not lend object, -1 = wrong usertype, 0 = invalid, 1 = valid for less than 6 weeks, 
+	// 2 = valid longer than 6 weeks, 3 = did lend object, 4 = user is admin
 	
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
@@ -387,29 +387,44 @@ function isvaliduser($uid) {
 	if (! $result) die ( "Database error " . $connection->error );
 	$result->data_seek(0);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
-	// if user ins only object owner -> invalid
+	// if user is only object owner -> invalid
 	if ($row['usertype'] > 2) return -1;
 	// if user is admin -> valid without fees
-	if ($row['usertype'] == 1) return 2;
+	if ($row['usertype'] == 1) return 4;
 	
+	if ($usermustlend == 0) { 
+		$valid = 0;
+		$fees = getfees($uid);
+		$now = date_create('now');
+		foreach ($fees as $fee) {
+			// getfees may return empty array
+			if ($fee['from'] == NULL) return 0;
+			$from = date_create($fee['from']);
+			$until = date_create($fee['until']);
+			$toend = date_diff($now, $until);
+			$tobeginning = date_diff($from, $now);
 	
-	$fees = getfees($uid);
-	$now = date_create('now');
-	foreach ($fees as $fee) {
-		// getfees may return empty array
-		if ($fee['from'] == NULL) return 0;
-		$from = date_create($fee['from']);
-		$until = date_create($fee['until']);
-		$toend = date_diff($now, $until);
-		$tobeginning = date_diff($from, $now);
-
-		if ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') > 42) {
-			return 2;
-		} elseif ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') < 42 && $toend->format('%R%a') >= 0) {
-			$valid = 1;
+			if ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') > 42) {
+				return 2;
+			} elseif ($tobeginning->format('%R%a') >= 0 && $toend->format('%R%a') < 42 && $toend->format('%R%a') >= 0) {
+				$valid = 1;
+			}
 		}
+		// if no valid fee is found return $valid with its default 0
+		return $valid;
 	}
-	return $valid;
+	if ($usermustlend == 1) {
+		$valid = -2;
+		$objects = getlendedobjects($uid);
+		$now = date_create('now');
+		foreach ($objects as $object) {
+			if ($object['name'] == NULL) return -2;
+			$until = date_create($object['until']);
+			$toend = date_diff($now, $until);
+			if ($toend->format('%R%a') >= 0) return 3;
+		}
+		return $valid;
+	}
 }
 
 // return -1 - wrong status, 0 rented away, 1 available
