@@ -250,6 +250,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 		// rented object list
 		$lendedobjects = getlendedobjects($uid);
 		echo "<table id='lendedobjectslist'>";
+		echo "<caption>Geliehene Objekte</caption>";
 		switch (isvaliduser($uid)) {
 			case -2:
 				echo "<caption><div class='invalid'>Kein Objekt geborgt</div></caption>";

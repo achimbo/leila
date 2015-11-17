@@ -322,6 +322,18 @@ function getlendedobjects($uid) {
 	return $objectslist;
 }
 
+function getemail($uid) {
+	include 'variables.php';
+	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
+	if ($connection->connect_error) die($connection->connect_error);
+	$query = "SELECT email FROM users WHERE user_id = '$uid'";
+	$result = $connection->query ( $query );
+	if (! $result) die ( "Database error in getemail" . $connection->error );
+	$result->data_seek(0);
+	$row = $result->fetch_array(MYSQLI_ASSOC);
+	return $row['email'];
+}
+
 function getrentalsbyobject($oid) {
 	include 'variables.php';
 	$connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);

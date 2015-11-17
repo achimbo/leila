@@ -43,6 +43,10 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	$loanedout = sanitizeMySQL ( $connection, $_POST ['loanedout'] );
 	$duedate = sanitizeMySQL ( $connection, $_POST ['duedate'] );
 	$comment = sanitizeMySQL ( $connection, $_POST ['comment'] );
+	$username = sanitizeMySQL ( $connection, $_POST ['username'] );
+	$objectname = sanitizeMySQL ( $connection, $_POST ['objectname'] );
+	
+	
 	
 	$error = isempty($userid, "User ID");
 	$error .= isempty($objectid, "Objekt ID");
@@ -80,8 +84,23 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 			die ( "Angaben fehlerhaft" . $connection->error );
 		} else {
 			$message = "Verleihvorgang Gespeichert<p>";
-		}
-	}	
+			
+			$email = getemail($userid);
+			if ($email != "") {		
+				$subject = "Gegenstand im Leihladen geliehen";
+				$headers = "From: $fromemail\r\n";
+				$headers .= "Mime-Version: 1.0\r\n";
+				$headers .= "Content-type: text/plain; charset=utf-8\r\n";
+				$mailbody = "Hallo {$username} \n
+Eine kleine Erinnerung: Du hast dir ein(e) {$objectname} im Leihladen ausgeborgt und solltest es bis {$duedate} zurückgeben. \n
+Liebe Grüße Leihladen Wien\n";
+			
+				if (mail($email, $subject, $mailbody, $headers)) {
+					$message .= "Email versand <p>";
+				} 
+			}
+		}	
+	}
 }
 
 ?>
