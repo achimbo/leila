@@ -140,7 +140,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			$message = '<div class="errorclass">Fehler, Kategorie nicht erstellt</div>';
 		} 
 			else {
-				$message = '<div class="message"><a href="editobject.php?ID=' .$insid . '"> Objekt</a> erstellt</div>';
+				$message = '<div class="message"><a href="editobject.php?ID=' .$insid . '"> Objekt</a> erstellt <br> <a href="printlabel.php?ID=' .$insid . '"> Label drucken</a> </div>';
 				$created = true;
 			}
 	}

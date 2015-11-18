@@ -227,8 +227,12 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	</select>
 	<br>
 	<input type="submit" name="saveobject" value="&Auml;nderungen speichern"><br>
-	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen" onclick="return confirm('Sicher l&ouml;schen?');">
+	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen" onclick="return confirm('Sicher l&ouml;schen?');"><br>
 </form>
+<form method="post" action="printlabel.php?ID=<?=$row['object_id']?>">
+	<input type="submit" name="printlabel" value="Label druckenn"><br>
+</form>
+
 </div>
 
 <script type="text/javascript">
