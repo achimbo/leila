@@ -62,6 +62,51 @@ if (isset($_POST['addmember'])) {
 			$insid = mysqli_insert_id($connection);
 			$message = '<div class="message"><a href="editmember.php?ID=' .$insid . '"> Member</a> erstellt</div>';
 			$created = true;
+			if ($email != "") {
+				$subject = "Leihladen Leihregeln";
+				$headers = "From: $fromemail\r\n";
+				$headers .= "Mime-Version: 1.0\r\n";
+				$headers .= "Content-type: text/plain; charset=utf-8\r\n";
+				$mailbody = <<<_END
+Hallo {$firstname}
+Anbei findest du die Leihregeln des Leihladens
+
+Version 1.1 30. Juli 2012 beschlossen vom Leila Orga-Treff
+
+commons = Selbstregulation   *   Leila = Mitmachladen hier mitregeln: http://pad.spline.de/cW5suQ7AAr
+
+1 - So wirst du Mitglied
+
+Um Neu-Mitglied zu werden fülle unser Formblatt aus und bringe einen Gegenstand oder mehr von dir in den Leihpool ein. Du kannst entscheiden, ob du diesen Gegenstand Leila schenkst oder ausleihst. Damit erhältst du eine namentliche Leila-Karte vergleichbar mit einer Bibliothekskarte. Die Leila-Karte ist nicht übertragbar. Die Leihe aller Gegenstände aus dem Pool ist für Mitglieder unentgeltlich (vgl. BGB § 598). Für die Mitgliedschaft wird eine freiwillige Spende an den Verein GeLa e.V. erbeten (siehe "Spenden"). Wenn du eine Sache in den Pool eingebracht hast, kannst du auch nur eine Sache ausleihen. Wenn du zwei Sachen eingebracht hast, kannst du zwei ausleihen und so weiter. Dies hängt nicht vom Wert oder der Größe der Gegenstände ab. Wir behalten uns vor, manches als zusammengehöriges Set und damit als einen Gegenstand zu definieren  (z.B. Besteck, Bauklötze u.ä. viel-teiliges).
+2 - Ende der Mitgliedschaft
+Als Mitglied kannst du deine Mitgliedschaft jederzeit kündigen. Zur Kündigung genügt eine entsprechende Erklärung in Textform an Leila.
+3 - Pfand
+
+Auf wertvolle Dinge wird beim Verleih Pfand erhoben. Für bewährte Mitglieder (nach Zahl der ordentlich und pünktlich zurückgebrachten Gegenstände) entfällt das Pfand.
+
+4 - Fristen
+Die Ausleihzeit hängt von der Sache ab und wird individuell, in Abwägung von persönlicher Nutzungsabsicht und allgemeinem Bedarf, vereinbart. Dinge sollen nach der Nutzung schnellstmöglich zurückgegeben werden. Eine kurze Ausleihzeit verstärkt, dass die Dinge für viele Mitglieder zugänglich sind. Du kannst die Leihe zweimal verlängern - vorausgesetzt, kein anderes  Mitglied hat die Sache vorgemerkt. Für die verspätete Rückgabe gibt es Entgelte (vgl. Entgeltkatalog).
+
+5 - Rückgabe
+Die Rückgabe ist nach Ablauf der Frist fällig (BGB § 604). Ausgeliehene Dinge sollen nach der Rückgabe so (sauber, ganz, vollständig) sein, wie sie bei der Verleihung waren, ist dies nicht der Fall fallen Entgelte an (vgl. Entgeltkatalog).
+6 - Nutzung
+Die Sachen des gemeinschaftlichen Pools sind nur für den privaten Gebrauch bestimmt. Die kommerzielle Bewirtschaftung von Gemeingütern ist untersagt (vgl. BGB § 603).
+7 - Haftung/Schadensfall
+Gegenüber den Mitgliedern haftet Leila nur für Vorsatz und grobe Fahrlässigkeit (vgl. BGB § 599).
+8 - Reparatur
+
+Im Fall der Reparatur trägst du als Mitglied die anfallenden Reparaturkosten bis zu 50 % des Pfands. Für gebrauchsüblichen Verschleiß fallen keine Reparaturkosten an (z.B. Abnutzung von Bremsklötzen am Fahrrad).
+9 - Verlust
+
+Verlierst du bei der Leihe die Leihsache wird das Pfand einbehalten oder du ersetzt den Gegenstand durch einen vergleichbaren (d.h. ggf. gebrauchten in ähnlicher Qualität).
+						
+				Liebe Grüße Leihladen Wien
+_END;
+					
+				if (mail($email, $subject, $mailbody, $headers)) {
+					$message .= "Email versand <p>";
+				}
+			}
 		}
 	}
 	
