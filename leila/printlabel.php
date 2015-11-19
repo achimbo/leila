@@ -6,7 +6,7 @@ define('FPDF_FONTPATH','fpdf/font/');
 require_once 'fpdf/fpdf.php';
 
 session_start();
-if ($allowguests == 0 && (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin")) die ("Bitte <a href='login.php'>anmelden</a>");
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
 
 $connection = new mysqli($db_hostname, $db_username, $db_password, $db_database);
 if ($connection->connect_error) die($connection->connect_error);

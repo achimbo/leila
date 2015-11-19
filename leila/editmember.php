@@ -198,6 +198,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			<input type="submit" name="deletemember" value="Member l&ouml;schen"
 				onclick="return confirm('Sicher l&ouml;schen?');">
 		</form>
+		<form method="post" action="printmember.php?ID=<?=$row['user_id']?>">
+			<input type="submit" name="printmember" value="Mitgliedsformular drucken"><br>
+		</form>
 			<p>
 		 <a href="lendobject.php?userid=<?=$uid?>">Objekt an diesen User ausleihen</a><p>
 			

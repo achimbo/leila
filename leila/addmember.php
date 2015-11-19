@@ -60,7 +60,7 @@ if (isset($_POST['addmember'])) {
 			$message = '<div class="errorclass">Fehler, Objekt nicht erstellt</div>';
 		} else {
 			$insid = mysqli_insert_id($connection);
-			$message = '<div class="message"><a href="editmember.php?ID=' .$insid . '"> Member</a> erstellt</div>';
+			$message = '<div class="message"><a href="editmember.php?ID=' .$insid . '"> Member</a> erstellt <br> <a href="printmember.php?ID=' .$insid . '"> Mitgliedformular drucken</a> </div>';
 			$created = true;
 			if ($email != "") {
 				$subject = "Leihladen Leihregeln";
