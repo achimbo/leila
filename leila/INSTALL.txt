@@ -6,8 +6,8 @@ A database leila and a user leila have been created
 Edit variables.php set the database password and change the salt
 Upload the PHP files to your webserver
 Eventually restrict access via .htaccess
-Comment the session line in addmember.php so you can create an admin user
-Add an admin user, login ist last name
+Comment the session line in addmember.php out, so you can create an admin user
+Go to addmember.php and add an admin user, login ist last name
 Uncomment the session line in addmember.php so the installation is secure again
 Log in via login.php
 Done!

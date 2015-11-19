@@ -230,7 +230,7 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	<input type="submit" name="deleteobject" value="Objekt l&ouml;schen" onclick="return confirm('Sicher l&ouml;schen?');"><br>
 </form>
 <form method="post" action="printlabel.php?ID=<?=$row['object_id']?>">
-	<input type="submit" name="printlabel" value="Label druckenn"><br>
+	<input type="submit" name="printlabel" value="Label drucken"><br>
 </form>
 
 </div>

@@ -6,11 +6,13 @@ Currently there are the following features:
 Add and edit members
 Add and edit member fees
 Add and edit objects
+Print out labels for Objects
 Search for members or objects
 Categorize objects in categories and subcategories
 Lend out objects to users
 Reporting and search of lended out objects
 Reporting on membership fees
+Send newsletter to members
 Send email reminders when items are due
 Optional Guest access to searchable object list
 Search as you type for users and objects
@@ -18,4 +20,6 @@ Search as you type for users and objects
 
 Required Software:
 PHP with imagemagick or GD
+FPDF
 MySQL Database
+Optionally: A label printer like Brother QL-700, for about 60 Euro
