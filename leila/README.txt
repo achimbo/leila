@@ -6,7 +6,8 @@ Currently there are the following features:
 Add and edit members
 Add and edit member fees
 Add and edit objects
-Print out labels for Objects
+Print out labels for objects
+Print out Membership form
 Search for members or objects
 Categorize objects in categories and subcategories
 Lend out objects to users

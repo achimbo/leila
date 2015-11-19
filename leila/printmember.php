@@ -59,7 +59,16 @@ $pdf->SetXY(40, 78);
 $pdf->Write(0, "$email");
 $pdf->SetXY(130, 78);
 $pdf->Write(0, "$telephone");
-$pdf->SetXY(20, 267);
+
+if ($row['getsnewsletter'] == 1) {
+	$pdf->SetXY(140, 209);
+	$pdf->Write(0, "X");
+} else {
+	$pdf->SetXY(175, 209);
+	$pdf->Write(0, "X");	
+}
+
+$pdf->SetXY(20, 270);
 $pdf->Write(0, "Berlin, " . getcurrentdate());
 
 
