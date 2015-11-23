@@ -89,6 +89,10 @@ if (isset ( $_POST ['savemember'] )) {
 	$error .= isempty ( $city, "Stadt" );
 	$error .= isempty ( $zipcode, "PLZ" );
 	$error .= isempty ( $country, "Land" );
+
+	if($usertype == 1){
+		$error .= isempty($email, "Email");
+	}
 	
 	if ($usertype == 1 && isset ( $_POST ['updatepassword'] ) && ! passwordvalid ( $password )) {
 		$error .= "Passwort muss mindestens 6 Zeichen und Sonderzeichen haben";
@@ -202,7 +206,12 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			<input type="submit" name="printmember" value="Mitgliedsformular drucken"><br>
 		</form>
 			<p>
-		 <a href="lendobject.php?userid=<?=$uid?>">Objekt an diesen User ausleihen</a><p>
+					<form method="post" action="lendobject.php?userid=<?=$row['user_id']?>">
+			<input type="submit" name="lendobjecttouser" value="Objekt verleihen"><br>
+		</form>
+		<p>
+		<hr>
+		<p>
 			
 			<?php 
 			$fees = getfees($uid);

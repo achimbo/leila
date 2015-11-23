@@ -18,4 +18,5 @@ $allowguests = 1;
 $usermustlend = 0;
 
 $fromemail = 'info@leihladen.at';
+$fromname = 'Leila Berlin';
 ?>

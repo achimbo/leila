@@ -40,6 +40,10 @@ if (isset($_POST['addmember'])) {
 	$error .= isempty($zipcode, "PLZ");
 	$error .= isempty($country, "Land");
 	
+	if($usertype == 1){
+		$error .= isempty($email, "Email");
+	}
+	
 	if ($usertype == 1 && !passwordvalid($password) ) {
 		$error .= "Passwort muss mindestens 6 Zeichen und Sonderzeichen haben";
 	} elseif ($usertype == 2 || $usertype == 3) {

@@ -9,7 +9,7 @@ if (isset($_POST['username'])) {
 	$username = sanitizeMySQL($connection, $_POST['username']);
 	$submittedpass = sanitizeMySQL($connection, $_POST['password']);
 
-	$query = "SELECT password FROM users WHERE usertype = 1 AND lastname = '$username'";
+	$query = "SELECT password FROM users WHERE usertype = 1 AND email = '$username'";
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
