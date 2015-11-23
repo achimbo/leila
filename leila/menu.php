@@ -52,14 +52,19 @@ switch ($scriptname){
 	
 	case "lendobject.php":
 		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<b><a href='listlendedobjects.php'>Verleih</a></b><br>";
-		echo "<a href='listlendedobjects.php'>Verleih &Uuml;bersicht</a>&nbsp;<b><a href='lendobject.php'>Objekte verleihen</a></b></b>";
+		echo "<a href='listlendedobjects.php'>Verleih &Uuml;bersicht</a>&nbsp;<b><a href='lendobject.php'>Objekte verleihen</a></b>&nbsp;<a href='statistics.php'>Statistik</a>";
 		break;
 	
 	case "listlendedobjects.php":
 			echo "<a href='listobjects.php'>Objekte</a>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<b><a href='listlendedobjects.php'>Verleih</a></b><br>";
-			echo "<b><a href='listlendedobjects.php'>Verleih &Uuml;bersicht</a></b>&nbsp;<a href='lendobject.php'>Objekte verleihen</a>&nbsp;";
+			echo "<b><a href='listlendedobjects.php'>Verleih &Uuml;bersicht</a></b>&nbsp;<a href='lendobject.php'>Objekte verleihen</a>&nbsp;<a href='statistics.php'>Statistik</a>";
 			break;
-		
+
+	case "statistics.php":
+		echo "<a href='listobjects.php'>Objekte</a>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<b><a href='listlendedobjects.php'>Verleih</a></b><br>";
+		echo "<a href='listlendedobjects.php'>Verleih &Uuml;bersicht</a>&nbsp;<a href='lendobject.php'>Objekte verleihen</a>&nbsp;<b><a href='statistics.php'>Statistik</a></b>";
+		break;			
+			
 	default:
 		echo "<b><a href='listobjects.php'>Objekte</a></b>&nbsp;<a href='listmembers.php'>Mitglieder</a>&nbsp;<a href='listlendedobjects.php'>Verleih</a><br>";
 		echo "<a href='listobjects.php'>Objekte listen</a>&nbsp;<a href='addobject.php'>Objekt anlegen</a>&nbsp;<a href='categoriesadmin.php'>Kategorien verwalten</a>";		
