@@ -22,5 +22,6 @@ Search as you type for users and objects
 Required Software:
 PHP with imagemagick or GD
 FPDF
+phpmailer
 MySQL Database
 Optionally: A label printer like Brother QL-700, for about 60 Euro
