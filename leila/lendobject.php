@@ -83,8 +83,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 		if (! $result) {
 			die ( "Angaben fehlerhaft" . $connection->error );
 		} else {
-			$message = "Verleihvorgang Gespeichert<p>";
-			
+			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>Verleihvorgang</a> Gespeichert<p>";			
 			$email = getemail($userid);
 			if ($email != "") {		
 				$subject = "Gegenstand im Leihladen geliehen";

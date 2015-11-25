@@ -79,8 +79,8 @@ for ($r = 0; $r < $rows; ++$r) {
 		$class = "class=available";
 	}
 	
-	$mylist .= '<tr><td> Name <a ' . $class . ' href="showobject.php?ID=' .$row['object_id'] . '">' . $row['name'] . '</a>
-			<img src="showimage.php?ID=' . $row['object_id'] . '&amp;showthumb" alt="Objekt Bild"></td></tr> ';
+	$mylist .= '<tr><td> Name <a ' . $class . ' href="showobject.php?ID=' .$row['object_id'] . '">' . $row['name'] . '
+			<img src="showimage.php?ID=' . $row['object_id'] . '&amp;showthumb" alt="Objekt Bild"></a></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
