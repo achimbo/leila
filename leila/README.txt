@@ -23,5 +23,6 @@ Required Software:
 PHP with imagemagick or GD
 FPDF
 phpmailer
+jquery, jquery-ui
 MySQL Database
 Optionally: A label printer like Brother QL-700, for about 60 Euro

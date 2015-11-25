@@ -152,7 +152,11 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 <head>
 	<title>Objekt hinzuf&uuml;gen</title>
 	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 </head>
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
 <body>
 <?php include 'menu.php';?>
 <div id='content'>
@@ -182,11 +186,18 @@ Kategorie 	<select name="topcategory" size="1">
 <label for="dateadded">Eingangsdatum</label> <input id="dateadded" type="text" name="dateadded" value="<?= getcurrentdate()?>"> <br>
 <label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?php if(isset($_POST['internalcomment']) && !$created){ echo $_POST['internalcomment']; } ?>
 </textarea> <br>
-<label for="owner">Eigent&uuml;mer ID</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
-<label for="username">Eigent&uuml;mer Name</label>
+<label for="owner">Eigent&uuml;mer ID &#x1f50e;</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?php if(isset($_POST['owner']) && !$created){ echo $_POST['owner']; } ?>"> <br>
+<label for="username">Eigent. Name &#x1f50e;</label>
 <input type="text" name="username" id="username" oninput="searchUserName(this)"><br>
 <div id="usersearchbox"></div>
-<label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
+<label for="loaneduntil">Geliehen bis &#x1f4c5;</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
+	<script type="text/javascript">
+		$( "#loaneduntil" ).datepicker({
+			  dateFormat: "yy-mm-dd",
+				  firstDay: 1
+		});
+	</script>
+
 <input type="submit" name="addobject" value="Objekt anlegen">
 </form>
 </div>

@@ -122,14 +122,14 @@ Liebe Grüße Leihladen Wien\n";
 		echo $message;
 	?>
 	<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
-	<label for="userid">User ID</label>
+	<label for="userid">User ID &#x1f50e;</label>
 	<input type="text" name="userid" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
-	<label for="username">User Name</label>
+	<label for="username">User Name &#x1f50e;</label>
 	<input type="text" name="username" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
 	<div id="usersearchbox"></div>
-	<label for="objectid">Objekt ID</label>
+	<label for="objectid">Objekt ID &#x1f50e;</label>
 	<input type="text" name="objectid" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
-	<label for="objectname">Objekt Name</label>
+	<label for="objectname">Objekt Name &#x1f50e;</label>
 	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
 	<div id="objectsearchbox"></div>
 	<label for="loanedout">Von</label>

@@ -5,6 +5,7 @@ Run sql-create.sql in you MySQL server with appropiate rights
 A database leila and a user leila have been created
 Edit variables.php set the database password and change the salt
 Upload the PHP files to your webserver
+Upload FPDF, FPDI, phpmailer, jquery and jquery-ui to folders named the same
 Eventually restrict access via .htaccess
 Comment the session line in addmember.php out, so you can create an admin user
 Go to addmember.php and add an admin user, login ist last name

@@ -170,9 +170,15 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-   <link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 </head>
 <body onload="updateNames()">
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
+
+
 <?php include 'menu.php';?>
 <div id='content'>
 <?php if (isset($error) && $error != "") echo "<div class='errorclass'>Fehler: $error </div>";?>
@@ -214,11 +220,20 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	Foto &auml;ndern<input type="file" name="image"> <p>
 	<label for="dateadded">Hinzugef&uuml;gt am</label> <input id="dateadded" type="text" name="dateadded" value="<?= $row['dateadded']?>"> <br>
 	<label for="internalcomment">Interner Kommentar</label> <textarea id="internalcomment" name ="internalcomment" rows="5" cols="20"><?= $row['internalcomment']?></textarea> <br>
-	<label for="owner">Eigent&uuml;er ID</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?= $row['owner']?>"> <br>
-	<label for="username">Eigent&uuml;mer Name</label>
+	<label for="owner">Eigent&uuml;mer ID &#x1f50e;</label> <input id="owner" type="text" name="owner" oninput="displayUserName(this)" value="<?= $row['owner']?>"> <br>
+	<label for="username">Eigent. Name &#x1f50e;</label>
 	<input type="text" name="username" id="username" oninput="searchUserName(this)"><br>
 	<div id="usersearchbox"></div>
-	<label for="loaneduntil">Geliehen bis</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
+	<label for="loaneduntil">Geliehen bis &#x1f4c5;</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
+	<script type="text/javascript">
+		$( "#loaneduntil" ).datepicker({
+			  dateFormat: "yy-mm-dd",
+				  firstDay: 1
+		});
+
+		$( "#loaneduntil" ).datepicker( "setDate", document.getElementById('loaneduntil').value );
+		
+	</script>
 	<label for="isavailable">Status </label>
 	<select id="isavailable" name="isavailable" size="1">
 		<option value="1" <?php if ($row['isavailable'] == 1) {echo "selected=\"selected\" ";}?> >Ist da</option>
