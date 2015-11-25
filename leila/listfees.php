@@ -92,15 +92,17 @@ $mylist .= "</table>";
 		$( "#datefrom" ).datepicker({
 			dateFormat: "yy-mm-dd",
 			firstDay: 1,
-			defaultDate: -365	
+			defaultDate: -365,
+			changeYear: true	
 		});						
 	</script>
 	<label for="dateuntil">Datum Bis: &#x1f4c5;</label>
 	<input type="text" id="dateuntil" name="dateuntil">	
 	<script type="text/javascript">
 		$( "#dateuntil" ).datepicker({
-			  dateFormat: "yy-mm-dd",
-				  firstDay: 1
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			changeYear: true
 		});				
 	</script>
 	<input type="submit" value="Suchen">

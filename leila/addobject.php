@@ -193,8 +193,9 @@ Kategorie 	<select name="topcategory" size="1">
 <label for="loaneduntil">Geliehen bis &#x1f4c5;</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?php if(isset($_POST['loaneduntil']) && !$created){ echo $_POST['loaneduntil']; } ?>"> <br>
 	<script type="text/javascript">
 		$( "#loaneduntil" ).datepicker({
-			  dateFormat: "yy-mm-dd",
-				  firstDay: 1
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			changeYear: true
 		});
 	</script>
 

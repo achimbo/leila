@@ -143,11 +143,12 @@ Liebe Grüße Leihladen Wien\n";
 		$( "#duedate" ).datepicker({
 			dateFormat: "yy-mm-dd",
 			firstDay: 1,
+			changeYear: true
 		});						
 	</script>
 	<?php 
 		if (isset($_GET['edit'])) {
-			echo "<label for='givenback'>R&uuml;ckgabedatum</label>";
+			echo "<label for='givenback'>R&uuml;ckgabe  &#x1f4c5;</label>";
 			if (isset($givenback) && $givenback != 'NULL') {
 				echo "<input type='text' name='givenback' id='givenback' value='" . $noquotesgivenback . "'><p>";
 			} else {
@@ -155,6 +156,13 @@ Liebe Grüße Leihladen Wien\n";
 			}
 		}
 	?>
+	<script type="text/javascript">
+		$( "#givenback" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			changeYear: true
+		});						
+	</script>
 	<label for="comment">Kommentar</label>
 	<textarea name="comment" id="comment"><?=$comment?></textarea><p>
 	<?php

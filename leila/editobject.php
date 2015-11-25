@@ -227,8 +227,9 @@ $row = $result->fetch_array(MYSQLI_ASSOC);
 	<label for="loaneduntil">Geliehen bis &#x1f4c5;</label> <input id="loaneduntil" type="text" name="loaneduntil" value="<?= $row['loaneduntil']?>"> <br>
 	<script type="text/javascript">
 		$( "#loaneduntil" ).datepicker({
-			  dateFormat: "yy-mm-dd",
-				  firstDay: 1
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			changeYear: true
 		});
 
 		$( "#loaneduntil" ).datepicker( "setDate", document.getElementById('loaneduntil').value );

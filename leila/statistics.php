@@ -98,20 +98,22 @@ if(isset($_GET['byuser'])) {
 <h1>Statistik</h1>
 <form>
 	<label for="datefrom">Datum Von: &#x1f4c5;</label>
-	<input type="text" id="datefrom" name="datefrom" value=<?php echo $from ?>><br>
+	<input type="text" id="datefrom" name="datefrom" value="<?php echo $from ?>"><br>
 	<script type="text/javascript">
 		$( "#datefrom" ).datepicker({
 			dateFormat: "yy-mm-dd",
 			firstDay: 1,
-			defaultDate: -365	
+			defaultDate: -365,
+			  changeYear: true
 		});						
 	</script>
 	<label for="dateuntil">Datum Bis: &#x1f4c5;</label>
-	<input type="text" id="dateuntil" name="dateuntil" value=<?php echo $until ?>>	<br>
+	<input type="text" id="dateuntil" name="dateuntil" value="<?php echo $until ?>">	<br>
 	<script type="text/javascript">
 		$( "#dateuntil" ).datepicker({
-			  dateFormat: "yy-mm-dd",
-				  firstDay: 1
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			changeYear: true
 		});				
 	</script>
 	<label for="sortmax">Maximale Eintr&auml;ge </label>

@@ -257,8 +257,9 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 				<input type="text" name="fromfee" id="fromfee" value="<?= getcurrentdate()?>"> <br>
 				<script type="text/javascript">
 					$( "#fromfee" ).datepicker({
-						  dateFormat: "yy-mm-dd",
-							  firstDay: 1
+						dateFormat: "yy-mm-dd",
+						firstDay: 1,
+						changeYear: true
 					});					
 				</script>
 				<label for="untilfee">Beitrag bis &#x1f4c5;</label>
@@ -267,7 +268,8 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 					$( "#untilfee" ).datepicker({
 						dateFormat: "yy-mm-dd",
 						firstDay: 1,
-						defaultDate: +365	
+						defaultDate: +365,
+						changeYear: true	
 					});		
 				</script>
 				<label for="amount">Beitragsh&ouml;he</label> 
