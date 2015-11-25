@@ -140,10 +140,14 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 <title>Member anzeigen</title>
 </head>
 <body>
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
 <?php include 'menu.php';?>
 <div id="content">
 	<?php
@@ -249,10 +253,23 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
 			?>
 			
 			<form method="post" action="editmember.php?ID=<?=$uid?>">
-				<label for="fromfee">Beitrag ab</label> 
+				<label for="fromfee">Beitrag ab &#x1f4c5;</label> 
 				<input type="text" name="fromfee" id="fromfee" value="<?= getcurrentdate()?>"> <br>
-				<label for="untilfee">Beitrag bis</label>
+				<script type="text/javascript">
+					$( "#fromfee" ).datepicker({
+						  dateFormat: "yy-mm-dd",
+							  firstDay: 1
+					});					
+				</script>
+				<label for="untilfee">Beitrag bis &#x1f4c5;</label>
 				<input type="text" name="untilfee" id="untilfee" value="<?= date("Y-m-d", (time() + 60 * 60 * 24 * 365))?>"> <br>
+				<script type="text/javascript">
+					$( "#untilfee" ).datepicker({
+						dateFormat: "yy-mm-dd",
+						firstDay: 1,
+						defaultDate: +365	
+					});		
+				</script>
 				<label for="amount">Beitragsh&ouml;he</label> 
 				<input type="text" name="amount" id="amount"> <br>
 				<input type="submit" name="addfee" value="Beitrag hinzuf&uuml;gen">

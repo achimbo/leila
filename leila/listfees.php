@@ -12,7 +12,7 @@ if ($connection->connect_error)
 $feesum = "";
 $mylist = "";
 
-if (isset($_GET['datefrom']) && isset($_GET['dateuntil'])) {
+if (isset($_GET['datefrom']) && isset($_GET['dateuntil']) && $_GET['datefrom'] != NULL && $_GET['dateuntil'] != NULL) {
 	$from = sanitizeMySQL($connection, $_GET['datefrom']);
 	$until = sanitizeMySQL($connection, $_GET['dateuntil']);
 	if (datepresent($from) == "" && datepresent($until) == "") {
@@ -31,7 +31,7 @@ if (isset($_GET['datefrom']) && isset($_GET['dateuntil'])) {
 		$message = "die zwischen $from und $until verliehen wurden";
 		$query = "SELECT mf.*, u.firstname, u.lastname FROM membershipfees mf INNER JOIN users u ON mf.user_id = u.user_id WHERE mf.from BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) ORDER BY mf.from ASC " . $pag['query'];
 	} else {
-		$error = "Datum fehlerhaft";
+		$error = "Datum fehlerhaft";		
 	}
 } else {
 	$query = "SELECT COUNT(*) AS count FROM membershipfees";
@@ -73,19 +73,36 @@ $mylist .= "</table>";
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="leila.css" type="text/css">
-<title>Geb&uuml;hren &Uuml;bersicht</title>
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+	<title>Geb&uuml;hren &Uuml;bersicht</title>
 </head>
 <body>
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
 <?php include 'menu.php';?>
 <div id="content">
 <h1>Geb&uuml;hren</h1>
 <?php if (isset ( $error ) && $error != "") echo "<span class='errorclass'>Fehler: $error </span>" ?>
 <form method="get" action="listfees.php">
-	<label for="datefrom">Datum Von: </label>
+	<label for="datefrom">Datum Von: &#x1f4c5;</label>
 	<input type="text" id="datefrom" name="datefrom"><br>
-	<label for="dateuntil">Datum Bis: </label>
+	<script type="text/javascript">
+		$( "#datefrom" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			defaultDate: -365	
+		});						
+	</script>
+	<label for="dateuntil">Datum Bis: &#x1f4c5;</label>
 	<input type="text" id="dateuntil" name="dateuntil">	
+	<script type="text/javascript">
+		$( "#dateuntil" ).datepicker({
+			  dateFormat: "yy-mm-dd",
+				  firstDay: 1
+		});				
+	</script>
 	<input type="submit" value="Suchen">
 </form><p>
 

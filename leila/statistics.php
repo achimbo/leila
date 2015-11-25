@@ -87,18 +87,33 @@ if(isset($_GET['byuser'])) {
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="leila.css" type="text/css">
-<title>Verleih &Uuml;bersicht</title>
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css"><title>Verleih &Uuml;bersicht</title>
 </head>
 <body>
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
 <?php include 'menu.php';?>
 <div id="content">
 <h1>Statistik</h1>
 <form>
-	<label for="datefrom">Datum Von: </label>
+	<label for="datefrom">Datum Von: &#x1f4c5;</label>
 	<input type="text" id="datefrom" name="datefrom" value=<?php echo $from ?>><br>
-	<label for="dateuntil">Datum Bis: </label>
+	<script type="text/javascript">
+		$( "#datefrom" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			defaultDate: -365	
+		});						
+	</script>
+	<label for="dateuntil">Datum Bis: &#x1f4c5;</label>
 	<input type="text" id="dateuntil" name="dateuntil" value=<?php echo $until ?>>	<br>
+	<script type="text/javascript">
+		$( "#dateuntil" ).datepicker({
+			  dateFormat: "yy-mm-dd",
+				  firstDay: 1
+		});				
+	</script>
 	<label for="sortmax">Maximale Eintr&auml;ge </label>
 	<input type="text" id="sortmax" name="sortmax" value=<?php if (isset($_GET['sortmax'])){echo $_GET['sortmax'];} else {echo 10;}?>>	<br>
 	<input type="submit" name="byuser" value="nach User">

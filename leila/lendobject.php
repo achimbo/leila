@@ -108,10 +108,13 @@ Liebe Grüße Leihladen Wien\n";
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 <title>Objekt verleihen</title>
 </head>
 <body onload="updateNames()">
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
 <?php include 'menu.php';?>
 <div id="content">
 	<h1>Objekt Verleih <?php if (isset($_GET['edit'])) echo "updaten"?></h1>
@@ -134,8 +137,14 @@ Liebe Grüße Leihladen Wien\n";
 	<div id="objectsearchbox"></div>
 	<label for="loanedout">Von</label>
 	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
-	<label for="duedate">Bis</label>
+	<label for="duedate">Bis &#x1f4c5;</label>
 	<input type="text" name="duedate" id="duedate" value='<?php if (isset($_GET['edit'])) echo $duedate; else echo date("Y-m-d", (time() + 60 * 60 * 24 * 14))?>'><p>
+	<script type="text/javascript">
+		$( "#duedate" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+		});						
+	</script>
 	<?php 
 		if (isset($_GET['edit'])) {
 			echo "<label for='givenback'>R&uuml;ckgabedatum</label>";

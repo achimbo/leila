@@ -96,19 +96,36 @@ $mylist .= "</table>";
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 <title>Verleih &Uuml;bersicht</title>
 </head>
 <body>
+<script src="jquery/jquery.js"></script>
+<script src="jquery-ui/jquery-ui.min.js"></script>
+
 <?php include 'menu.php';?>
 <div id="content">
 <h1>Verleih &Uuml;bersicht</h1>
 <?php if (isset ( $error ) && $error != "") echo "<span class='errorclass'>Fehler: $error </span>" ?>
 <form method="get" action="listlendedobjects.php">
-	<label for="datefrom">Datum Von: </label>
+	<label for="datefrom">Datum Von: &#x1f4c5;</label>
 	<input type="text" id="datefrom" name="datefrom"><br>
-	<label for="dateuntil">Datum Bis: </label>
+	<script type="text/javascript">
+		$( "#datefrom" ).datepicker({
+			dateFormat: "yy-mm-dd",
+			firstDay: 1,
+			defaultDate: -365	
+		});						
+	</script>
+	<label for="dateuntil">Datum Bis: &#x1f4c5;</label>
 	<input type="text" id="dateuntil" name="dateuntil">	
+	<script type="text/javascript">
+		$( "#dateuntil" ).datepicker({
+			  dateFormat: "yy-mm-dd",
+				  firstDay: 1
+		});				
+	</script>
 	<input type="submit" value="Suchen">
 </form><p>
 <form>
