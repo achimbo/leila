@@ -37,9 +37,7 @@ if (isset($_GET['username']) ){
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
-	
-	$mylist = [];
-	
+		
 	for ($r = 0; $r < $rows; ++$r) {
 		$result->data_seek($r);
 		$row = $result->fetch_array(MYSQLI_ASSOC);
@@ -55,8 +53,6 @@ if (isset($_GET['objectname']) ){
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error" . $connection->error);
 	$rows = $result->num_rows;
-
-	$mylist = [];
 
 	for ($r = 0; $r < $rows; ++$r) {
 		$result->data_seek($r);
