@@ -104,7 +104,7 @@ Im Fall der Reparatur trägst du als Mitglied die anfallenden Reparaturkosten bi
 
 Verlierst du bei der Leihe die Leihsache wird das Pfand einbehalten oder du ersetzt den Gegenstand durch einen vergleichbaren (d.h. ggf. gebrauchten in ähnlicher Qualität).
 						
-				Liebe Grüße Leihladen Wien
+				Liebe Grüße vom Leihladen
 _END;
 					
 				if (mail($email, $subject, $mailbody, $headers)) {

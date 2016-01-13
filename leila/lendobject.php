@@ -92,7 +92,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				$headers .= "Content-type: text/plain; charset=utf-8\r\n";
 				$mailbody = "Hallo {$username} \n
 Eine kleine Erinnerung: Du hast dir ein(e) {$objectname} im Leihladen ausgeborgt und solltest es bis {$duedate} zurückgeben. \n
-Liebe Grüße Leihladen Wien\n";
+Liebe Grüße {$fromname}\n";
 			
 				if (mail($email, $subject, $mailbody, $headers)) {
 					$message .= "Email versand <p>";

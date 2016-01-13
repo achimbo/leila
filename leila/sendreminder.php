@@ -30,7 +30,7 @@ for ($r = 0; $r < $rows; ++$r) {
 	
 	$message = "Hallo {$row['firstname']} \n
 Eine kleine Erinnerung: Du hast dir ein(e) {$row['objectname']} im Leihladen ausgeborgt und solltest es bis {$row['duedate']} zurückgeben. \n
-Liebe Grüße Leihladen Wien\n";
+Liebe Grüße {$fromname}\n";
 	
 	if (mail($row['email'], $subject, $message, $headers)) {
 		echo date('Y-m-d G:i:s', time()) . " Email sent to {$row['email']}\n";
