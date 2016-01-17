@@ -60,6 +60,7 @@ if (isset ( $_POST ['sendnewsletter'] )) {
 	if (isset ( $message )) echo $message;	?>
 	
 	<h1>Newsletter senden</h1>
+	
 		<form method="post" action="sendnewsletter.php" enctype="multipart/form-data">
 			<label for="subject">Subject</label>
 			<input type="text" name="subject" id="subject"><br>

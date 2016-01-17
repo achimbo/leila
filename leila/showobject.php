@@ -42,7 +42,7 @@ foreach (getcategories($oid) as $cat){
 	echo 'Kategorie <a href="listobjects.php?catid=' . $cat['catid'] . '">' . $cat['name'] . '</a><br>';
 }
 ?><p>
-Beschreibung: <?= $row['description']?><br>
+Beschreibung: <?= nl2br($row['description'])?><br>
 Regal: <?= $row['shelf']?><br>
 Hinzugef&uuml;gt am <?= $row['dateadded']?> <br>
 <br>
