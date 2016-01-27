@@ -71,7 +71,7 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 			$new_image = imagecreatetruecolor(100, 75);
 			
 			// Create new image with changed dimensions
-			imagecopyresized($new_image, $largeimage,
+			imagecopyresampled($new_image, $largeimage,
 					0, 0, 0, 0,
 					$width, $height,
 					$orig_width, $orig_height);

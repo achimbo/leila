@@ -18,6 +18,7 @@ Send email reminders when items are due
 Optional Guest access to searchable object list
 Search as you type for users and objects
 
+There is a short screencast in german: https://vimeo.com/147863167
 
 Required Software:
 PHP with imagemagick or GD
