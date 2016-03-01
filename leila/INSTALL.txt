@@ -1,11 +1,17 @@
+===Installation===
 
-Installation:
-Edit user password in the sql-create.sql script
-Run sql-create.sql in you MySQL server with appropiate rights
-A database leila and a user leila have been created
+==Database==
+Edit user password on line 145 in the sql-create-simple.sql script
+Create a database (preferrably called leila) and enter it
+Run sql-create-simple.sql in you MySQL server with appropiate rights
+Tables (users, objects etc.) have been created in the database, and a user leila has been created
+
+==PHP==
 Edit variables.php set the database password and change the salt
 Upload the PHP files to your webserver
 Upload FPDF, FPDI, phpmailer, jquery and jquery-ui to folders named the same
+
+==Create Admin User==
 Eventually restrict access via .htaccess
 Comment the session line in addmember.php out, so you can create an admin user
 Go to addmember.php and add an admin user, login is email address

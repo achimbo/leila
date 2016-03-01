@@ -27,7 +27,6 @@ if (!isset($_POST['getsubcategories']) && isset($_POST['name']) && $error == "")
 	$loaneduntil = sanitizeMySQL($connection, $_POST['loaneduntil']);
 	$shelf = sanitizeMySQL($connection, $_POST['shelf']);
 
-//	print_R($_FILES['image']);
 	if (file_exists($_FILES['image']['tmp_name'])){
 		$imagename = sanitizeMySQL($connection, $_FILES['image']['name']);
 		$imagetype = sanitizeMySQL($connection, $_FILES['image']['type']);

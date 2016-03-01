@@ -19,6 +19,7 @@ if (isset($_POST['username'])) {
 	if ($row['password'] == $submittedpass) {
 		$loginsuccess = true;
 		session_start();
+		// prevent session fixation
 		session_regenerate_id();
 		$_SESSION['username'] = $username;
 		$_SESSION['usertype'] = "admin";
