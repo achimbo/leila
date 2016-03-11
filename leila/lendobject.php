@@ -82,7 +82,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 		
 		if (! $result) {
 			die ( "Angaben fehlerhaft" . $connection->error );
-		} else {
+		} elseif ($noquotegivenback == "") {
 			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>Verleihvorgang</a> Gespeichert<p>";			
 			$email = getemail($userid);
 			if ($email != "") {		
