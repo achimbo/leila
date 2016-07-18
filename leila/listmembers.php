@@ -69,31 +69,31 @@ $mylist .= "</table>";
 <!DOCTYPE html>
 <html>
 <head>
-   <link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila.css" type="text/css">
 </head>
 <body>
-<?php include 'menu.php';?>
-<div id="content">
+	<?php include 'menu.php';?>
+	<div id="content">
 
-<h1>Mitglieder &Uuml;bersicht</h1>
-<form method="get" action="listmembers.php">
-	<label for="searchstring">In Namen suchen:</label> 
-	<input type="text" id="searchstring" name="searchstring">
-	<input type="submit" value="Suchen">
-</form>
-<form method="get" action="listmembers.php">
-	<label for="searchid">In ID suchen: </label>
-	<input type="text" id="searchid" name="searchid">
-	<input type="submit" value="ID suchen">
-</form>
-<form method="get" action="listmembers.php">
-	<input type="submit" name="showadmins" value="Admins anzeigen">
-</form>	
+		<h1>Mitglieder &Uuml;bersicht</h1>
+		<form method="get" action="listmembers.php">
+			<label for="searchstring">In Namen suchen:</label> 
+			<input type="text" id="searchstring" name="searchstring">
+			<input type="submit" value="Suchen">
+		</form>
+		<form method="get" action="listmembers.php">
+			<label for="searchid">In ID suchen: </label>
+			<input type="text" id="searchid" name="searchid">
+			<input type="submit" value="ID suchen">
+		</form>
+		<form method="get" action="listmembers.php">
+			<input type="submit" name="showadmins" value="Admins anzeigen">
+		</form>	
 
-<h3>Mitglieder <?= $message?></h3>
-<?= $mylist?>
-<?= $pag['footer']?>
-</div>
+		<h3>Mitglieder <?= $message?></h3>
+		<?= $mylist?>
+		<?= $pag['footer']?>
+	</div>
 
 </body>
 </html>
