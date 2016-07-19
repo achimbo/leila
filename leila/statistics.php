@@ -10,12 +10,24 @@ if ($connection->connect_error)
 	die ( $connection->connect_error );
 
 $mylist = '';
-$sortmax = sanitizeMySQL($connection, $_GET['sortmax']);
-$sortmax = $sortmax != "" ? $sortmax : 10;
 
-$from = sanitizeMySQL($connection, $_GET['datefrom']);
-$until = sanitizeMySQL($connection, $_GET['dateuntil']);
+if (isset($_GET['sortmax'])) {
+	$sortmax = sanitizeMySQL($connection, $_GET['sortmax']);
+} else {
+	$sortmax = 10;
+}
 
+if (isset($_GET['datefrom'])) {
+	$from = sanitizeMySQL($connection, $_GET['datefrom']);
+} else {
+	$from = "";
+}
+
+if (isset($_GET['dateuntil'])) {
+	$until = sanitizeMySQL($connection, $_GET['dateuntil']);
+} else {
+	$until = "";
+}
 
 if(isset($_GET['byuser'])) {
 	if (datepresent($from) == "" && datepresent($until) == "") {
