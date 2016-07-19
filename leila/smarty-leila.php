@@ -19,16 +19,7 @@ class Smarty_Leila extends Smarty {
 
 		parent::__construct();
 
-        if (isset($_GET['lang']) && key_exists($_GET['lang'], $languages)) {
-            $_SESSION['lang'] = $_GET['lang'];
-        }
-
-        if (isset($_SESSION['lang'])) {
-            $this->setTemplateDir('views/templates/' . $_SESSION['lang']);
-        } else {
-            $this->setTemplateDir('views/templates/' . $defaultlang);
-        }
-
+        $this->setTemplateDir('views/templates/');
         $this->setCompileDir('views/templates_c/');
         $this->setConfigDir('views/configs/');
 		$this->setCacheDir('views/cache/');

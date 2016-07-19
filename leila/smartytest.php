@@ -6,10 +6,12 @@
  * Time: 12:25
  */
 
-require_once 'variables.php';
-require('smarty-leila.php');
+require_once('variables.php');
+require_once('smarty-leila.php');
+require_once('configlocale.php');
 
 session_start();
+
 
 
 
