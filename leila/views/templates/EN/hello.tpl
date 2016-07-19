@@ -12,7 +12,7 @@
 <div class="container">
     {include 'nav.tpl'}
 
-    <h1>hallo lieber {{$name}}</h1>
+    <h1>hello dear {{$name}}</h1>
 </div>
 </body>
 </html>

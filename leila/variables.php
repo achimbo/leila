@@ -17,6 +17,9 @@ $allowguests = 1;
 // set 0 to make users valid by paying a fee
 $usermustlend = 0;
 
+$languages = ['DE' => 'Deutsch', 'EN' => 'English', 'FR' => 'Français'];
+$defaultlang = 'DE';
+
 $fromemail = 'info@leihladen.at';
 $fromname = 'Leila Berlin';
 ?>
