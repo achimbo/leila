@@ -1,10 +1,10 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8\n"
 
-#: views/templates//hello.tpl:15
-msgid "hello dear"
-msgstr "Halli hallo Lieber"
+#: views/templates//hello.tpl:17
+msgid "hello dear %1"
+msgstr "Halli hallo %1 Lieber"
 
-#: views/templates//hello.tpl:16
+#: views/templates//hello.tpl:18
 msgid "test"
 msgstr "Das ist ein Übersetzungs Test"

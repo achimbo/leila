@@ -14,9 +14,10 @@
 <div class="container">
     {include 'nav.tpl'}
 
-    <h1>{t}hello dear{/t} {{$name}}</h1>
+    <h1>{t name={{$name}}}hello dear %1{/t}</h1>
     {t}test{/t}
     XXXX Français
+    {html_table loop=$data}
 </div>
 </body>
 </html>
