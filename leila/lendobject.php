@@ -3,6 +3,8 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 session_start();
+require_once('configlocale.php');
+
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
 
 $connection = new mysqli ( $db_hostname, $db_username, $db_password, $db_database );
@@ -33,7 +35,7 @@ if (isset($_POST['delete'])) {
 	$loanedout = sanitizeMySQL ( $connection, $_POST ['loanedout'] );
 	$query = "DELETE FROM rented WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";
 	$result = $connection->query ( $query );
-	$message = "Verleihvorgang gel&ouml;scht";
+	$message = _('deleted transaction');
 }
 
 
@@ -45,14 +47,14 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	$comment = sanitizeMySQL ( $connection, $_POST ['comment'] );
 	$username = sanitizeMySQL ( $connection, $_POST ['username'] );
 	$objectname = sanitizeMySQL ( $connection, $_POST ['objectname'] );
-	
-	
-	
+
+
+
 	$error = isempty($userid, "User ID");
 	$error .= isempty($objectid, "Objekt ID");
 	$error .= datetimepresent($loanedout);
 	$error .= datepresent($duedate);
-	
+
 	if (isset($_POST['updatelease'])) {
 		$givenback = sanitizeMySQL($connection, $_POST['givenback']);
 		$noquotesgivenback = $givenback;
@@ -62,9 +64,9 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 			$error .= datepresent($givenback);
 			$givenback = addquotes($givenback);
 		}
-	}	
-		
-	if (isset($_POST['lendobject'])) {	
+	}
+
+	if (isset($_POST['lendobject'])) {
 		if (isvaliduser($userid) < 1) $error .= "User ist ung&uuml;ltig";
 		if (objectisavailable($objectid) == 0) $error .= "Objekt bereits verliehen";
 		if (objectisavailable($objectid) == -1) $error .= "Objekt Status falsch";
@@ -72,33 +74,32 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	}
 	if ($error == "") {
 		if (isset($_POST['lendobject'])) {
-		$query = "INSERT INTO rented (object_ID, user_ID, loanedout, duedate, comment) 
+			$query = "INSERT INTO rented (object_ID, user_ID, loanedout, duedate, comment) 
 			VALUES ('$objectid', '$userid', '$loanedout', '$duedate', '$comment') ";
 		} elseif (isset($_POST['updatelease'])) {
 			$query = "UPDATE rented SET duedate='$duedate', givenback = $givenback, comment = '$comment'
-				WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";		
-		} 
+				WHERE object_id = '$objectid' AND user_id = '$userid' AND loanedout = '$loanedout'";
+		}
 		$result = $connection->query ( $query );
-		
+
 		if (! $result) {
-			die ( "Angaben fehlerhaft" . $connection->error );
+			die ( _('invalid data') . $connection->error );
 		} elseif ($noquotegivenback == "") {
-			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>Verleihvorgang</a> Gespeichert<p>";			
+			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>" . _('transaction') . "</a>" . _('saved') . "<p>";
 			$email = getemail($userid);
-			if ($email != "") {		
-				$subject = "Gegenstand im Leihladen geliehen";
+			if ($email != "") {
+				$subject = _('rented object in LOT');
 				$headers = "From: $fromemail\r\n";
 				$headers .= "Mime-Version: 1.0\r\n";
 				$headers .= "Content-type: text/plain; charset=utf-8\r\n";
-				$mailbody = "Hallo {$username} \n
-Eine kleine Erinnerung: Du hast dir ein(e) {$objectname} im Leihladen ausgeborgt und solltest es bis {$duedate} zurückgeben. \n
-Liebe Grüße {$fromname}\n";
-			
+				$mailbody = sprintf(_('hello %1$s \n A short reminder: You have rented a %2$s in the LOT and should give 
+				it back until %3$s. \n kind regards, %4$s'), $username, $objectname, $duedate, $fromname);
+
 				if (mail($email, $subject, $mailbody, $headers)) {
-					$message .= "Email versand <p>";
-				} 
+					$message .= _('email sent') . "<p>";
+				}
 			}
-		}	
+		}
 	}
 }
 
@@ -107,253 +108,285 @@ Liebe Grüße {$fromname}\n";
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="leila.css" type="text/css">
-	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
-<title>Objekt verleihen</title>
+	<link rel="stylesheet" href="leila-new.css"  type="text/css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+	<script src="jquery/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="jquery-ui/jquery-ui.min.js"></script>
+
+
+	<meta charset="utf-8"/>
+	<title><?=_('rent object away')?></title>
 </head>
 <body onload="updateNames()">
-<script src="jquery/jquery.js"></script>
-<script src="jquery-ui/jquery-ui.min.js"></script>
-<?php include 'menu.php';?>
-<div id="content">
-	<h1>Objekt Verleih <?php if (isset($_GET['edit'])) echo "updaten"?></h1>
-	<?php
-	if (isset ( $error ) && $error != "")
-		echo "<div class='errorclass'>Fehler: $error </div><p>";
-	if (isset ( $message ))
-		echo $message;
-	?>
-	<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
-	<label for="userid">User ID &#x1f50e;</label>
-	<input type="text" name="userid" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
-	<label for="username">User Name &#x1f50e;</label>
-	<input type="text" name="username" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
-	<div id="usersearchbox"></div>
-	<label for="objectid">Objekt ID &#x1f50e;</label>
-	<input type="text" name="objectid" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
-	<label for="objectname">Objekt Name &#x1f50e;</label>
-	<input type="text" name="objectname" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
-	<div id="objectsearchbox"></div>
-	<label for="loanedout">Von</label>
-	<input type="text" name="loanedout" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
-	<label for="duedate">Bis &#x1f4c5;</label>
-	<input type="text" name="duedate" id="duedate" value='<?php if (isset($_GET['edit'])) echo $duedate; else echo date("Y-m-d", (time() + 60 * 60 * 24 * 14))?>'><p>
+<div class="container">
+	<?php include 'nav.php';?>
 	<script type="text/javascript">
-		$( "#duedate" ).datepicker({
-			dateFormat: "yy-mm-dd",
-			firstDay: 1,
-			changeYear: true
-		});						
+		document.getElementById('lendingtab').className = 'active';
+		document.getElementById('objectspane').className = 'tab-pane';
+		document.getElementById('lendingpane').className = 'tab-pane active';
 	</script>
-	<?php 
-		if (isset($_GET['edit'])) {
-			echo "<label for='givenback'>R&uuml;ckgabe  &#x1f4c5;</label>";
-			if (isset($givenback) && $givenback != 'NULL') {
-				echo "<input type='text' name='givenback' id='givenback' value='" . $noquotesgivenback . "'><p>";
-			} else {
-				echo "<input type='text' name='givenback' id='givenback' value=''><p>";
-			}
-		}
-	?>
-	<script type="text/javascript">
-		$( "#givenback" ).datepicker({
-			dateFormat: "yy-mm-dd",
-			firstDay: 1,
-			changeYear: true
-		});						
-	</script>
-	<label for="comment">Kommentar</label>
-	<textarea name="comment" id="comment"><?=$comment?></textarea><p>
-	<?php
-	if (isset($_GET['edit'])) {
-		echo "<input type='submit' name='updatelease' value='Verleih updaten'><p>";
-		echo "<input type='submit' name='delete' value='Verleih l&ouml;schen' onclick='return confirm(\"Sicher l&ouml;schen?\");'>";
-	} else {
-		echo "<input type='submit' name='lendobject' value='objekt verleihen'>";
-	}
-	?>
-	</form>
 
-	<div id="test"></div>
+		<h1><?php if (isset($_GET['edit'])) {echo _('update lease');} else { echo _('rent object away');} ?></h1>
+	<div class="row margin-top">
+		<div class="col-md-6">
+			<?php
+			if (isset ( $error ) && $error != "")
+				echo "<div class='errorclass'>" . _('error') . ":" . $error . " </div><p>";
+			if (isset ( $message ))
+				echo $message;
+			?>
+
+			<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
+				<div class="form-group">
+					<label for="userid"><?=_('User ID')?> &#x1f50e;</label>
+					<input type="text" name="userid" class="form-control" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
+				</div>
+				<div class="form-group">
+					<label for="username"><?=_('User Name')?> &#x1f50e;</label>
+					<input type="text" name="username" class="form-control" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
+					<div id="usersearchbox"></div>
+				</div>
+				<div class="form-group">
+					<label for="objectid"><?=_('Object ID')?> &#x1f50e;</label>
+					<input type="text" name="objectid" class="form-control" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
+				</div>
+				<div class="form-group">
+					<label for="objectname"><?=_('Object Name')?> &#x1f50e;</label>
+					<input type="text" name="objectname" class="form-control" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
+					<div id="objectsearchbox"></div>
+				</div>
+				<div class="form-group">
+					<label for="loanedout"><?=_('Loaned From')?></label>
+					<input type="text" name="loanedout" class="form-control" id="loanedout" <?php if (isset($_GET['edit'])) echo "readonly "; ?> value="<?php if (isset($_GET['loanedout'])) { echo $_GET['loanedout'];} else{ echo date("Y-m-d G:i:s", time());} ?>"><p>
+				</div>
+				<div class="form-group">
+					<label for="duedate"><?=_('Loaned Until')?> &#x1f4c5;</label>
+					<input type="text" name="duedate" class="form-control" id="duedate" value='<?php if (isset($_GET['edit'])) echo $duedate; else echo date("Y-m-d", (time() + 60 * 60 * 24 * 14))?>'><p>
+						<script type="text/javascript">
+							$( "#duedate" ).datepicker({
+								dateFormat: "yy-mm-dd",
+								firstDay: 1,
+								changeYear: true
+							});
+						</script>
+				</div>
+				<div class="form-group">
+					<?php
+					if (isset($_GET['edit'])) {
+						echo "<label for='givenback'>" . _('Date given back') . " &#x1f4c5;</label>";
+						if (isset($givenback) && $givenback != 'NULL') {
+							echo "<input type='text' name='givenback' class=\"form-control\" id='givenback' value='" . $noquotesgivenback . "'><p>";
+						} else {
+							echo "<input type='text' name='givenback'  class=\"form-control\" id='givenback' value=''><p>";
+						}
+					}
+					?>
+					<script type="text/javascript">
+						$( "#givenback" ).datepicker({
+							dateFormat: "yy-mm-dd",
+							firstDay: 1,
+							changeYear: true
+						});
+					</script>
+				</div>
+				<div class="form-group">
+					<label for="comment"><?=_('Comment')?></label>
+					<textarea name="comment" class="form-control" id="comment"><?=$comment?></textarea><p>
+				</div>
+				<?php
+				if (isset($_GET['edit'])) {
+					echo "<input type='submit'  class=\"btn\" name='updatelease' value='" . _('update lease') . "'><p>";
+					echo "<input type='submit' class=\"btn\" name='delete' value='" . _('delete lease') . " onclick='return confirm(\"" . _('Are you sure you want to delete?') . "\");'>";
+				} else {
+					echo "<input type='submit' class=\"btn\" name='lendobject' value='" . _('lend object') . "'>";
+				}
+				?>
+			</form>
+
+			<div id="test"></div>
+		</div>
+	</div>
 </div>
 <script type="text/javascript">
-	
 
-function updateNames() {
-	displayUserName(document.getElementById('userid'))
-	displayObjectName(document.getElementById('objectid'))
-}
 
-function displayUserName(input) {
-	var request = new ajaxRequest()
-
-	request.open("GET", "leilaservice.php?userid=" + input.value, true)
-    request.send(null)		
-
-    request.onreadystatechange = function()
-    {
-      if (this.readyState == 4)
-      {
-        if (this.status == 200)
-        {
-          if (this.responseText != null)
-          {
-          		document.getElementById('username').value = unescapeHtml(this.responseText)
-          }
-          else alert("Ajax error: No data received")
-        }
-        else alert( "Ajax error: " + this.statusText)
-      }
-    }
-  	
-}
-
-function displayObjectName(input) {
-	var request = new ajaxRequest()
-
-	request.open("GET", "leilaservice.php?objectid=" + input.value, true)
-    request.send(null)		
-
-    request.onreadystatechange = function()
-    {
-      if (this.readyState == 4)
-      {
-        if (this.status == 200)
-        {
-          if (this.responseText != null)
-          {
-          		document.getElementById('objectname').value = unescapeHtml(this.responseText)
-          }
-          else alert("Ajax error: No data received")
-        }
-        else alert( "Ajax error: " + this.statusText)
-      }
-    }
-  	
-}
-
-function searchUserName(input) {
-
-	if (input.value.length > 2) {	
-		var request = new ajaxRequest()
-	
-		request.open("GET", "leilaservice.php?username=" + input.value, true)
-	    request.send(null)		
-	
-	    request.onreadystatechange = function()
-	    {
-	      if (this.readyState == 4)
-	      {
-	        if (this.status == 200)
-	        {
-	          if (this.responseText != null)
-	          {
-		          var objectlist = JSON.parse(this.responseText)
-	          		document.getElementById('usersearchbox').innerHTML = ""
-	      		document.getElementById('usersearchbox').style.display = "block" 
-		      		for (x in objectlist) {	
-        				document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
-		      		}
-	          }
-	          else alert("Ajax error: No data received")
-	        }
-	        else alert( "Ajax error: " + this.statusText)
-	      }
-	    }
-	}	else {
-		document.getElementById('usersearchbox').innerHTML = ""
-		document.getElementById('usersearchbox').style.display = "none"
+	function updateNames() {
+		displayUserName(document.getElementById('userid'))
+		displayObjectName(document.getElementById('objectid'))
 	}
-}
 
-function searchObjectName(input) {
-
-	if (input.value.length > 2) {	
+	function displayUserName(input) {
 		var request = new ajaxRequest()
-	
-		request.open("GET", "leilaservice.php?objectname=" + input.value, true)
-	    request.send(null)		
-	
-	    request.onreadystatechange = function()
-	    {
-	      if (this.readyState == 4)
-	      {
-	        if (this.status == 200)
-	        {
-	          if (this.responseText != null)
-	          {
-		          var objectlist = JSON.parse(this.responseText)
-		          		document.getElementById('objectsearchbox').innerHTML = ""
-		      		document.getElementById('objectsearchbox').style.display = "block" 
-			      		for (x in objectlist) {	
-	          				document.getElementById('objectsearchbox').innerHTML += "<div " + objectlist[x].style + " onclick=\"setObjectId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
-			      		}
-	          }
-	          else alert("Ajax error: No data received")
-	        }
-	        else alert( "Ajax error: " + this.statusText)
-	      }
-	    }
-	}	else {
-		document.getElementById('objectsearchbox').innerHTML = ""
+
+		request.open("GET", "leilaservice.php?userid=" + input.value, true)
+		request.send(null)
+
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4)
+			{
+				if (this.status == 200)
+				{
+					if (this.responseText != null)
+					{
+						document.getElementById('username').value = unescapeHtml(this.responseText)
+					}
+					else alert("Ajax error: No data received")
+				}
+				else alert( "Ajax error: " + this.statusText)
+			}
+		}
+
+	}
+
+	function displayObjectName(input) {
+		var request = new ajaxRequest()
+
+		request.open("GET", "leilaservice.php?objectid=" + input.value, true)
+		request.send(null)
+
+		request.onreadystatechange = function()
+		{
+			if (this.readyState == 4)
+			{
+				if (this.status == 200)
+				{
+					if (this.responseText != null)
+					{
+						document.getElementById('objectname').value = unescapeHtml(this.responseText)
+					}
+					else alert("Ajax error: No data received")
+				}
+				else alert( "Ajax error: " + this.statusText)
+			}
+		}
+
+	}
+
+	function searchUserName(input) {
+
+		if (input.value.length > 2) {
+			var request = new ajaxRequest()
+
+			request.open("GET", "leilaservice.php?username=" + input.value, true)
+			request.send(null)
+
+			request.onreadystatechange = function()
+			{
+				if (this.readyState == 4)
+				{
+					if (this.status == 200)
+					{
+						if (this.responseText != null)
+						{
+							var objectlist = JSON.parse(this.responseText)
+							document.getElementById('usersearchbox').innerHTML = ""
+							document.getElementById('usersearchbox').style.display = "block"
+							for (x in objectlist) {
+								document.getElementById('usersearchbox').innerHTML += "<div onclick=\"setUserId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
+							}
+						}
+						else alert("Ajax error: No data received")
+					}
+					else alert( "Ajax error: " + this.statusText)
+				}
+			}
+		}	else {
+			document.getElementById('usersearchbox').innerHTML = ""
+			document.getElementById('usersearchbox').style.display = "none"
+		}
+	}
+
+	function searchObjectName(input) {
+
+		if (input.value.length > 2) {
+			var request = new ajaxRequest()
+
+			request.open("GET", "leilaservice.php?objectname=" + input.value, true)
+			request.send(null)
+
+			request.onreadystatechange = function()
+			{
+				if (this.readyState == 4)
+				{
+					if (this.status == 200)
+					{
+						if (this.responseText != null)
+						{
+							var objectlist = JSON.parse(this.responseText)
+							document.getElementById('objectsearchbox').innerHTML = ""
+							document.getElementById('objectsearchbox').style.display = "block"
+							for (x in objectlist) {
+								document.getElementById('objectsearchbox').innerHTML += "<div " + objectlist[x].style + " onclick=\"setObjectId(" + objectlist[x].id + ")\">ID: " + objectlist[x].id + " - " + objectlist[x].name + '</div>'
+							}
+						}
+						else alert("Ajax error: No data received")
+					}
+					else alert( "Ajax error: " + this.statusText)
+				}
+			}
+		}	else {
+			document.getElementById('objectsearchbox').innerHTML = ""
+			document.getElementById('objectsearchbox').style.display = "none"
+		}
+	}
+
+	function setObjectId(id) {
+		document.getElementById('objectid').value = id
 		document.getElementById('objectsearchbox').style.display = "none"
+		updateNames()
 	}
-}
 
-function setObjectId(id) {
-	document.getElementById('objectid').value = id
-	document.getElementById('objectsearchbox').style.display = "none" 
-	updateNames()
-}
-
-function setUserId(id) {
-	document.getElementById('userid').value = id
-	document.getElementById('usersearchbox').style.display = "none" 
-	updateNames()
-}
-
-function ajaxRequest()
-{
-	try
-	{
-		var request = new XMLHttpRequest()
+	function setUserId(id) {
+		document.getElementById('userid').value = id
+		document.getElementById('usersearchbox').style.display = "none"
+		updateNames()
 	}
-	catch(e1)
+
+	function ajaxRequest()
 	{
 		try
 		{
-			request = new ActiveXObject("Msxml2.XMLHTTP")
+			var request = new XMLHttpRequest()
 		}
-		catch(e2)
+		catch(e1)
 		{
 			try
 			{
-				request = new ActiveXObject("Microsoft.XMLHTTP")
+				request = new ActiveXObject("Msxml2.XMLHTTP")
 			}
-			catch(e3)
+			catch(e2)
 			{
-				request = false
+				try
+				{
+					request = new ActiveXObject("Microsoft.XMLHTTP")
+				}
+				catch(e3)
+				{
+					request = false
+				}
 			}
 		}
+		return request
 	}
-	return request
-}
 
-function unescapeHtml(unsafe) {
-    return unsafe
-        .replace(/&amp;/g, "&")
-        .replace(/&ouml;/g, "ö")
-        .replace(/&Ouml;/g, "Ö")
-        .replace(/&auml;/g, "ä")
-        .replace(/&Auml;/g, "Ä")
-        .replace(/&uuml;/g, "ü")
-        .replace(/&Uuml;/g, "Ü")
-        .replace(/&szlig;/g, "ß")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, "\"")
-        .replace(/&#039;/g, "'");
-}
+	function unescapeHtml(unsafe) {
+		return unsafe
+			.replace(/&amp;/g, "&")
+			.replace(/&ouml;/g, "ö")
+			.replace(/&Ouml;/g, "Ö")
+			.replace(/&auml;/g, "ä")
+			.replace(/&Auml;/g, "Ä")
+			.replace(/&uuml;/g, "ü")
+			.replace(/&Uuml;/g, "Ü")
+			.replace(/&szlig;/g, "ß")
+			.replace(/&lt;/g, "<")
+			.replace(/&gt;/g, ">")
+			.replace(/&quot;/g, "\"")
+			.replace(/&#039;/g, "'");
+	}
 </script>
 </body>
 </html>

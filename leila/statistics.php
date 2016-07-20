@@ -117,6 +117,13 @@ if(isset($_GET['byuser'])) {
 <div class="container">
 
 	<?php include 'nav.php';?>
+
+	<script type="text/javascript">
+		document.getElementById('lendingtab').className = 'active';
+		document.getElementById('objectspane').className = 'tab-pane';
+		document.getElementById('lendingpane').className = 'tab-pane active';
+	</script>
+
 	<div class="h1"><?= _('statistics')?></div>
 	<div class="row margin-top">
 		<div class="col-md-6">
@@ -148,8 +155,8 @@ if(isset($_GET['byuser'])) {
 					<label for="sortmax"><?= _('maximum entries')?> </label>
 					<input type="text" id="sortmax" class="form-control" name="sortmax" value=<?php if (isset($_GET['sortmax'])){echo $_GET['sortmax'];} else {echo 10;}?>>	<br>
 				</div>
-				<input type="submit" name="byuser" class="btn btn-small" value="<?= _('sort by user')?>">
-				<input type="submit" name="byobject" class="btn btn-small" value="<?= _('sort by object')?>">
+				<input type="submit" name="byuser" class="btn" value="<?= _('sort by user')?>">
+				<input type="submit" name="byobject" class="btn" value="<?= _('sort by object')?>">
 			</form>
 		</div>
 		</div>

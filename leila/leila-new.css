@@ -3,3 +3,27 @@
 }
 
 .margin-top { margin-top:20px; }
+
+#usersearchbox, #objectsearchbox {
+    display: none;
+    position: relative;
+    z-index: 3;
+    width: 250px;
+    margin-left: 25px;
+    background: #F0F0F0;
+    color: #000000;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 3px #888888;
+    text-align: center;
+    padding: 5px;
+}
+
+#usersearchbox div:nth-child(odd) , #objectsearchbox div:nth-child(odd) {
+    background-color: lavender;
+}
+
+.objectlist tr a.unavailable, #objectsearchbox div.unavailable {
+    background-color: lightpink;
+}
