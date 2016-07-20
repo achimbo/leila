@@ -3,43 +3,43 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: leila\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 21:42+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2016-07-20 21:26+0200\n"
+"PO-Revision-Date: 2016-07-20 21:39+0200\n"
+"Last-Translator: Achim <joachim.boltz@gmx.at>\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language-Team: \n"
+"X-Generator: Poedit 1.8.8\n"
 
 #: lendobject.php:8 listlendedobjects.php:9 statistics.php:7
 msgid "please <a href='login.php'>login</a>"
-msgstr ""
+msgstr "Bitte <a href='login.php'>einloggen</a>"
 
 #: lendobject.php:38
 msgid "deleted transaction"
-msgstr ""
+msgstr "Verleihvorgang gelöscht"
 
 #: lendobject.php:86
 msgid "invalid data"
-msgstr ""
+msgstr "Ungültige Daten"
 
 #: lendobject.php:88
 msgid "transaction"
-msgstr ""
+msgstr "Verleihvorgang"
 
 #: lendobject.php:88
 msgid "saved"
-msgstr ""
+msgstr "gespeichert"
 
 #: lendobject.php:91
 msgid "rented object in LOT"
-msgstr ""
+msgstr "Gegenstand im Leihladen geliehen"
 
 #: lendobject.php:95
 #, php-format
@@ -47,203 +47,207 @@ msgid ""
 "hello %1$s \\n A short reminder: You have rented a %2$s in the LOT and "
 "should give it back until %3$s. \\n kind regards, %4$s"
 msgstr ""
+"Hallo %1$s \\n Eine kurze Erinnerung: Du hast einen %2$s im Leihladen "
+"geliehen \n"
+"und solltest es bis %3$s zurückgeben. \\n Liebe Grüße, %4$s"
 
-#: lendobject.php:98
+#: lendobject.php:99
 msgid "email sent"
-msgstr ""
+msgstr "Email gesendet"
 
-#: lendobject.php:119 lendobject.php:130
+#: lendobject.php:120 lendobject.php:131
 msgid "rent object away"
-msgstr ""
+msgstr "Objekt verleihen"
 
-#: lendobject.php:130 lendobject.php:199
+#: lendobject.php:131 lendobject.php:200
 msgid "update lease"
-msgstr ""
+msgstr "Verleihvorgang updaten"
 
-#: lendobject.php:135
+#: lendobject.php:136
 msgid "error"
-msgstr ""
+msgstr "Fehler"
 
-#: lendobject.php:142
+#: lendobject.php:143
 msgid "User ID"
-msgstr ""
+msgstr "User ID"
 
-#: lendobject.php:146
+#: lendobject.php:147
 msgid "User Name"
-msgstr ""
+msgstr "User Name"
 
-#: lendobject.php:151
+#: lendobject.php:152
 msgid "Object ID"
-msgstr ""
+msgstr "Objekt ID"
 
-#: lendobject.php:155
+#: lendobject.php:156
 msgid "Object Name"
-msgstr ""
+msgstr "Objekt Name"
 
-#: lendobject.php:160
+#: lendobject.php:161
 msgid "Loaned From"
-msgstr ""
+msgstr "Geliehen von"
 
-#: lendobject.php:164
+#: lendobject.php:165
 msgid "Loaned Until"
-msgstr ""
+msgstr "Geliehen bis"
 
-#: lendobject.php:177
+#: lendobject.php:178
 msgid "Date given back"
-msgstr ""
+msgstr "Rückgabe Datum"
 
-#: lendobject.php:194
+#: lendobject.php:195
 msgid "Comment"
-msgstr ""
+msgstr "Kommentar"
 
-#: lendobject.php:200
+#: lendobject.php:201
 msgid "delete lease"
-msgstr ""
+msgstr "Verleihvorgang löschen"
 
-#: lendobject.php:200
+#: lendobject.php:201
 msgid "Are you sure you want to delete?"
-msgstr ""
+msgstr "Sicher löschen?"
 
-#: lendobject.php:202 nav.php:33
+#: lendobject.php:203 nav.php:33
 msgid "lend object"
-msgstr ""
+msgstr "Objekt verleihen"
 
 #: listlendedobjects.php:28
 msgid "which are overdue"
-msgstr ""
+msgstr "die überfällig sind"
 
 #: listlendedobjects.php:39
 msgid "which are currently lended away"
-msgstr ""
+msgstr "die im Moment verliehen sind"
 
 #: listlendedobjects.php:62
 msgid "date malformed"
-msgstr ""
+msgstr "Datum ungültig"
 
 #: listlendedobjects.php:83 statistics.php:85
 msgid "object"
-msgstr ""
+msgstr "Objekt"
 
 #: listlendedobjects.php:83
 msgid "user"
-msgstr ""
+msgstr "User"
 
 #: listlendedobjects.php:83
 msgid "rented"
-msgstr ""
+msgstr "Verliehen am"
 
 #: listlendedobjects.php:83
 msgid "due"
-msgstr ""
+msgstr "Fällig am"
 
 #: listlendedobjects.php:83
 msgid "given back"
-msgstr ""
+msgstr "Zurückgegeben am"
 
 #: listlendedobjects.php:111 listlendedobjects.php:124
 msgid "overview of lended objects"
-msgstr ""
+msgstr "Übersicht der verliehenen Objekte"
 
 #: listlendedobjects.php:126
 msgid "error:"
-msgstr ""
+msgstr "Fehler:"
 
 #: listlendedobjects.php:131
 msgid "date from"
-msgstr ""
+msgstr "Von Datum"
 
 #: listlendedobjects.php:143
 msgid "date until"
-msgstr ""
+msgstr "Bis Datum"
 
 #: listlendedobjects.php:153
 msgid "search"
-msgstr ""
+msgstr "suchen"
 
 #: listlendedobjects.php:156
 msgid "show rented objects"
-msgstr ""
+msgstr "Zeige verliehene Objekte"
 
 #: listlendedobjects.php:157
 msgid "show overdue objects"
-msgstr ""
+msgstr "Zeige überfällige Objekte"
 
 #: listlendedobjects.php:159
 msgid "rented objects"
-msgstr ""
+msgstr "Verliehene Objekte"
 
 #: nav.php:15
 msgid "objects"
-msgstr ""
+msgstr "Objekte"
 
 #: nav.php:16
 msgid "members"
-msgstr ""
+msgstr "Mitglieder"
 
 #: nav.php:17
 msgid "lending"
-msgstr ""
+msgstr "Verleih"
 
 #: nav.php:18
 msgid "logout"
-msgstr ""
+msgstr "Logout"
 
 #: nav.php:31
 msgid "list objects"
-msgstr ""
+msgstr "Objekte anzeigen"
 
 #: nav.php:31
 msgid "create objects"
-msgstr ""
+msgstr "Objekt anlegen"
 
 #: nav.php:31
 msgid "manage categories"
-msgstr ""
+msgstr "Kategorien verwalten"
 
 #: nav.php:32
 msgid "list members"
-msgstr ""
+msgstr "Mitglieder anzeigen"
 
 #: nav.php:32
 msgid "add member"
-msgstr ""
+msgstr "Mitglied anlegen"
 
 #: nav.php:32
 msgid "list fees"
-msgstr ""
+msgstr "Gebühren anzeigen"
 
 #: nav.php:32
 msgid "send newsletter"
-msgstr ""
+msgstr "Newsletter senden"
 
 #: nav.php:33
 msgid "lending overview"
-msgstr ""
+msgstr "Verleih Übersicht"
 
 #: nav.php:33 statistics.php:113 statistics.php:127
 msgid "statistics"
-msgstr ""
+msgstr "Statistik"
 
 #: statistics.php:85
 msgid "times rented"
-msgstr ""
+msgstr "Anzahl Leihvorgänge"
 
 #: statistics.php:132
 msgid "from date"
-msgstr ""
+msgstr "Datum von"
 
 #: statistics.php:144
 msgid "until date"
-msgstr ""
+msgstr "Datum bis"
 
 #: statistics.php:155
 msgid "maximum entries"
-msgstr ""
+msgstr "Maximale Einträge"
 
 #: statistics.php:158
 msgid "sort by user"
-msgstr ""
+msgstr "Nach Benutzer sortieren"
 
 #: statistics.php:159
 msgid "sort by object"
-msgstr ""
+msgstr "Nach Objekt sortieren"
+

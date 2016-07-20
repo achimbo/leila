@@ -6,101 +6,245 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: leila\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 14:14+0200\n"
+"POT-Creation-Date: 2016-07-20 21:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Achim <joachim.boltz@gmx.at>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: de_DE\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: lendobject.php:8 listlendedobjects.php:9 statistics.php:7
+msgid "please <a href='login.php'>login</a>"
+msgstr ""
+
+#: lendobject.php:38
+msgid "deleted transaction"
+msgstr ""
+
+#: lendobject.php:86
+msgid "invalid data"
+msgstr ""
+
+#: lendobject.php:88
+msgid "transaction"
+msgstr ""
+
+#: lendobject.php:88
+msgid "saved"
+msgstr ""
+
+#: lendobject.php:91
+msgid "rented object in LOT"
+msgstr ""
+
+#: lendobject.php:95
+#, php-format
+msgid ""
+"hello %1$s \\n A short reminder: You have rented a %2$s in the LOT and "
+"should give \n"
+"\t\t\t\tit back until %3$s. \\n kind regards, %4$s"
+msgstr ""
+
+#: lendobject.php:99
+msgid "email sent"
+msgstr ""
+
+#: lendobject.php:120 lendobject.php:131
+msgid "rent object away"
+msgstr ""
+
+#: lendobject.php:131 lendobject.php:200
+msgid "update lease"
+msgstr ""
+
+#: lendobject.php:136
+msgid "error"
+msgstr ""
+
+#: lendobject.php:143
+msgid "User ID"
+msgstr ""
+
+#: lendobject.php:147
+msgid "User Name"
+msgstr ""
+
+#: lendobject.php:152
+msgid "Object ID"
+msgstr ""
+
+#: lendobject.php:156
+msgid "Object Name"
+msgstr ""
+
+#: lendobject.php:161
+msgid "Loaned From"
+msgstr ""
+
+#: lendobject.php:165
+msgid "Loaned Until"
+msgstr ""
+
+#: lendobject.php:178
+msgid "Date given back"
+msgstr ""
+
+#: lendobject.php:195
+msgid "Comment"
+msgstr ""
+
+#: lendobject.php:201
+msgid "delete lease"
+msgstr ""
+
+#: lendobject.php:201
+msgid "Are you sure you want to delete?"
+msgstr ""
+
+#: lendobject.php:203 nav.php:33
+msgid "lend object"
+msgstr ""
+
+#: listlendedobjects.php:28
+msgid "which are overdue"
+msgstr ""
+
+#: listlendedobjects.php:39
+msgid "which are currently lended away"
+msgstr ""
+
+#: listlendedobjects.php:62
+msgid "date malformed"
+msgstr ""
+
+#: listlendedobjects.php:83 statistics.php:85
+msgid "object"
+msgstr ""
+
+#: listlendedobjects.php:83
+msgid "user"
+msgstr ""
+
+#: listlendedobjects.php:83
+msgid "rented"
+msgstr ""
+
+#: listlendedobjects.php:83
+msgid "due"
+msgstr ""
+
+#: listlendedobjects.php:83
+msgid "given back"
+msgstr ""
+
+#: listlendedobjects.php:111 listlendedobjects.php:124
+msgid "overview of lended objects"
+msgstr ""
+
+#: listlendedobjects.php:126
+msgid "error:"
+msgstr ""
+
+#: listlendedobjects.php:131
+msgid "date from"
+msgstr ""
+
+#: listlendedobjects.php:143
+msgid "date until"
+msgstr ""
+
+#: listlendedobjects.php:153
+msgid "search"
+msgstr ""
+
+#: listlendedobjects.php:156
+msgid "show rented objects"
+msgstr ""
+
+#: listlendedobjects.php:157
+msgid "show overdue objects"
+msgstr ""
+
+#: listlendedobjects.php:159
+msgid "rented objects"
+msgstr ""
 
 #: nav.php:15
 msgid "objects"
-msgstr "Objekte"
+msgstr ""
 
 #: nav.php:16
 msgid "members"
-msgstr "Mitglieder"
+msgstr ""
 
 #: nav.php:17
 msgid "lending"
-msgstr "Verleih"
+msgstr ""
 
 #: nav.php:18
 msgid "logout"
-msgstr "Logout"
-
-#: nav.php:20
-msgid "language"
-msgstr "Sprache"
+msgstr ""
 
 #: nav.php:31
 msgid "list objects"
-msgstr "Objekte anzeigen"
+msgstr ""
 
 #: nav.php:31
 msgid "create objects"
-msgstr "Objekt anlegen"
+msgstr ""
 
 #: nav.php:31
 msgid "manage categories"
-msgstr "Kategorien verwalten"
+msgstr ""
 
 #: nav.php:32
 msgid "list members"
-msgstr "Mitglieder anzeigen"
+msgstr ""
 
 #: nav.php:32
 msgid "add member"
-msgstr "Mitglied anlegen"
+msgstr ""
 
 #: nav.php:32
 msgid "list fees"
-msgstr "Gebühren anzeigen"
+msgstr ""
 
 #: nav.php:32
 msgid "send newsletter"
-msgstr "Newsletter senden"
+msgstr ""
 
 #: nav.php:33
 msgid "lending overview"
-msgstr "Verleih Übersicht"
+msgstr ""
 
-#: nav.php:33
-msgid "lend object"
-msgstr "Objekt verleihen"
-
-#: nav.php:33 statistics.php:120
+#: nav.php:33 statistics.php:113 statistics.php:127
 msgid "statistics"
-msgstr "Statistik"
-
-#: statistics.php:85
-msgid "object"
-msgstr "Objekt"
+msgstr ""
 
 #: statistics.php:85
 msgid "times rented"
-msgstr "Anzahl Leihvorgänge"
+msgstr ""
 
-#: statistics.php:125
+#: statistics.php:132
 msgid "from date"
-msgstr "Datum von"
+msgstr ""
 
-#: statistics.php:137
+#: statistics.php:144
 msgid "until date"
-msgstr "Datum bis"
+msgstr ""
 
-#: statistics.php:148
+#: statistics.php:155
 msgid "maximum entries"
-msgstr "Maximale Einträge"
+msgstr ""
 
-#: statistics.php:151
+#: statistics.php:158
 msgid "sort by user"
-msgstr "Nach Benutzer sortieren"
+msgstr ""
 
-#: statistics.php:152
+#: statistics.php:159
 msgid "sort by object"
-msgstr "Nach Objekt sortieren"
+msgstr ""

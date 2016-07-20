@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: leila\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-20 14:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Achim <joachim.boltz@gmx.at>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: nav.php:15
+msgid "objects"
+msgstr "Objekte"
+
+#: nav.php:16
+msgid "members"
+msgstr "Mitglieder"
+
+#: nav.php:17
+msgid "lending"
+msgstr "Verleih"
+
+#: nav.php:18
+msgid "logout"
+msgstr "Logout"
+
+#: nav.php:20
+msgid "language"
+msgstr "Sprache"
+
+#: nav.php:31
+msgid "list objects"
+msgstr "Objekte anzeigen"
+
+#: nav.php:31
+msgid "create objects"
+msgstr "Objekt anlegen"
+
+#: nav.php:31
+msgid "manage categories"
+msgstr "Kategorien verwalten"
+
+#: nav.php:32
+msgid "list members"
+msgstr "Mitglieder anzeigen"
+
+#: nav.php:32
+msgid "add member"
+msgstr "Mitglied anlegen"
+
+#: nav.php:32
+msgid "list fees"
+msgstr "Gebühren anzeigen"
+
+#: nav.php:32
+msgid "send newsletter"
+msgstr "Newsletter senden"
+
+#: nav.php:33
+msgid "lending overview"
+msgstr "Verleih Übersicht"
+
+#: nav.php:33
+msgid "lend object"
+msgstr "Objekt verleihen"
+
+#: nav.php:33 statistics.php:120
+msgid "statistics"
+msgstr "Statistik"
+
+#: statistics.php:85
+msgid "object"
+msgstr "Objekt"
+
+#: statistics.php:85
+msgid "times rented"
+msgstr "Anzahl Leihvorgänge"
+
+#: statistics.php:125
+msgid "from date"
+msgstr "Datum von"
+
+#: statistics.php:137
+msgid "until date"
+msgstr "Datum bis"
+
+#: statistics.php:148
+msgid "maximum entries"
+msgstr "Maximale Einträge"
+
+#: statistics.php:151
+msgid "sort by user"
+msgstr "Nach Benutzer sortieren"
+
+#: statistics.php:152
+msgid "sort by object"
+msgstr "Nach Objekt sortieren"

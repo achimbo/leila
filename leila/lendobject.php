@@ -5,7 +5,7 @@ require_once 'tools.php';
 session_start();
 require_once('configlocale.php');
 
-if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die (_("please <a href='login.php'>login</a>"));
 
 $connection = new mysqli ( $db_hostname, $db_username, $db_password, $db_database );
 if ($connection->connect_error)
@@ -92,8 +92,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				$headers = "From: $fromemail\r\n";
 				$headers .= "Mime-Version: 1.0\r\n";
 				$headers .= "Content-type: text/plain; charset=utf-8\r\n";
-				$mailbody = sprintf(_('hello %1$s \n A short reminder: You have rented a %2$s in the LOT and should give 
-				it back until %3$s. \n kind regards, %4$s'), $username, $objectname, $duedate, $fromname);
+				$mailbody = sprintf(_('hello %1$s \n A short reminder: You have rented a %2$s in the LOT and should give it back until %3$s. \n kind regards, %4$s'), $username, $objectname, $duedate, $fromname);
 
 				if (mail($email, $subject, $mailbody, $headers)) {
 					$message .= _('email sent') . "<p>";

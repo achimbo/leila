@@ -4,7 +4,7 @@ require_once 'tools.php';
 session_start();
 require_once('configlocale.php');
 
-if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die (_("please <a href='login.php'>login</a>"));
 
 $connection = new mysqli ( $db_hostname, $db_username, $db_password, $db_database );
 if ($connection->connect_error)
@@ -110,7 +110,7 @@ if(isset($_GET['byuser'])) {
 
 
 	<meta charset="utf-8"/>
-
+	<title><?= _('statistics')?></title>
 </head>
 
 <body>
