@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: leila\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-20 14:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Achim <joachim.boltz@gmx.at>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: xx_XX\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: nav.php:15
+msgid "objects"
+msgstr ""
+
+#: nav.php:16
+msgid "members"
+msgstr ""
+
+#: nav.php:17
+msgid "lending"
+msgstr ""
+
+#: nav.php:18
+msgid "logout"
+msgstr ""
+
+#: nav.php:20
+msgid "language"
+msgstr ""
+
+#: nav.php:31
+msgid "list objects"
+msgstr ""
+
+#: nav.php:31
+msgid "create objects"
+msgstr ""
+
+#: nav.php:31
+msgid "manage categories"
+msgstr ""
+
+#: nav.php:32
+msgid "list members"
+msgstr ""
+
+#: nav.php:32
+msgid "add member"
+msgstr ""
+
+#: nav.php:32
+msgid "list fees"
+msgstr ""
+
+#: nav.php:32
+msgid "send newsletter"
+msgstr ""
+
+#: nav.php:33
+msgid "lending overview"
+msgstr ""
+
+#: nav.php:33
+msgid "lend object"
+msgstr ""
+
+#: nav.php:33 statistics.php:120
+msgid "statistics"
+msgstr ""
+
+#: statistics.php:85
+msgid "object"
+msgstr ""
+
+#: statistics.php:85
+msgid "times rented"
+msgstr ""
+
+#: statistics.php:125
+msgid "from date"
+msgstr ""
+
+#: statistics.php:137
+msgid "until date"
+msgstr ""
+
+#: statistics.php:148
+msgid "maximum entries"
+msgstr ""
+
+#: statistics.php:151
+msgid "sort by user"
+msgstr ""
+
+#: statistics.php:152
+msgid "sort by object"
+msgstr ""

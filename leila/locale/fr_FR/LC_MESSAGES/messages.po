@@ -1,0 +1,105 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: leila\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-20 14:14+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Achim <joachim.boltz@gmx.at>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#: nav.php:15
+msgid "objects"
+msgstr ""
+
+#: nav.php:16
+msgid "members"
+msgstr "Membre"
+
+#: nav.php:17
+msgid "lending"
+msgstr "prêter"
+
+#: nav.php:18
+msgid "logout"
+msgstr "Logout"
+
+#: nav.php:20
+msgid "language"
+msgstr "Langue"
+
+#: nav.php:31
+msgid "list objects"
+msgstr "Liste Objets"
+
+#: nav.php:31
+msgid "create objects"
+msgstr "Cree Objet"
+
+#: nav.php:31
+msgid "manage categories"
+msgstr "Administrer Categories"
+
+#: nav.php:32
+msgid "list members"
+msgstr "Liste Membres"
+
+#: nav.php:32
+msgid "add member"
+msgstr "Ajoute Membre"
+
+#: nav.php:32
+msgid "list fees"
+msgstr "Liste Redevances"
+
+#: nav.php:32
+msgid "send newsletter"
+msgstr "Envoyer newsletter"
+
+#: nav.php:33
+msgid "lending overview"
+msgstr "Sommaire objets pretees"
+
+#: nav.php:33
+msgid "lend object"
+msgstr "Preter Objet"
+
+#: nav.php:33 statistics.php:120
+msgid "statistics"
+msgstr "Statistique"
+
+#: statistics.php:85
+msgid "object"
+msgstr "Objet"
+
+#: statistics.php:85
+msgid "times rented"
+msgstr "Nombre de pretees?"
+
+#: statistics.php:125
+msgid "from date"
+msgstr "Depuis date"
+
+#: statistics.php:137
+msgid "until date"
+msgstr "à date"
+
+#: statistics.php:148
+msgid "maximum entries"
+msgstr "nombre maximale"
+
+#: statistics.php:151
+msgid "sort by user"
+msgstr "Trier par Membre "
+
+#: statistics.php:152
+msgid "sort by object"
+msgstr "Trier par Objet"
