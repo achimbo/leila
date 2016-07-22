@@ -131,7 +131,7 @@ $mylist .= "</table>";
     <form method="get" action="listlendedobjects.php">
         <div class="form-group">
         <label for="datefrom"><?= _("date from") ?> &#x1f4c5;</label>
-        <input type="text" class="form-control" id="datefrom" name="datefrom"><br>
+        <input type="text" class="form-control" id="datefrom" name="datefrom">
         <script type="text/javascript">
             $( "#datefrom" ).datepicker({
                 dateFormat: "yy-mm-dd",

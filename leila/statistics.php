@@ -1,6 +1,7 @@
 <?php
 require_once 'variables.php';
 require_once 'tools.php';
+
 session_start();
 require_once('configlocale.php');
 
@@ -94,6 +95,7 @@ if(isset($_GET['byuser'])) {
 
 	$mylist .= "</table>";
 }
+
 ?>
 
 

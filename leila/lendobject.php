@@ -144,7 +144,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 			<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
 				<div class="form-group">
 					<label for="userid"><?=_('User ID')?> &#x1f50e;</label>
-					<input type="text" name="userid" class="form-control" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>><br>
+					<input type="text" name="userid" class="form-control" id="userid" oninput="displayUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['userid'])) {echo "value='" . $_GET['userid']. "'";} elseif (isset($_POST['userid'])) {echo "value='". $_POST['userid'] . "'";} ?>>
 				</div>
 				<div class="form-group">
 					<label for="username"><?=_('User Name')?> &#x1f50e;</label>
@@ -153,7 +153,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				</div>
 				<div class="form-group">
 					<label for="objectid"><?=_('Object ID')?> &#x1f50e;</label>
-					<input type="text" name="objectid" class="form-control" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>><br>
+					<input type="text" name="objectid" class="form-control" id="objectid" oninput="displayObjectName(this)"<?php if (isset($_GET['edit'])) echo "readonly "; if (isset($_GET['objectid'])) {echo "value='" . $_GET['objectid']. "'";} elseif (isset($_POST['objectid'])) {echo "value='". $_POST['objectid'] . "'";} ?>>
 				</div>
 				<div class="form-group">
 					<label for="objectname"><?=_('Object Name')?> &#x1f50e;</label>
