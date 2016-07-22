@@ -102,6 +102,8 @@ $mylist .= "</table>";
     <link rel="stylesheet" href="leila-new.css"  type="text/css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+    <link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+
     <script src="jquery/jquery.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="jquery-ui/jquery-ui.min.js"></script>
@@ -150,11 +152,11 @@ $mylist .= "</table>";
             });
         </script>
             </div>
-        <input type="submit" class="btn" value="<?= _('search')?>">
+        <input type="submit" class="btn btn-default" value="<?= _('search')?>">
     </form><p>
     <form>
-        <input type="submit" class="btn" name="showrented" value="<?= _('show rented objects')?>">
-        <input type="submit" class="btn" name="showoverdue" value="<?= _('show overdue objects')?>">
+        <input type="submit" class="btn btn-default" name="showrented" value="<?= _('show rented objects')?>">
+        <input type="submit" class="btn btn-default" name="showoverdue" value="<?= _('show overdue objects')?>">
     </form><p>
     <h3 class="margin-top"><?= _('rented objects') . " " . $message?></h3>
 </div>

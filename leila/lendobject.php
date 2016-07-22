@@ -58,6 +58,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	if (isset($_POST['updatelease'])) {
 		$givenback = sanitizeMySQL($connection, $_POST['givenback']);
 		$noquotesgivenback = $givenback;
+
 		if ($givenback == "") {
 			$givenback = 'NULL';
 		} else {
@@ -67,9 +68,9 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	}
 
 	if (isset($_POST['lendobject'])) {
-		if (isvaliduser($userid) < 1) $error .= "User ist ung&uuml;ltig";
-		if (objectisavailable($objectid) == 0) $error .= "Objekt bereits verliehen";
-		if (objectisavailable($objectid) == -1) $error .= "Objekt Status falsch";
+		if (isvaliduser($userid) < 1) $error .= _("user invalid");
+		if (objectisavailable($objectid) == 0) $error .= _("object already rented away");
+		if (objectisavailable($objectid) == -1) $error .= _("object status wrong");
 		// wenn loanedout in der Zukunft Abbruch?
 	}
 	if ($error == "") {
@@ -84,8 +85,8 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 
 		if (! $result) {
 			die ( _('invalid data') . $connection->error );
-		} elseif ($noquotegivenback == "") {
-			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>" . _('transaction') . "</a>" . _('saved') . "<p>";
+		} elseif ($noquotesgivenback == "") {
+			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>" . _('transaction') . "</a> " . _('saved') . "<p>";
 			$email = getemail($userid);
 			if ($email != "") {
 				$subject = _('rented object in LOT');
@@ -110,6 +111,8 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 	<link rel="stylesheet" href="leila-new.css"  type="text/css">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+
 	<script src="jquery/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="jquery-ui/jquery-ui.min.js"></script>
@@ -132,9 +135,10 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 		<div class="col-md-6">
 			<?php
 			if (isset ( $error ) && $error != "")
-				echo "<div class='errorclass'>" . _('error') . ":" . $error . " </div><p>";
-			if (isset ( $message ))
-				echo $message;
+				echo "<div class='alert alert-danger'>" . _('error') . ":" . $error . " </div><p>";
+			if (isset ( $message ) && $message != "") {
+				echo "<div class='alert alert-success'>" . $message . " </div><p>";
+			}
 			?>
 
 			<form action="lendobject.php<?php if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] != '') echo '?' . $_SERVER['QUERY_STRING']; ?>" method="post">
@@ -196,10 +200,10 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				</div>
 				<?php
 				if (isset($_GET['edit'])) {
-					echo "<input type='submit'  class=\"btn\" name='updatelease' value='" . _('update lease') . "'><p>";
-					echo "<input type='submit' class=\"btn\" name='delete' value='" . _('delete lease') . " onclick='return confirm(\"" . _('Are you sure you want to delete?') . "\");'>";
+					echo "<input type='submit'  class=\"btn btn-default\" name='updatelease' value='" . _('update lease') . "'><p>";
+					echo "<input type='submit' class=\"btn btn-warning margin-top\" name='delete' value='" . _('delete lease') . "'" . " onclick='return confirm(\"" . _('Are you sure you want to delete?') . "\");'>";
 				} else {
-					echo "<input type='submit' class=\"btn\" name='lendobject' value='" . _('lend object') . "'>";
+					echo "<input type='submit' class=\"btn btn-default\" name='lendobject' value='" . _('lend object') . "'>";
 				}
 				?>
 			</form>

@@ -30,12 +30,12 @@
 
 .larrows {
     float: left;
-    font-size: 220%;
+    font-size: 150%;
 }
 
 .rarrows {
     float: right;
-    font-size: 220%;
+    font-size: 150%;
 }
 
 #paging {
@@ -43,4 +43,8 @@
     max-width: 400px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.ui-datepicker-year {
+    color: black;
 }

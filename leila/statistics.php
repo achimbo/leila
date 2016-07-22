@@ -104,9 +104,11 @@ if(isset($_GET['byuser'])) {
 	<link rel="stylesheet" href="leila-new.css"  type="text/css">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
 	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
 	<script src="jquery/jquery.js"></script>
 	<script src="bootstrap/js/bootstrap.min.js"></script>
 	<script src="jquery-ui/jquery-ui.min.js"></script>
+
 
 
 	<meta charset="utf-8"/>
@@ -155,8 +157,8 @@ if(isset($_GET['byuser'])) {
 					<label for="sortmax"><?= _('maximum entries')?> </label>
 					<input type="text" id="sortmax" class="form-control" name="sortmax" value=<?php if (isset($_GET['sortmax'])){echo $_GET['sortmax'];} else {echo 10;}?>>	<br>
 				</div>
-				<input type="submit" name="byuser" class="btn" value="<?= _('sort by user')?>">
-				<input type="submit" name="byobject" class="btn" value="<?= _('sort by object')?>">
+				<input type="submit" name="byuser" class="btn btn-default" value="<?= _('sort by user')?>">
+				<input type="submit" name="byobject" class="btn btn-default" value="<?= _('sort by object')?>">
 			</form>
 		</div>
 		</div>

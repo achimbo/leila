@@ -500,8 +500,8 @@ function paginate($total) {
 		 $myquery= "?" . preg_replace("/(\?|&)page=[0-9]+/", "", $_SERVER['QUERY_STRING']) . "&page=";	 	
 	}
 
-	$prevlink = ($page > 1) ? '<a class="larrows" href="' . $myquery . '1" title="Erste Seite">&laquo;</a> &ensp; <a class="larrows" href="' . $myquery . ($page - 1) . '" title="Vorige Seite">&lsaquo;</a>' : '<span class="disabled larrows">&laquo;</span> &ensp; <span class="disabled larrows">&lsaquo;</span>';
-	$nextlink = ($page < $pages) ? ' <a class="rarrows" href="' . $myquery . $pages . '" title="Letzte Seite">&raquo;</a>  &ensp; <a class="rarrows" href="' . $myquery . ($page + 1) . '" title="N&auml;chste Seite">&rsaquo;</a>' : '<span class="disabled rarrows">&raquo;</span> &ensp; <span class="disabled rarrows">&rsaquo;</span>';
+	$prevlink = ($page > 1) ? '<a class="larrows" href="' . $myquery . '1" title="Erste Seite"><span class="glyphicon glyphicon-fast-backward"></span></a> <a class="larrows" href="' . $myquery . ($page - 1) . '" title="Vorige Seite"><span class="glyphicon glyphicon-step-backward"></span></a>' : '<span class="disabled larrows"><span class="glyphicon glyphicon-fast-backward"></span></span> &ensp; <span class="disabled larrows"><span class="glyphicon glyphicon-step-backward"></span></span>';
+	$nextlink = ($page < $pages) ? ' <a class="rarrows" href="' . $myquery . $pages . '" title="Letzte Seite"><span class="glyphicon glyphicon-fast-forward"></span></a>  &ensp; <a class="rarrows" href="' . $myquery . ($page + 1) . '" title="N&auml;chste Seite"><span class="glyphicon glyphicon-step-forward"></span></a>' : '<span class="disabled rarrows"><span class="glyphicon glyphicon-fast-forward"></span></span> &ensp; <span class="disabled rarrows"><span class="glyphicon glyphicon-step-forward"></span></span>';
 
 	$retval['footer'] = "<div id='paging'><p>" . $prevlink . $nextlink . " Seite " . $page . " von " . $pages . " Seiten <br> Datens&auml;tze " . $start . " bis " . $end . " von insgesamt " . $total . "</p></div>";
 	$retval['query'] =" LIMIT $limit OFFSET $offset ";
