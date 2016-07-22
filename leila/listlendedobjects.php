@@ -79,7 +79,7 @@ $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
 
-$mylist .= "<table id='rentedlist' class='margin-top table table-bordered'>";
+$mylist .= "<table id='rentedlist' class='margin-top table table-bordered table-striped'>";
 $mylist .= "<tr><th>" . _("object") . "</th><th>" . _("user") . "</th><th>" . _("rented") . "</th><th>" . _("due") . "</th><th>" . _("given back") . "</th></tr>";
 
 for ($r = 0; $r < $rows; ++$r) {

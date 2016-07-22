@@ -50,7 +50,7 @@ if(isset($_GET['byuser'])) {
 	if (!$result) die ("Database query error " . $connection->error);
 	$rows = $result->num_rows;
 
-	$mylist .= "<table id='toplist' class='margin-top table table-bordered'>";
+	$mylist .= "<table id='toplist' class='margin-top table table-bordered table-striped'>";
 	$mylist .= "<tr><th>User</th><th>Geliehen</th></tr>";
 
 	for ($r = 0; $r < $rows; ++$r) {
@@ -82,7 +82,7 @@ if(isset($_GET['byuser'])) {
 	if (!$result) die ("Database query error " . $connection->error);
 	$rows = $result->num_rows;
 
-	$mylist .= "<table id='toplist' class='margin-top table table-bordered'>";
+	$mylist .= "<table id='toplist' class='margin-top table table-bordered table-striped'>";
 	$mylist .= "<tr><th>". _('object') . "</th><th>" ._('times rented') . "</th></tr>";
 
 	for ($r = 0; $r < $rows; ++$r) {

@@ -247,7 +247,7 @@ function addquotes($mystring){
 
 function isempty($name, $erroritem) {
 	// check wether name is empty or does not contain alphabetic characters
-	if (($name == "") || !preg_match("/[\w]/", $name)) return "$erroritem ist leer <br>";
+	if (($name == "") || !preg_match("/[\w]/", $name)) return "$erroritem " . _("is empty") ."<br>";
 	else return "";
 }
 

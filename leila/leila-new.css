@@ -48,3 +48,18 @@
 .ui-datepicker-year {
     color: black;
 }
+
+.valid {
+    color: black;
+    background-color: lightgreen;
+}
+
+.tempvalid {
+    color: black;
+    background-color: orange;
+}
+
+.invalid {
+    color: black;
+    background-color: orangered;
+}

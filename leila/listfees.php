@@ -55,7 +55,7 @@ $result = $connection->query($query);
 if (!$result) die ("Database query error" . $connection->error);
 $rows = $result->num_rows;
 
-$mylist .= "<table id='feelist' class='margin-top table table-bordered'>";
+$mylist .= "<table id='feelist' class='margin-top table table-bordered table-striped'>";
 $mylist .= "<thead><tr><th>" . _("user") . "</th><th>" . _("from") . "</th><th>" . _("until") . "</th><th>" . _("amount") . "</th></tr></thead>";
 
 for ($r = 0; $r < $rows; ++$r) {
