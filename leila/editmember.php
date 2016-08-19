@@ -257,7 +257,7 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
     </form>
     <form method="post" action="printmember.php?ID=<?=$row['user_id']?>">
         <input type="submit" class="btn btn-default" name="printmember" value="<?= _('print member form')?>"><br>
-    </form>"
+    </form>
     <p>
     <form method="post" action="lendobject.php?userid=<?=$row['user_id']?>">
         <input type="submit" class="btn btn-default" name="lendobjecttouser" value="<?= _('lend object to user')?>"><br>

@@ -130,7 +130,7 @@ if (isset($_POST['addmember'])) {
 
 			<form method="post" action="addmember.php"  enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="usertyp"><?= _('account type')?></label>
+					<label for="usertype"><?= _('account type')?></label>
 					<select name="usertype" class="form-control" id="usertype" size="1">
 						<option value="1"><?= _('administrator')?></option>
 						<option value="2" selected="selected"><?= _('user')?></option>
