@@ -4,6 +4,13 @@
 
 .margin-top { margin-top:25px; }
 
+.small-margin-top { margin-top:10px; }
+
+.container {
+    margin-top:25px;
+    margin-bottom: 25px;
+}
+
 #usersearchbox, #objectsearchbox {
     display: none;
     position: relative;
@@ -18,6 +25,11 @@
     box-shadow: 5px 5px 3px #888888;
     text-align: center;
     padding: 5px;
+}
+
+#usersearchbox div:hover, #objectsearchbox div:hover    {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #usersearchbox div:nth-child(odd) , #objectsearchbox div:nth-child(odd) {

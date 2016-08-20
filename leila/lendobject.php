@@ -85,8 +85,11 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 
 		if (! $result) {
 			die ( _('invalid data') . $connection->error );
-		} elseif ($noquotesgivenback == "") {
+		} else {
 			$message = "<a href='lendobject.php?edit=1&objectid=$objectid&userid=$userid&loanedout=$loanedout'>" . _('transaction') . "</a> " . _('saved') . "<p>";
+		}
+
+		if (is_null($noquotesgivenback) || $noquotesgivenback == "") {
 			$email = getemail($userid);
 			if ($email != "") {
 				$subject = _('rented object in LOT');
@@ -148,7 +151,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				</div>
 				<div class="form-group">
 					<label for="username"><?=_('User Name')?> &#x1f50e;</label>
-					<input type="text" name="username" class="form-control" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
+					<input type="text" autocomplete="off" name="username" class="form-control" id="username" oninput="searchUserName(this)" <?php if (isset($_GET['edit'])) echo "readonly "; ?>><p>
 					<div id="usersearchbox"></div>
 				</div>
 				<div class="form-group">
@@ -157,7 +160,7 @@ if (isset($_POST['lendobject']) || isset($_POST['updatelease'])) {
 				</div>
 				<div class="form-group">
 					<label for="objectname"><?=_('Object Name')?> &#x1f50e;</label>
-					<input type="text" name="objectname" class="form-control" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
+					<input type="text" autocomplete="off" name="objectname" class="form-control" id="objectname" oninput="searchObjectName(this)" <?php if (isset($_GET['edit'])) echo "readonly "?>><p>
 					<div id="objectsearchbox"></div>
 				</div>
 				<div class="form-group">

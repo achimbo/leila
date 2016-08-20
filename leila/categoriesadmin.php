@@ -84,6 +84,10 @@ if (isset($_POST['deletecategories'])){
 
     <?php include 'nav.php';?>
 
+    <script type="text/javascript">
+        document.getElementById('objectstab').className = 'active';
+    </script>
+
     <h1> <?= _('categories admin')?> </h1>
     <div class="row margin-top">
         <div class="col-md-6">

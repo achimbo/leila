@@ -28,7 +28,7 @@
             </div>
             <div class="panel-body">
                 <div class="tab-content">
-                    <div class="tab-pane active" id="objectspane"><a href='listobjects.php'><?=_('list objects')?></a>&nbsp;<a href='addobject.php' class="margin-left"><?=_('create objects')?></a>&nbsp;<a href='categoriesadmin.php' class="margin-left"><?=_('manage categories')?></a></div>
+                    <div class="tab-pane active" id="objectspane"><a href='listobjects.php'><?=_('list objects')?></a>&nbsp;<a href='addobject.php' class="margin-left"><?=_('add object')?></a>&nbsp;<a href='categoriesadmin.php' class="margin-left"><?=_('manage categories')?></a></div>
                     <div class="tab-pane" id="memberspane"><a href='listmembers.php'><?=_('list members')?></a>&nbsp;<a href='addmember.php' class="margin-left"><?=_('add member')?></a>&nbsp;<a href='listfees.php' class="margin-left"><?=_('list fees')?></a>&nbsp;<a href='sendnewsletter.php' class="margin-left"><?=_('send newsletter')?></a></div>
                     <div class="tab-pane" id="lendingpane"><a href='listlendedobjects.php'><?=_('lending overview')?></a>&nbsp;<a href='lendobject.php' class="margin-left"><?=_('lend object')?></a>&nbsp;<a href='statistics.php' class="margin-left"><?=_('statistics')?></a></div>
                 </div>

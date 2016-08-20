@@ -7,7 +7,7 @@ session_start();
 require_once('configlocale.php');
 
 // comment this line out for install, add admin user, then uncomment immediatly!
-if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die ("Bitte <a href='login.php'>anmelden</a>");
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin") die (_("please <a href='login.php'>login</a>"));
 
 $created = false;
 
