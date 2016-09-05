@@ -1,6 +1,7 @@
 <?php
 require_once 'variables.php';
 require_once 'tools.php';
+require_once('configlocale.php');
 
 if (isset($_POST['username'])) {
 	$connection = new mysqli ( $db_hostname, $db_username, $db_password, $db_database );
@@ -32,15 +33,21 @@ if (isset($_POST['username'])) {
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Login</title>
-	<link rel="stylesheet" href="leila.css" type="text/css">
+    <link rel="stylesheet" href="leila-new.css"  type="text/css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+      <meta charset="utf-8"/>
+    <title><?= _('login')?></title>
 </head>
 <body>
+<div class='container'>
+    <div class="col-md-6">
 <?php
 
 if (isset($loginsuccess) && $loginsuccess){
-	echo <<<_END
-	<h1>Login erfolgreich</h1>
+	echo "<h1>" . _('login successfull') . "</h1>";
+    echo "<br><a href='listobjects.php'>" . _('list objects') . "</a>";
+    echo <<<_END
 	<script type="text/javascript">
 	function leave() {
 	  window.location = "listobjects.php";
@@ -49,8 +56,9 @@ if (isset($loginsuccess) && $loginsuccess){
 	</script>
 _END;
 } elseif (isset($loginsuccess) && !$loginsuccess) {
+
+    echo "<h1>" . _('login failed') . "</h1>";
 	echo <<<_END
-	<h1>Login fehlgeschlagen</h1>
 	<script type="text/javascript">
 	function leave() {
 	  window.location = "login.php";
@@ -63,20 +71,25 @@ _END;
 	$_SESSION = array();
 	setcookie(session_name(), '', time() - 200000, '/');
 	session_destroy();
-	echo "Abgemeldet, wieder <a href='login.php'>anmelden</a>";
+	echo "<h1>" . _('logged out') . " <br><a href='login.php'>" . _('login again') . "</a></h1>";
 } else {
+    echo "<h1>" . _('please login') . "</h1>";
 echo <<<_END
-<h1>Bitte einloggen</h1>
 <form method="post" action="login.php">
+    <div class="form-group">
 	<label for="username">Username</label>
-	<input type="text" id="username" name="username"><br>
-	<label for="password">Passwort</label>
-	<input type="password" id="password" name="password"><br>
-	<input type="submit" value="login">
+	<input class="form-control" type="text" id="username" name="username">
+	</div>
+	<div class="form-group">
+	<label for="password">Password</label>
+	<input type="password" class="form-control" id="password" name="password"><br>
+	<input type="submit" class="btn btn-default" value="login">
 </form>
 _END;
 }
 
 ?>
+        </div>
+    </div>
 </body>
 </html>

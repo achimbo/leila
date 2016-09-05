@@ -3,7 +3,9 @@ require_once 'variables.php';
 require_once 'tools.php';
 
 session_start();
-if ($allowguests == 0 && (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin")) die ("Bitte <a href='login.php'>anmelden</a>");
+require_once('configlocale.php');
+
+if ($allowguests == 0 && (!isset($_SESSION['usertype']) || $_SESSION['usertype'] != "admin")) die (_("please <a href='login.php'>login</a>"));
 
 
 $mylist = '';
@@ -28,47 +30,47 @@ if (isset($catid) ){
 	$query = "SELECT COUNT(*) AS count FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.object_id = ohc.object_id		
     INNER JOIN categories c on ohc.category_id = c.category_id 
-	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name";	
-	$message = "in Kategorie " . getcategoryname($catid);
+	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name";
+	$message = _("in category ") . getcategoryname($catid);
 	$result = $connection->query($query);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	$count = $row['count'];
 	$pag = paginate($count);
-	
+
 	$query = "SELECT o.* FROM objects o
 	INNER JOIN objects_has_categories ohc ON o.object_id = ohc.object_ID
 	INNER JOIN categories c on ohc.category_id = c.category_id
-	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name" . $pag['query'];	
+	WHERE ohc.category_id = $catid OR c.ischildof = $catid ORDER BY o.name" . $pag['query'];
 } elseif (isset($searchstring)){
 	$query = "SELECT COUNT(*) AS count FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name";
-	$message = "mit Inhalt " . $searchstring;
+	$message = _("with content ") . $searchstring;
 	$result = $connection->query($query);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	$count = $row['count'];
-	$pag = paginate($count);	
-	
+	$pag = paginate($count);
+
 	$query = "SELECT * FROM objects WHERE (name LIKE '%$searchstring%') OR (description LIKE '%$searchstring%') ORDER BY name" . $pag['query'];
 } elseif (isset($searchid)) {
 	$query = "SELECT * FROM objects WHERE object_id = '$searchid'";
 	$pag['footer'] = "";
-	$message = "mit ID " . $searchid;
+	$message = _("with ID ") . $searchid;
 } else {
 	$query = "SELECT COUNT(*) AS count FROM objects;";
 	$result = $connection->query($query);
 	$row = $result->fetch_array(MYSQLI_ASSOC);
 	$count = $row['count'];
 	$pag = paginate($count);
-	
+
 	$query = "SELECT * FROM objects ORDER BY name" . $pag['query'];
 }
 
 
 // echo $query;
 $result = $connection->query($query);
-if (!$result) die ("Database query error" . $connection->error);
+if (!$result) die (_("Database query error") . $connection->error);
 $rows = $result->num_rows;
 
-$mylist .= "<table class='objectlist'>";
+$mylist .= "<table id='objectslist' class='margin-top table table-bordered table-striped'>";
 
 for ($r = 0; $r < $rows; ++$r) {
 	$result->data_seek($r);
@@ -78,9 +80,9 @@ for ($r = 0; $r < $rows; ++$r) {
 	} else {
 		$class = "class=available";
 	}
-	
-	$mylist .= '<tr><td><a ' . $class . ' href="showobject.php?ID=' .$row['object_id'] . '">' . $row['name'] . '
-			<img src="showimage.php?ID=' . $row['object_id'] . '&amp;showthumb" alt="Objekt Bild"></a></td></tr> ';
+
+	$mylist .= '<tr ' . $class . '><td><a href="showobject.php?ID=' .$row['object_id'] . '">' . $row['name'] . '
+			<img src="showimage.php?ID=' . $row['object_id'] . '&amp;showthumb" class="img-rounded pull-right" alt="object image"></a></td></tr> ';
 	//$mylist .= 'Description ' . $row['description'] . '<br>';
 }
 
@@ -90,35 +92,65 @@ $mylist .= "</table>";
 <!DOCTYPE html>
 <html>
 <head>
-	<title>List Objects</title>
-   <link rel="stylesheet" href="leila.css" type="text/css">
+	<link rel="stylesheet" href="leila-new.css"  type="text/css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"  type="text/css">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css" type="text/css">
+	<link rel="stylesheet" href="jquery-ui/jquery-ui.min.css">
+	<script src="jquery/jquery.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+	<script src="jquery-ui/jquery-ui.min.js"></script>
+
+
+
+	<meta charset="utf-8"/>
+	<title><?= _('list objects')?></title>
 </head>
 <body>
 
-<?php 
-if (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") include 'menu.php';
-?>
-<div id="content">
-<h1>Objekt &Uuml;bersicht</h1>
-<h3>Kategorien durchsuchen</h3>
-<?php echo "<div id='cats'>";
-	echo "<a href='listobjects.php'>Alle </a>";
-	 getcategoriesaslinks();
-	 echo "</div>";
-?>
-<form method="get" action="listobjects.php">
-	<label for="searchstring">Beschr &amp; Titel: </label>
-	<input type="text" id="searchstring" name="searchstring">
-	<input type="submit" value="Suchen">
-</form>
-<form method="get" action="listobjects.php">
-	<label for="searchid">In ID suchen: </label>
-	<input type="text" id="searchid" name="searchid">
-	<input type="submit" value="ID suchen">
-</form>
-<h3>Objekte <?= $message?></h3>
-<?= $mylist?>
-<?= $pag['footer']?>
+<div class="container">
+	<?php
+	if (isset($_SESSION['usertype']) && $_SESSION['usertype'] == "admin") include 'nav.php';
+	?>
+	<script type="text/javascript">
+		document.getElementById('objectstab').className = 'active';
+	</script>
+
+	<h1><?= _('list objects')?></h1>
+
+	<div class="row margin-top">
+		<div class="col-md-6">
+
+			<h3><?= _('search categories')?></h3>
+			<?php echo "<div id='cats'>";
+			echo "<a href='listobjects.php'>Alle </a>";
+			getcategoriesaslinks();
+			echo "</div>";
+			?>
+			<form method="get" class="margin-top" action="listobjects.php">
+
+				<div class="input-group">
+					<input type="text" class="form-control" id="searchstring" name="searchstring" placeholder="<?= _('search in description and title')?>">
+					<span class="input-group-btn">
+			<input type="submit" class="btn btn-default" value="<?= _('search')?>">
+		</span>
+				</div>
+			</form>
+
+			<form method="get" action="listobjects.php">
+
+				<div class="input-group margin-top">
+					<input type="text" class="form-control" id="searchid" name="searchid" placeholder="<?= _('search ID')?>">
+					<span class="input-group-btn">
+			<input type="submit" class="btn btn-default" value="<?= _('search ID')?>">
+		</span>
+				</div>
+			</form>
+			<h3 class="margin-top"><?= _('list objects') . ' ' . $message ?></h3>
+			<?= $mylist?>
+			<?= $pag['footer']?>
+
+		</div>
+	</div>
 </div>
 </body>
 </html>

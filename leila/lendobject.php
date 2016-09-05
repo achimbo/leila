@@ -13,7 +13,7 @@ if ($connection->connect_error)
 
 $message = "";
 $comment = "";
-$noquotegivenback = "";
+$noquotesgivenback = "";
 
 if (isset($_GET['edit'])) {
 	$userid = sanitizeMySQL ( $connection, $_GET ['userid'] );

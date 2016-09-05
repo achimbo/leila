@@ -180,15 +180,15 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
         <div class="col-md-6">
     <form method="post" action="editmember.php?ID=<?=$uid?>">
         <div class="form-group">
-            <label for="id">ID</label>
+            <label for="id"><?= _('user ID')?></label>
             <input disabled="disabled" class="form-control" name="id" id="id" type="text" value="<?= $row['user_id']?>">
         </div>
         <div class="form-group">
             <label for="usertype"><?= _('user type')?></label>
             <select name="usertype" class="form-control" id="usertype" size="1">
-                <option value="1" <?php if ($row['usertype'] == 1) {echo "selected=\"selected\" ";}?>>Admin</option>
-                <option value="2" <?php if ($row['usertype'] == 2) {echo "selected=\"selected\" ";}?>>Benutzer_in</option>
-                <option value="3" <?php if ($row['usertype'] == 3) {echo "selected=\"selected\" ";}?>>Verleiher_in</option>
+                <option value="1" <?php if ($row['usertype'] == 1) {echo "selected=\"selected\" ";}?>><?= _('admin')?></option>
+                <option value="2" <?php if ($row['usertype'] == 2) {echo "selected=\"selected\" ";}?>><?= _('user')?></option>
+                <option value="3" <?php if ($row['usertype'] == 3) {echo "selected=\"selected\" ";}?>><?= _('lender')?></option>
             </select>
         </div>
         <div class="form-group">
@@ -252,10 +252,10 @@ $row = $result->fetch_array ( MYSQLI_ASSOC );
             <input type="checkbox" id="islocked" name="islocked" value="1" <?php if ($row['islocked'] == 1) echo "checked='checked'";?>>
         </div>
         <input type="submit" class="btn btn-default" name="savemember" value="<?= _('save changes')?>"><p>
-            <input type="submit" class="margin-top btn btn-default" name="deletemember" value="<?= _('delete member')?>"
+            <input type="submit" class="margin-top btn btn-warning" name="deletemember" value="<?= _('delete member')?>"
                    onclick="return confirm('<?= _('Are you sure you want to delete?')?>');">
     </form>
-    <form method="post" action="printmember.php?ID=<?=$row['user_id']?>">
+    <form class="margin-top" method="post" action="printmember.php?ID=<?=$row['user_id']?>">
         <input type="submit" class="btn btn-default" name="printmember" value="<?= _('print member form')?>"><br>
     </form>
     <p>
