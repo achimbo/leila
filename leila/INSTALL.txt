@@ -9,7 +9,7 @@ Tables (users, objects etc.) have been created in the database, and a user leila
 ==PHP==
 Edit variables.php set the database password and change the salt
 Upload the PHP files to your webserver
-Upload FPDF, FPDI, phpmailer, jquery, jquery-ui, smarty and bootstrap to folders named the same
+Upload FPDF, FPDI, phpmailer, jquery, jquery-ui and bootstrap to folders named the same
 
 ==Create Admin User==
 Eventually restrict access via .htaccess

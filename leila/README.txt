@@ -1,6 +1,6 @@
 Leila ist a software package originally developed for Leihladen Wien or www.leihladen.at, 
-a lending shop / library of things in Vienna, a place where people can lend out things against a small membership fee. It is a small library system that also keeps track of users and membership fees. There is currently only a german version available - but 
-feel free to translate it.
+a lending shop / library of things in Vienna, a place where people can lend out things against a small membership fee. It is a small library system that also keeps track of users and membership fees. There is currently a German and English Version available, translation is done via gettext.
+
 
 Currently there are the following features:
 Add and edit members
@@ -25,5 +25,6 @@ PHP with imagemagick or GD
 FPDF
 phpmailer
 jquery, jquery-ui
+Bootstrap
 MySQL Database
 Optionally: A label printer like Brother QL-700, for about 60 Euro
