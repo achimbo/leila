@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-20 21:42+0200\n"
+"POT-Creation-Date: 2016-09-05 17:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,95 +17,588 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: lendobject.php:8 listlendedobjects.php:9 statistics.php:7
+#: addmember.php:10 addobject.php:8 editobject.php:8 lendobject.php:8
+#: listlendedobjects.php:9 listobjects.php:8 sendnewsletter.php:9
+#: showobject.php:8 statistics.php:8
 msgid "please <a href='login.php'>login</a>"
+msgstr ""
+
+#: addmember.php:50 editmember.php:100
+msgid "password needs to have 6 characters and a special character"
+msgstr ""
+
+#: addmember.php:65
+msgid "data invalid, member not created"
+msgstr ""
+
+#: addmember.php:66
+msgid "error, member not created"
+msgstr ""
+
+#: addmember.php:69
+msgid "member"
+msgstr ""
+
+#: addmember.php:69 addobject.php:144
+msgid "created"
+msgstr ""
+
+#: addmember.php:69 editmember.php:259
+msgid "print member form"
+msgstr ""
+
+#: addmember.php:72
+msgid "LOT rules"
+msgstr ""
+
+#: addmember.php:76
+#, php-format
+msgid "hello %1$s, \\n INSERT RULES \\n kind regards LOT"
+msgstr ""
+
+#: addmember.php:79
+msgid "sent email"
+msgstr ""
+
+#: addmember.php:105 addmember.php:119 editmember.php:156 nav.php:32
+msgid "add member"
+msgstr ""
+
+#: addmember.php:125 addobject.php:179 categoriesadmin.php:96
+#: editmember.php:174 editobject.php:209 lendobject.php:141
+msgid "error"
+msgstr ""
+
+#: addmember.php:133
+msgid "account type"
+msgstr ""
+
+#: addmember.php:135
+msgid "administrator"
+msgstr ""
+
+#: addmember.php:136 editmember.php:190 listfees.php:59
+#: listlendedobjects.php:83
+msgid "user"
+msgstr ""
+
+#: addmember.php:137
+msgid "donor"
+msgstr ""
+
+#: addmember.php:141 editmember.php:195
+msgid "first name"
+msgstr ""
+
+#: addmember.php:145 editmember.php:199
+msgid "last name"
+msgstr ""
+
+#: addmember.php:149 editmember.php:203
+msgid "password"
+msgstr ""
+
+#: addmember.php:153 editmember.php:90 editmember.php:211
+msgid "street"
+msgstr ""
+
+#: addmember.php:157 editmember.php:91 editmember.php:215
+msgid "city"
+msgstr ""
+
+#: addmember.php:161 editmember.php:92 editmember.php:219
+msgid "po code"
+msgstr ""
+
+#: addmember.php:165 editmember.php:93 editmember.php:223
+msgid "country"
+msgstr ""
+
+#: addmember.php:169
+msgid "telephone number"
+msgstr ""
+
+#: addmember.php:173 editmember.php:96 editmember.php:231
+msgid "email"
+msgstr ""
+
+#: addmember.php:177 editmember.php:235
+msgid "receive newsletter"
+msgstr ""
+
+#: addmember.php:181
+msgid "id number"
+msgstr ""
+
+#: addmember.php:185 editmember.php:243 editmember.php:375
+msgid "comment"
+msgstr ""
+
+#: addmember.php:189
+msgid "co user"
+msgstr ""
+
+#: addmember.php:193
+msgid "create member"
+msgstr ""
+
+#: addobject.php:13
+msgid "name"
+msgstr ""
+
+#: addobject.php:41 addobject.php:66 addobject.php:93 editobject.php:113
+#: editobject.php:140
+msgid "Error, only jpg, png or gif images allowed!"
+msgstr ""
+
+#: addobject.php:128 addobject.php:140
+msgid "invalid data, object not created "
+msgstr ""
+
+#: addobject.php:129
+msgid "error object not created"
+msgstr ""
+
+#: addobject.php:141
+msgid "error category not created"
+msgstr ""
+
+#: addobject.php:144 listlendedobjects.php:83 statistics.php:86
+msgid "object"
+msgstr ""
+
+#: addobject.php:144
+msgid "print label"
+msgstr ""
+
+#: addobject.php:165 addobject.php:185 nav.php:31
+msgid "add object"
+msgstr ""
+
+#: addobject.php:225
+msgid "description"
+msgstr ""
+
+#: addobject.php:229 editobject.php:264
+msgid "shelf"
+msgstr ""
+
+#: addobject.php:233
+msgid "photo"
+msgstr ""
+
+#: addobject.php:237 editobject.php:273
+msgid "date added"
+msgstr ""
+
+#: addobject.php:241 editobject.php:277
+msgid "internal comment"
+msgstr ""
+
+#: addobject.php:246 editobject.php:281
+msgid "owner ID"
+msgstr ""
+
+#: addobject.php:250 editobject.php:285
+msgid "owner name"
+msgstr ""
+
+#: addobject.php:255 editobject.php:290
+msgid "loaned until"
+msgstr ""
+
+#: categoriesadmin.php:16 categoriesadmin.php:33
+msgid "category name"
+msgstr ""
+
+#: categoriesadmin.php:34
+msgid "subcategory name"
+msgstr ""
+
+#: categoriesadmin.php:80 categoriesadmin.php:91
+msgid "categories admin"
+msgstr ""
+
+#: categoriesadmin.php:98
+msgid "add top category"
+msgstr ""
+
+#: categoriesadmin.php:108 editobject.php:236
+msgid "add category"
+msgstr ""
+
+#: categoriesadmin.php:113 categoriesadmin.php:126
+msgid "add subcategory"
+msgstr ""
+
+#: categoriesadmin.php:133
+msgid "delete subcategory"
+msgstr ""
+
+#: categoriesadmin.php:154
+msgid "show subcategory"
+msgstr ""
+
+#: categoriesadmin.php:157
+msgid "delete category"
+msgstr ""
+
+#: editmember.php:26 editmember.php:45
+msgid "member fee or date not valid "
+msgstr ""
+
+#: editmember.php:28
+msgid "fee deleted"
+msgstr ""
+
+#: editmember.php:47
+msgid "fee added"
+msgstr ""
+
+#: editmember.php:58
+msgid "member deleted"
+msgstr ""
+
+#: editmember.php:88
+msgid "firstname"
+msgstr ""
+
+#: editmember.php:89
+msgid "lastname"
+msgstr ""
+
+#: editmember.php:109 editmember.php:122
+msgid "data invalid, member not saved"
+msgstr ""
+
+#: editmember.php:110 editmember.php:123
+msgid "error, member not saved"
+msgstr ""
+
+#: editmember.php:112 editmember.php:125
+msgid "member saved"
+msgstr ""
+
+#: editmember.php:170
+msgid "edit member"
+msgstr ""
+
+#: editmember.php:183
+msgid "user ID"
+msgstr ""
+
+#: editmember.php:187
+msgid "user type"
+msgstr ""
+
+#: editmember.php:189
+msgid "admin"
+msgstr ""
+
+#: editmember.php:191
+msgid "lender"
+msgstr ""
+
+#: editmember.php:207
+msgid "change password"
+msgstr ""
+
+#: editmember.php:227
+msgid "telephone"
+msgstr ""
+
+#: editmember.php:239
+msgid "ID number"
+msgstr ""
+
+#: editmember.php:247
+msgid "co member"
+msgstr ""
+
+#: editmember.php:251
+msgid "lock user"
+msgstr ""
+
+#: editmember.php:254
+msgid "save changes"
+msgstr ""
+
+#: editmember.php:255
+msgid "delete member"
+msgstr ""
+
+#: editmember.php:256 editmember.php:302 editobject.php:269 lendobject.php:207
+msgid "Are you sure you want to delete?"
+msgstr ""
+
+#: editmember.php:263
+msgid "lend object to user"
+msgstr ""
+
+#: editmember.php:277
+msgid "user locked"
+msgstr ""
+
+#: editmember.php:281
+msgid "not a user"
+msgstr ""
+
+#: editmember.php:285
+msgid "no membership fees paid"
+msgstr ""
+
+#: editmember.php:289
+msgid "member soon invalid"
+msgstr ""
+
+#: editmember.php:293
+msgid "fees paid"
+msgstr ""
+
+#: editmember.php:297
+msgid "user is admin"
+msgstr ""
+
+#: editmember.php:300 editmember.php:375 listfees.php:59
+msgid "from"
+msgstr ""
+
+#: editmember.php:300 editmember.php:375 listfees.php:59
+msgid "until"
+msgstr ""
+
+#: editmember.php:300 editmember.php:335 listfees.php:59
+msgid "amount"
+msgstr ""
+
+#: editmember.php:300 editmember.php:302 editobject.php:232
+msgid "delete"
+msgstr ""
+
+#: editmember.php:312
+msgid "fee from"
+msgstr ""
+
+#: editmember.php:323
+msgid "fee until"
+msgstr ""
+
+#: editmember.php:338
+msgid "add fee"
+msgstr ""
+
+#: editmember.php:350
+msgid "objects lended to LOT"
+msgstr ""
+
+#: editmember.php:353
+msgid "no object lended"
+msgstr ""
+
+#: editmember.php:357
+msgid "object lended"
+msgstr ""
+
+#: editmember.php:360
+msgid "lended until"
+msgstr ""
+
+#: editmember.php:374
+msgid "rental history"
+msgstr ""
+
+#: editmember.php:375 editobject.php:223
+msgid "object name"
+msgstr ""
+
+#: editmember.php:375 listlendedobjects.php:83
+msgid "given back"
+msgstr ""
+
+#: editobject.php:34
+msgid "category can not be assigned twice"
+msgstr ""
+
+#: editobject.php:40 editobject.php:46 editobject.php:162 editobject.php:169
+#: editobject.php:177 listobjects.php:70
+msgid "Database query error"
+msgstr ""
+
+#: editobject.php:60
+msgid "object deleted"
+msgstr ""
+
+#: editobject.php:198 editobject.php:211
+msgid "edit object"
+msgstr ""
+
+#: editobject.php:218
+msgid "object ID"
+msgstr ""
+
+#: editobject.php:222
+msgid "enter name"
+msgstr ""
+
+#: editobject.php:229
+msgid "categories"
+msgstr ""
+
+#: editobject.php:259
+msgid "object description"
+msgstr ""
+
+#: editobject.php:269
+msgid "delete image"
+msgstr ""
+
+#: editobject.php:270
+msgid "upload photo"
+msgstr ""
+
+#: editobject.php:304
+msgid "availability status"
+msgstr ""
+
+#: editobject.php:306
+msgid "is here"
+msgstr ""
+
+#: editobject.php:307
+msgid "is broken"
+msgstr ""
+
+#: editobject.php:308
+msgid "has disappeared"
 msgstr ""
 
 #: lendobject.php:38
 msgid "deleted transaction"
 msgstr ""
 
-#: lendobject.php:86
+#: lendobject.php:71
+msgid "user invalid"
+msgstr ""
+
+#: lendobject.php:72
+msgid "object already rented away"
+msgstr ""
+
+#: lendobject.php:73
+msgid "object status wrong"
+msgstr ""
+
+#: lendobject.php:87
 msgid "invalid data"
 msgstr ""
 
-#: lendobject.php:88
+#: lendobject.php:89
 msgid "transaction"
 msgstr ""
 
-#: lendobject.php:88
+#: lendobject.php:89
 msgid "saved"
 msgstr ""
 
-#: lendobject.php:91
+#: lendobject.php:95
 msgid "rented object in LOT"
 msgstr ""
 
-#: lendobject.php:95
+#: lendobject.php:99
 #, php-format
 msgid ""
 "hello %1$s \\n A short reminder: You have rented a %2$s in the LOT and "
 "should give it back until %3$s. \\n kind regards, %4$s"
 msgstr ""
 
-#: lendobject.php:98
+#: lendobject.php:102
 msgid "email sent"
 msgstr ""
 
-#: lendobject.php:119 lendobject.php:130
+#: lendobject.php:125 lendobject.php:136
 msgid "rent object away"
 msgstr ""
 
-#: lendobject.php:130 lendobject.php:199
+#: lendobject.php:136 lendobject.php:206
 msgid "update lease"
 msgstr ""
 
-#: lendobject.php:135
-msgid "error"
-msgstr ""
-
-#: lendobject.php:142
+#: lendobject.php:149
 msgid "User ID"
 msgstr ""
 
-#: lendobject.php:146
+#: lendobject.php:153
 msgid "User Name"
 msgstr ""
 
-#: lendobject.php:151
+#: lendobject.php:158
 msgid "Object ID"
 msgstr ""
 
-#: lendobject.php:155
+#: lendobject.php:162
 msgid "Object Name"
 msgstr ""
 
-#: lendobject.php:160
+#: lendobject.php:167
 msgid "Loaned From"
 msgstr ""
 
-#: lendobject.php:164
+#: lendobject.php:171
 msgid "Loaned Until"
 msgstr ""
 
-#: lendobject.php:177
+#: lendobject.php:184
 msgid "Date given back"
 msgstr ""
 
-#: lendobject.php:194
+#: lendobject.php:201
 msgid "Comment"
 msgstr ""
 
-#: lendobject.php:200
+#: lendobject.php:207
 msgid "delete lease"
 msgstr ""
 
-#: lendobject.php:200
-msgid "Are you sure you want to delete?"
+#: lendobject.php:209 nav.php:33
+msgid "lend object"
 msgstr ""
 
-#: lendobject.php:202 nav.php:33
-msgid "lend object"
+#: listfees.php:31
+#, php-format
+msgid "sum in the time between %1$s and %2$s: %3$s Euro"
+msgstr ""
+
+#: listfees.php:36 listlendedobjects.php:62
+msgid "date malformed"
+msgstr ""
+
+#: listfees.php:48
+msgid "total sum: "
+msgstr ""
+
+#: listfees.php:88 nav.php:33 statistics.php:117 statistics.php:131
+msgid "statistics"
+msgstr ""
+
+#: listfees.php:102
+msgid "fees"
+msgstr ""
+
+#: listfees.php:103 listlendedobjects.php:128 sendnewsletter.php:47
+msgid "error:"
+msgstr ""
+
+#: listfees.php:108 statistics.php:136
+msgid "from date"
+msgstr ""
+
+#: listfees.php:120 statistics.php:148
+msgid "until date"
+msgstr ""
+
+#: listfees.php:130 listlendedobjects.php:155 listmembers.php:108
+#: listobjects.php:134
+msgid "search"
 msgstr ""
 
 #: listlendedobjects.php:28
@@ -116,18 +609,6 @@ msgstr ""
 msgid "which are currently lended away"
 msgstr ""
 
-#: listlendedobjects.php:62
-msgid "date malformed"
-msgstr ""
-
-#: listlendedobjects.php:83 statistics.php:85
-msgid "object"
-msgstr ""
-
-#: listlendedobjects.php:83
-msgid "user"
-msgstr ""
-
 #: listlendedobjects.php:83
 msgid "rented"
 msgstr ""
@@ -136,40 +617,109 @@ msgstr ""
 msgid "due"
 msgstr ""
 
-#: listlendedobjects.php:83
-msgid "given back"
-msgstr ""
-
-#: listlendedobjects.php:111 listlendedobjects.php:124
+#: listlendedobjects.php:113 listlendedobjects.php:126
 msgid "overview of lended objects"
 msgstr ""
 
-#: listlendedobjects.php:126
-msgid "error:"
-msgstr ""
-
-#: listlendedobjects.php:131
+#: listlendedobjects.php:133
 msgid "date from"
 msgstr ""
 
-#: listlendedobjects.php:143
+#: listlendedobjects.php:145
 msgid "date until"
 msgstr ""
 
-#: listlendedobjects.php:153
-msgid "search"
-msgstr ""
-
-#: listlendedobjects.php:156
+#: listlendedobjects.php:158
 msgid "show rented objects"
 msgstr ""
 
-#: listlendedobjects.php:157
+#: listlendedobjects.php:159
 msgid "show overdue objects"
 msgstr ""
 
-#: listlendedobjects.php:159
+#: listlendedobjects.php:161
 msgid "rented objects"
+msgstr ""
+
+#: listmembers.php:23
+msgid "with name "
+msgstr ""
+
+#: listmembers.php:33
+msgid "which are administrators"
+msgstr ""
+
+#: listmembers.php:40
+msgid "with id "
+msgstr ""
+
+#: listmembers.php:85 listmembers.php:99 nav.php:32
+msgid "list members"
+msgstr ""
+
+#: listmembers.php:106
+msgid "search in name"
+msgstr ""
+
+#: listmembers.php:116
+msgid "search for id"
+msgstr ""
+
+#: listmembers.php:123
+msgid "show admins"
+msgstr ""
+
+#: listobjects.php:34
+msgid "in category "
+msgstr ""
+
+#: listobjects.php:46
+msgid "with content "
+msgstr ""
+
+#: listobjects.php:56
+msgid "with ID "
+msgstr ""
+
+#: listobjects.php:106 listobjects.php:118 listobjects.php:148 login.php:49
+#: nav.php:31
+msgid "list objects"
+msgstr ""
+
+#: listobjects.php:123
+msgid "search categories"
+msgstr ""
+
+#: listobjects.php:132
+msgid "search in description and title"
+msgstr ""
+
+#: listobjects.php:142 listobjects.php:144
+msgid "search ID"
+msgstr ""
+
+#: login.php:40
+msgid "login"
+msgstr ""
+
+#: login.php:48
+msgid "login successfull"
+msgstr ""
+
+#: login.php:60
+msgid "login failed"
+msgstr ""
+
+#: login.php:74
+msgid "logged out"
+msgstr ""
+
+#: login.php:74
+msgid "login again"
+msgstr ""
+
+#: login.php:76
+msgid "please login"
 msgstr ""
 
 #: nav.php:15
@@ -189,30 +739,14 @@ msgid "logout"
 msgstr ""
 
 #: nav.php:31
-msgid "list objects"
-msgstr ""
-
-#: nav.php:31
-msgid "create objects"
-msgstr ""
-
-#: nav.php:31
 msgid "manage categories"
-msgstr ""
-
-#: nav.php:32
-msgid "list members"
-msgstr ""
-
-#: nav.php:32
-msgid "add member"
 msgstr ""
 
 #: nav.php:32
 msgid "list fees"
 msgstr ""
 
-#: nav.php:32
+#: nav.php:32 sendnewsletter.php:64 sendnewsletter.php:84 sendnewsletter.php:94
 msgid "send newsletter"
 msgstr ""
 
@@ -220,30 +754,74 @@ msgstr ""
 msgid "lending overview"
 msgstr ""
 
-#: nav.php:33 statistics.php:113 statistics.php:127
-msgid "statistics"
+#: sendnewsletter.php:33
+msgid "hello"
 msgstr ""
 
-#: statistics.php:85
+#: sendnewsletter.php:47
+msgid "sent newsletter"
+msgstr ""
+
+#: sendnewsletter.php:47
+msgid "success: "
+msgstr ""
+
+#: sendnewsletter.php:47
+msgid "the following addresses failed"
+msgstr ""
+
+#: sendnewsletter.php:89
+msgid "subject"
+msgstr ""
+
+#: sendnewsletter.php:91
+msgid "text"
+msgstr ""
+
+#: sendnewsletter.php:93
+msgid "attachment"
+msgstr ""
+
+#: showobject.php:43
+msgid "show object"
+msgstr ""
+
+#: showobject.php:56
+msgid "object ID: "
+msgstr ""
+
+#: showobject.php:59
+msgid "category: "
+msgstr ""
+
+#: showobject.php:62
+msgid "description: "
+msgstr ""
+
+#: showobject.php:63
+msgid "shelf: "
+msgstr ""
+
+#: showobject.php:64
+msgid "date added: "
+msgstr ""
+
+#: statistics.php:86
 msgid "times rented"
 msgstr ""
 
-#: statistics.php:132
-msgid "from date"
-msgstr ""
-
-#: statistics.php:144
-msgid "until date"
-msgstr ""
-
-#: statistics.php:155
+#: statistics.php:159
 msgid "maximum entries"
 msgstr ""
 
-#: statistics.php:158
+#: statistics.php:162
 msgid "sort by user"
 msgstr ""
 
-#: statistics.php:159
+#: statistics.php:163
 msgid "sort by object"
+msgstr ""
+
+#: tools.php:250
+msgid "is empty"
 msgstr ""
