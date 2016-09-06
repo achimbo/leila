@@ -11,6 +11,8 @@ Edit variables.php set the database password and change the salt
 Upload the PHP files to your webserver
 Upload FPDF, FPDI, phpmailer, jquery, jquery-ui and bootstrap to folders named the same
 
+As an alternative you can use a tarball from the tarballs directory, libraries are included in the tarball.
+
 ==Create Admin User==
 Eventually restrict access via .htaccess
 Comment the session line in addmember.php out, so you can create an admin user
