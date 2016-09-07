@@ -19,6 +19,7 @@ Optional Guest access to searchable object list
 Search as you type for users and objects
 
 There is a short screencast in german: https://vimeo.com/147863167
+Updated Screenshots are here: https://github.com/achimbo/leila/tree/feature-translation/leila/screenshots
 
 Required Software:
 PHP with imagemagick or GD
