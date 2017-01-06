@@ -65,18 +65,30 @@ if(isset($_GET['byuser'])) {
 
 } elseif(isset($_GET['byobject'])) {
 	if (datepresent($from) == "" && datepresent($until) == "") {
-		$query = "SELECT o.name, r.object_id, COUNT(r.object_id) AS timesrented
-			FROM rented r JOIN objects o ON r.object_id = o.object_id
-			WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE)
-			GROUP BY object_id
-			ORDER BY timesrented DESC
-			LIMIT $sortmax";
+		$query = "SELECT o.name, o.object_id, count(r.loanedout) AS timesrented
+		FROM objects o left join rented r on o.object_id = r.object_id
+		where (r.loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE)) or r.loanedout is null
+		group by o.object_id, o.name order by timesrented desc
+		limit $sortmax";
+		
+// 		"SELECT o.name, r.object_id, COUNT(r.object_id) AS timesrented
+// 			FROM rented r JOIN objects o ON r.object_id = o.object_id
+// 			WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE)
+// 			GROUP BY object_id
+// 			ORDER BY timesrented DESC
+// 			LIMIT $sortmax";
+		
 	} else {
-		$query = "SELECT o.name, r.object_id, COUNT(r.object_id) AS timesrented
-			FROM rented r JOIN objects o ON r.object_id = o.object_id
-			GROUP BY object_id
-			ORDER BY timesrented DESC
-			LIMIT $sortmax";
+		$query = "SELECT o.name, o.object_id, count(r.loanedout) AS timesrented
+		FROM objects o left join rented r on o.object_id = r.object_id
+		group by o.object_id, o.name order by timesrented desc
+		limit $sortmax";
+		
+// 		"SELECT o.name, r.object_id, COUNT(r.object_id) AS timesrented
+// 			FROM rented r JOIN objects o ON r.object_id = o.object_id
+// 			GROUP BY object_id
+// 			ORDER BY timesrented DESC
+// 			LIMIT $sortmax";
 	}
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error " . $connection->error);
