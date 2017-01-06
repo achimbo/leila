@@ -33,18 +33,14 @@ if (isset($_GET['dateuntil'])) {
 
 if(isset($_GET['byuser'])) {
 	if (datepresent($from) == "" && datepresent($until) == "") {
-		$query = "SELECT u.firstname, u.lastname, r.user_id, COUNT(r.user_id) AS timesrented
-			FROM rented r JOIN users u ON r.user_id = u.user_id
-			WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE)
-			GROUP BY user_id
-			ORDER BY timesrented DESC
-			LIMIT $sortmax";
+		$query = "SELECT u.user_id, u.firstname, u.lastname, count(r.loanedout) as timesrented 
+		FROM users u LEFT JOIN rented r ON u.user_id = r.user_id 
+		WHERE loanedout BETWEEN CAST('$from' AS DATE) AND CAST('$until' AS DATE) or r.loanedout is null
+		GROUP BY u.user_id, u.firstname, u.lastname ORDEr BY timesrented desc LIMIT $sortmax";		
 	} else {
-		$query = "SELECT u.firstname, u.lastname, r.user_id, COUNT(r.user_id) AS timesrented
-			FROM rented r JOIN users u ON r.user_id = u.user_id
-			GROUP BY user_id
-			ORDER BY timesrented DESC
-			LIMIT $sortmax";
+		$query = "SELECT u.user_id, u.firstname, u.lastname, count(r.loanedout) as timesrented 
+		FROM users u LEFT JOIN rented r ON u.user_id = r.user_id 
+		GROUP BY u.user_id, u.firstname, u.lastname ORDEr BY timesrented desc LIMIT $sortmax";	
 	}
 	$result = $connection->query($query);
 	if (!$result) die ("Database query error " . $connection->error);
