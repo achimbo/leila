@@ -20,3 +20,6 @@ Go to addmember.php and add an admin user, login is email address
 Uncomment the session line in addmember.php so the installation is secure again
 Log in via login.php
 Done!
+
+==Email reminders when items are due==
+Call sendreminder.php via a cron job once per day. It will send a reminder when the item is due in three days.
