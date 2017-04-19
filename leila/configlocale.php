@@ -22,7 +22,7 @@ putenv("LC_ALL=" . $lang);
 setlocale(LC_ALL, $lang);
 
 $domain = 'messages';
-bindtextdomain($domain, "/Library/WebServer/Documents/leila/leila/locale");
+bindtextdomain($domain, "./locale");
 textdomain($domain);
 
 ?>

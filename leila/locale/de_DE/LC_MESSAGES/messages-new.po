@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: leila\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-05 17:45+0200\n"
-"PO-Revision-Date: 2016-09-05 18:10+0200\n"
+"PO-Revision-Date: 2017-01-06 10:50+0100\n"
 "Last-Translator: Achim <joachim.boltz@gmx.at>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -807,7 +807,7 @@ msgstr "Regal: "
 
 #: showobject.php:64
 msgid "date added: "
-msgstr "Datum hinzugefühgt: "
+msgstr "Datum hinzugefügt: "
 
 #: statistics.php:86
 msgid "times rented"
