@@ -22,7 +22,7 @@ There is a short screencast in german: https://vimeo.com/147863167
 Updated Screenshots are here: https://github.com/achimbo/leila/tree/feature-translation/leila/screenshots
 
 Required Software:
-PHP with imagemagick or GD
+PHP with gettext, imagemagick or GD
 FPDF
 phpmailer
 jquery, jquery-ui
